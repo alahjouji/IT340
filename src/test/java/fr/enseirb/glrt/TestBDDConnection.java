@@ -13,7 +13,7 @@ public class TestBDDConnection {
 	@Test
 	public void test() throws ClassNotFoundException, SQLException {
 		Class.forName("org.h2.Driver");
-		Connection conn = DriverManager.getConnection("jdbc:h2:~/it340", "alahjouji", "alahjouji");
+		Connection conn = DriverManager.getConnection("jdbc:h2:mem:it340");
 		assertTrue(conn.isValid(0));
 		conn.close();
 		assertTrue(conn.isClosed());
