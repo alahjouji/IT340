@@ -28,6 +28,7 @@ public class TestIndexPage {
 		URL url = new URL("http://localhost:4567");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
+		awaitInitialization();
 		conn.connect();
 		assertEquals(conn.getResponseMessage(), "OK");
 		stop();
