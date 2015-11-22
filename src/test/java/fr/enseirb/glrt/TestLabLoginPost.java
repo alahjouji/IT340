@@ -35,7 +35,7 @@ public class TestLabLoginPost {
 		post("/labs/login", new LabLoginHandlerPost(model));
 
 
-		URL url = new URL("http://localhost:4567/labs/login");
+		URL url = new URL("vm://localhost:4567/labs/login");
 		conn = (HttpURLConnection) url.openConnection();
 //		conn.setReadTimeout(15000);
 //		conn.setConnectTimeout(15000);
