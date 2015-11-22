@@ -5,3 +5,7 @@ jdk:
 
 script:
   - mvn test
+
+before_script:
+  - /etc/init.d/iptables save
+  - /etc/init.d/iptables stop
