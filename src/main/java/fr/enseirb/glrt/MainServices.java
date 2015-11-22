@@ -22,8 +22,12 @@ public class MainServices {
 		
 		Spark.staticFileLocation("/");
 
+		String bddURL = "jdbc:h2:~/it340";
+		Model model = new Model(bddURL);
+//		model.createLabTable();
+//		model.createAtelierTable();
 		
-		Model model = new Model();
+		
 		
 //		Atelier a = new Atelier();
 //		a.setTitre("ghghhhhhhhhhjkkkkkkkkkkkkkkhhhhhh");

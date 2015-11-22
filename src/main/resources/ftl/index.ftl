@@ -39,16 +39,16 @@
                             <div class="col-xs-12 col-lg-6">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-6">
-                                        <h2><a class="nostyle" href="http://circuit-scientifique-bordelais.cnrs.fr/teachers/login">R&Eacute;SERVER<br /><span style="color: #feca62;">UN ATELIER<br />SCIENTIFIQUE</span></a></h2>
+                                        <h2><a class="nostyle" href="/teachers/login">R&Eacute;SERVER<br /><span style="color: #feca62;">UN ATELIER<br />SCIENTIFIQUE</span></a></h2>
                                         <hr />
                                         <p>Vous &ecirc;tes enseignant<br />et vous souhaitez<br />participer au cricuit<br />avec vos &eacute;l&egrave;ves</p>
-                                        <a href="http://circuit-scientifique-bordelais.cnrs.fr/teachers/register"><img id="home4" class="img-responsive" src="img/Accueil_Gauche_CSB.png" alt="" /></a>
+                                        <a href="/teachers/register"><img id="home4" class="img-responsive" src="img/Accueil_Gauche_CSB.png" alt="" /></a>
                                     </div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <h2><a class="nostyle" href="http://circuit-scientifique-bordelais.cnrs.fr/labs/login">CR&Eacute;ER<br /><span style="color: #feca62;">UN ATELIER<br />SCIENTIFIQUE</span></a></h2>
+                                        <h2><a class="nostyle" href="/labs/login">CR&Eacute;ER<br /><span style="color: #feca62;">UN ATELIER<br />SCIENTIFIQUE</span></a></h2>
                                         <hr />
                                         <p>Vous &ecirc;tes chercheur ou<br />enseignant-chercheur et<br />vous souhaitez proposer<br />un atelier</p>
-                                        <a href="http://circuit-scientifique-bordelais.cnrs.fr/labs/register"><img id="home6" class="img-responsive" src="img/Accueil_Droite_CSB.png" alt="" /></a>
+                                        <a href="/labs/register"><img id="home6" class="img-responsive" src="img/Accueil_Droite_CSB.png" alt="" /></a>
                                     </div>
                                 </div>
                             </div>

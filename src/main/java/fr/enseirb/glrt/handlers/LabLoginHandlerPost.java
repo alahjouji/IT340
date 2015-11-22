@@ -1,5 +1,7 @@
 package fr.enseirb.glrt.handlers;
 
+import java.net.HttpURLConnection;
+
 import fr.enseirb.glrt.model.Model;
 import spark.Request;
 import spark.Response;
@@ -16,9 +18,10 @@ public class LabLoginHandlerPost implements Route{
 		int id = model.checkLab(request.queryParams("data[Lab][email]"), request.queryParams("data[Lab][password]"));
 		if(id!=0){
 			request.session().attribute("labId",id);
-			response.redirect("/labs/dashboard");
-		}else
-			response.redirect("/labs/login");
+			response.redirect("/labs/dashboard", HttpURLConnection.HTTP_ACCEPTED);
+		}else{
+			response.redirect("/labs/login", HttpURLConnection.HTTP_UNAUTHORIZED);
+		}
 		return null;
 	}
 

@@ -14,12 +14,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.enseirb.glrt.handlers.IndexHandler;
+import fr.enseirb.glrt.handlers.LabLoginHandlerGet;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
-public class TestIndexPage {
-	
+public class TestLabLoginPageGet {
+
 	private HttpURLConnection conn;
 	@Before
 	public void before() throws IOException {
@@ -28,8 +28,8 @@ public class TestIndexPage {
 		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));;
 		freeMarkerEngine.setConfiguration(freeMarkerConfiguration);
 
-		get("/", new IndexHandler(freeMarkerEngine));
-		URL url = new URL("http://localhost:4567");
+		get("/labs/login", new LabLoginHandlerGet(freeMarkerEngine));
+		URL url = new URL("http://localhost:4567/labs/login");
 		
 		conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
@@ -45,12 +45,13 @@ public class TestIndexPage {
 	@Test
 	public void testHTMLResponse() throws IOException {
 		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
-		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/index.html"), "UTF-8");
-		assertEquals(responseHTML, expectedHTML);	
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labLogin.html"), "UTF-8");
+		assertEquals(expectedHTML, responseHTML);	
 	}
 	
 	@After
 	public void after() {
 		stop();
 	}
+
 }
