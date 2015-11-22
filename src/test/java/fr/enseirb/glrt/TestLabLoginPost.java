@@ -3,16 +3,11 @@ package fr.enseirb.glrt;
 import static org.junit.Assert.*;
 import static spark.Spark.*;
 
-import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -42,77 +37,34 @@ public class TestLabLoginPost {
 
 		URL url = new URL("http://localhost:4567/labs/login");
 		conn = (HttpURLConnection) url.openConnection();
-		conn.setReadTimeout(15000);
-		conn.setConnectTimeout(15000);
+//		conn.setReadTimeout(15000);
+//		conn.setConnectTimeout(15000);
 		conn.setRequestMethod("POST");
-		conn.setDoInput(true);
+//		conn.setDoInput(true);
 		conn.setDoOutput(true);
 	}
 	
 	@Test
 	public void testLoginValid() throws IOException {
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("data[Lab][email]", "aaa@aaa.aaa");
-		params.put("data[Lab][password]", "aaa");
-		OutputStream os = conn.getOutputStream();
-        BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(os, "UTF-8"));
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for(Map.Entry<String, String> entry : params.entrySet()){
-            if (first)
-                first = false;
-            else
-                result.append("&");
-
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-        }
-
-        writer.write(result.toString());
-
-        writer.flush();
-        writer.close();
-        os.close();
-
+		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+		wr.writeBytes("data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=aaa");
+		wr.flush();
+		wr.close();
 		conn.connect();
-
 		assertEquals(HttpURLConnection.HTTP_ACCEPTED,conn.getResponseCode());
 	
 	}
 	
-//	@Test
-//	public void testLoginUnothorized() throws IOException {
-//		Map<String, String> params = new HashMap<String, String>();
-//		params.put("data[Lab][email]", "aaa@aaa.aaa");
-//		params.put("data[Lab][password]", "bbb");
-//		OutputStream os = conn.getOutputStream();
-//        BufferedWriter writer = new BufferedWriter(
-//                new OutputStreamWriter(os, "UTF-8"));
-//        StringBuilder result = new StringBuilder();
-//        boolean first = true;
-//        for(Map.Entry<String, String> entry : params.entrySet()){
-//            if (first)
-//                first = false;
-//            else
-//                result.append("&");
-//
-//            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-//            result.append("=");
-//            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-//        }
-//
-//        writer.write(result.toString());
-//
-//        writer.flush();
-//        writer.close();
-//        os.close();
-//
-//		conn.connect();
-//
-//		assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED,conn.getResponseCode());
-//	}
+	@Test
+	public void testLoginUnothorized() throws IOException {
+		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+		wr.writeBytes("data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=bbb");
+		wr.flush();
+		wr.close();
+		conn.connect();
+
+		assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED,conn.getResponseCode());
+	}
 
 	@After
 	public void after() throws SQLException {
