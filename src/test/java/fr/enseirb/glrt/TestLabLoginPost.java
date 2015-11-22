@@ -52,16 +52,16 @@ public class TestLabLoginPost {
 	
 	}
 	
-	@Test
-	public void testLoginUnothorized() throws IOException {
-		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-		wr.writeBytes("data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=bbb");
-		wr.flush();
-		wr.close();
-		conn.connect();
-
-		assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED,conn.getResponseCode());
-	}
+//	@Test
+//	public void testLoginUnothorized() throws IOException {
+//		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+//		wr.writeBytes("data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=bbb");
+//		wr.flush();
+//		wr.close();
+//		conn.connect();
+//
+//		assertEquals(HttpURLConnection.HTTP_UNAUTHORIZED,conn.getResponseCode());
+//	}
 
 	@After
 	public void after() throws SQLException {
