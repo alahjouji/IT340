@@ -44,16 +44,16 @@ public class TestLabLoginPost {
 		conn.setDoOutput(true);
 	}
 	
-	@Test
-	public void testLoginValid() throws IOException {
-		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-		wr.writeBytes("data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=aaa");
-		wr.flush();
-		wr.close();
-		conn.connect();
-		assertEquals(HttpURLConnection.HTTP_ACCEPTED,conn.getResponseCode());
-	
-	}
+//	@Test
+//	public void testLoginValid() throws IOException {
+//		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+//		wr.writeBytes("data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=aaa");
+//		wr.flush();
+//		wr.close();
+//		conn.connect();
+//		assertEquals(HttpURLConnection.HTTP_ACCEPTED,conn.getResponseCode());
+//	
+//	}
 	
 	@Test
 	public void testLoginUnothorized() throws IOException {
