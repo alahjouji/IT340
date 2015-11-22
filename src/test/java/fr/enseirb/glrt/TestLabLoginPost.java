@@ -33,28 +33,24 @@ public class TestLabLoginPost {
 		Laboratoire lab = new Laboratoire("aaa", "aaa", "0666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab);
 		post("/labs/login", new LabLoginHandlerPost(model));
+		awaitInitialization();
 
 		URL url = new URL("http://localhost:4567/labs/login");
 		conn = (HttpURLConnection) url.openConnection();
-		awaitInitialization();
-
-//		conn.setReadTimeout(15000);
-//		conn.setConnectTimeout(15000);
 		conn.setRequestMethod("POST");
-//		conn.setDoInput(true);
 		conn.setDoOutput(true);
 	}
 	
-//	@Test
-//	public void testLoginValid() throws IOException {
-//		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-//		wr.writeBytes("data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=aaa");
-//		wr.flush();
-//		wr.close();
-//		conn.connect();
-//		assertEquals(HttpURLConnection.HTTP_ACCEPTED,conn.getResponseCode());
-//	
-//	}
+	@Test
+	public void testLoginValid() throws IOException {
+		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+		wr.writeBytes("data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=aaa");
+		wr.flush();
+		wr.close();
+		conn.connect();
+		assertEquals(HttpURLConnection.HTTP_ACCEPTED,conn.getResponseCode());
+	
+	}
 	
 	@Test
 	public void testLoginUnothorized() throws IOException {
