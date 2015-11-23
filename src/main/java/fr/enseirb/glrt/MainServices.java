@@ -11,7 +11,6 @@ import fr.enseirb.glrt.handlers.LabRegisterHandlerGet;
 import fr.enseirb.glrt.handlers.LabRegisterHandlerPost;
 import fr.enseirb.glrt.model.Model;
 import freemarker.template.Configuration;
-import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import static spark.Spark.*;
@@ -21,12 +20,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class MainServices {
+	
+	public static Model model;
 	public static void main( String[] args) throws ClassNotFoundException, SQLException, IOException {
 		
-		Spark.staticFileLocation("/");
-
 		String[] bddArgs = {"jdbc:h2:mem:it340", "user", "password"};
-		Model model = new Model(bddArgs);
+		model = new Model(bddArgs);
 		model.createLabTable();
 		model.createAtelierTable();
 		
