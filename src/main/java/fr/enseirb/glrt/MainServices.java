@@ -2,6 +2,7 @@ package fr.enseirb.glrt;
 
 import fr.enseirb.glrt.handlers.IndexHandler;
 import fr.enseirb.glrt.handlers.LabDashboardHandler;
+import fr.enseirb.glrt.handlers.LabDisconnectHandler;
 import fr.enseirb.glrt.handlers.LabLoginHandlerGet;
 import fr.enseirb.glrt.handlers.LabLoginHandlerPost;
 import fr.enseirb.glrt.handlers.LabRegisterHandlerGet;
@@ -53,6 +54,7 @@ public class MainServices {
 		get("/labs/register", new LabRegisterHandlerGet(freeMarkerEngine));
 		post("/labs/register", new LabRegisterHandlerPost(model));
 		get("/labs/dashboard", new LabDashboardHandler(freeMarkerEngine, model));
+		get("/labs/disconnect", new LabDisconnectHandler());
 		stop();
 	}
 }

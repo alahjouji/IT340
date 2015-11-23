@@ -10,7 +10,7 @@
                         <a href="/labs/addAtelier">Ajouter un atelier</a>
                     </li>
                     <li class="secured">
-                        <a href="/labs/deconnexion">Se déconnecter</a>
+                        <a href="/labs/disconnect">Se déconnecter</a>
                     </li>  
                 </ul>
             </div>
@@ -31,13 +31,13 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="/">Accueil</a>                           
+                        <a href="/labs/dashboard">Tableau de bord</a>                           
                     </li>
                     <li class="secured">
-                        <a href="/teachers">Espace Enseignants</a>
+                        <a href="/labs/addAtelier">Ajouter un atelier</a>
                     </li>
                     <li class="secured">
-                        <a href="/labs">Espace Laboratoires</a>
+                        <a href="/labs/disconnect">Se déconnecter</a>
                     </li>  
                 </ul>
             </div><!--/.nav-collapse -->

@@ -34,10 +34,10 @@
                         <a href="/">Accueil</a>                           
                     </li>
                     <li class="secured">
-                        <a href="/teachers">Espace Enseignants</a>
+                        <a href="/teachers/dashboard">Espace Enseignants</a>
                     </li>
                     <li class="secured">
-                        <a href="/labs">Espace Laboratoires</a>
+                        <a href="/labs/dashboard">Espace Laboratoires</a>
                     </li>  
                 </ul>
             </div><!--/.nav-collapse -->
