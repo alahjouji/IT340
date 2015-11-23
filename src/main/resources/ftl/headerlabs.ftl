@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <header>
     <div class="navbar hidden-xs" role="navigation">
         <div class="container-fluid">

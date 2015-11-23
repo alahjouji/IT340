@@ -4,22 +4,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 import spark.template.freemarker.FreeMarkerEngine;
 
-public class LabLoginHandlerGet implements Route{
+public class LabLoginHandlerGet extends AbstractHandler{
 	private FreeMarkerEngine freeMarkerEngine;
 		
 	public LabLoginHandlerGet(FreeMarkerEngine freeMarkerEngine) {
-		super();
 		this.freeMarkerEngine = freeMarkerEngine;
 	}
 
 	@Override
-	public Object handle(Request request, Response response) throws Exception {
+	public Map<String, String> process(Map<String, String> urlParams, Map<String, String> sessionAtts){
 		Map<String, Object> attributes = new HashMap<>();
-		return freeMarkerEngine.render(new ModelAndView(attributes, "ftl/labLogin.ftl"));	}
+		Map<String, String> answer = new HashMap<String, String>();
+		answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/labLogin.ftl")));
+		return answer ;
+	}
+
+
 
 }

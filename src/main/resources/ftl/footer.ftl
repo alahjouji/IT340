@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <footer id="footer">
 	<div class="container">
 		<div class="row">

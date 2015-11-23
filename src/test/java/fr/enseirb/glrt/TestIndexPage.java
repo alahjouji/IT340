@@ -25,7 +25,7 @@ public class TestIndexPage {
 	public void before() throws IOException {
 		FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine();
 		Configuration freeMarkerConfiguration = new Configuration();
-		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));;
+		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));
 		freeMarkerEngine.setConfiguration(freeMarkerConfiguration);
 
 		get("/", new IndexHandler(freeMarkerEngine));
@@ -51,6 +51,7 @@ public class TestIndexPage {
 	
 	@After
 	public void after() {
+		conn.disconnect();
 		stop();
 	}
 }

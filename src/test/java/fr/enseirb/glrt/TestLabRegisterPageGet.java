@@ -14,24 +14,24 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.enseirb.glrt.handlers.LabLoginHandlerGet;
+import fr.enseirb.glrt.handlers.LabRegisterHandlerGet;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
-public class TestLabLoginPageGet {
+public class TestLabRegisterPageGet {
 
 	private HttpURLConnection conn;
 	@Before
 	public void before() throws IOException {
 		FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine();
 		Configuration freeMarkerConfiguration = new Configuration();
-		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));
+		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));;
 		freeMarkerEngine.setConfiguration(freeMarkerConfiguration);
 
-		get("/labs/login", new LabLoginHandlerGet(freeMarkerEngine));
+		get("/labs/register", new LabRegisterHandlerGet(freeMarkerEngine));
 		awaitInitialization();
 
-		URL url = new URL("http://localhost:4567/labs/login");
+		URL url = new URL("http://localhost:4567/labs/register");
 		
 		conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
@@ -46,7 +46,7 @@ public class TestLabLoginPageGet {
 	@Test
 	public void testHTMLResponse() throws IOException {
 		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
-		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labLogin.html"), "UTF-8");
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labRegister.html"), "UTF-8");
 		assertEquals(expectedHTML, responseHTML);	
 	}
 	

@@ -1,12 +1,14 @@
 package fr.enseirb.glrt.handlers;
 
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 
-public class LabRegisterHandlerPost implements Route{
+
+public class LabRegisterHandlerPost extends AbstractHandler{
 	private Model model;
 
 	public LabRegisterHandlerPost(Model model) {
@@ -14,11 +16,14 @@ public class LabRegisterHandlerPost implements Route{
 	}
 
 	@Override
-	public Object handle(Request request, Response response) throws Exception {
-		Laboratoire lab = new Laboratoire(request.queryParams("data[Lab][nom]"),request.queryParams("data[Lab][respo]"),request.queryParams("data[Lab][tel]"),request.queryParams("data[Lab][email]"),request.queryParams("data[Lab][password]"));
-		System.out.println(model.createLab(lab)); 
-		response.redirect("/labs/login");
-		return null;
+	public Map<String, String> process(Map<String, String> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException{
+		Map<String, String> answer = new HashMap<String, String>();
+		Laboratoire lab = new Laboratoire(urlParams.get("data[Lab][nom]"),urlParams.get("data[Lab][respo]"),urlParams.get("data[Lab][tel]"),urlParams.get("data[Lab][email]"),urlParams.get("data[Lab][password]"));
+		model.createLab(lab); 
+		answer.put("redirect", "/labs/login");
+		answer.put("response", "");
+		return answer ;
 	}
+
 
 }

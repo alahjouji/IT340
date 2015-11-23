@@ -1,28 +1,33 @@
 package fr.enseirb.glrt.handlers;
 
-import java.net.HttpURLConnection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import fr.enseirb.glrt.model.Model;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 
-public class LabLoginHandlerPost implements Route{
+
+public class LabLoginHandlerPost extends AbstractHandler{
 	private Model model;
 	public LabLoginHandlerPost(Model model) {
 		this.model = model;
 	}
-
 	@Override
-	public Object handle(Request request, Response response) throws Exception {
-		int id = model.checkLab(request.queryParams("data[Lab][email]"), request.queryParams("data[Lab][password]"));
+	public Map<String, String> process(Map<String, String> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException{
+		Integer id = model.checkLab(urlParams.get("data[Lab][email]"), urlParams.get("data[Lab][password]"));
 		if(id!=0){
-			request.session().attribute("labId",id);
-			response.redirect("/labs/dashboard", HttpURLConnection.HTTP_ACCEPTED);
+			Map<String, String> answer = new HashMap<String, String>();
+			answer.put("sessionLab", id.toString());
+			answer.put("redirect", "/labs/dashboard");
+			answer.put("response", "");
+			return answer ;
 		}else{
-			response.redirect("/labs/login", HttpURLConnection.HTTP_UNAUTHORIZED);
-		}
-		return null;
+			Map<String, String> answer = new HashMap<String, String>();
+			answer.put("redirect", "/labs/login");
+			answer.put("response", "");
+			return answer ;		}
 	}
+
+
 
 }

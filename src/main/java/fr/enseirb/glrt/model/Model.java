@@ -13,11 +13,11 @@ public class Model {
 	private int atelierCount;
 	private Connection conn;
 
-	public Model(String bddURL) throws ClassNotFoundException, SQLException {
+	public Model(String[] bddArgs) throws ClassNotFoundException, SQLException {
 		this.labCount = 0;
 		this.atelierCount = 0;
 		Class.forName("org.h2.Driver");
-		this.conn = DriverManager.getConnection(bddURL);
+		this.conn = DriverManager.getConnection(bddArgs[0], bddArgs[1], bddArgs[2]);
 	}
 
 	public void closeBDDConnection() throws SQLException {

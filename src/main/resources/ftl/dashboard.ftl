@@ -52,7 +52,7 @@
 					<td>${atelier.type}</td>
 					<td>
 					<#list atelier.disciplines as discipline>
-					${discipline},&nbsp;
+					${discipline}
 					</#list>
 					</td>
 					<td>bob</td>

@@ -15,6 +15,23 @@ public class Atelier {
 	private String resume;
 	private List<String> animateurs;
 	private List<String> publics;
+	
+	public Atelier(){
+		
+	}
+	public Atelier(int lab_id, String titre, List<String> disciplines, String type, List<String> seances, String lieu, int duree, int capacite, String resume, List<String> animateurs, List<String> publics){
+		this.setLabId(lab_id);
+		this.setTitre(titre);
+		this.setDisciplines(disciplines);
+		this.setType(type);
+		this.setSeances(seances);
+		this.setLieu(lieu);
+		this.setDuree(duree);
+		this.setCapacite(capacite);
+		this.setResume(resume);
+		this.setAnimateurs(animateurs);
+		this.setPublics(publics);
+	}
 	public int getId() {
 		return id;
 	}

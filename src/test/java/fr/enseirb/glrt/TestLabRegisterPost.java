@@ -13,12 +13,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
-import fr.enseirb.glrt.handlers.LabLoginHandlerPost;
-import fr.enseirb.glrt.model.Laboratoire;
+import fr.enseirb.glrt.handlers.LabRegisterHandlerPost;
 import fr.enseirb.glrt.model.Model;
 
-public class TestLabLoginPost {
+
+public class TestLabRegisterPost {
 
 	private HttpURLConnection conn;
 	private Model model;
@@ -26,16 +25,14 @@ public class TestLabLoginPost {
 	@Before
 	public void before() throws IOException, ClassNotFoundException, SQLException {
 		
-		String[] bddArgs= {"jdbc:h2:mem:it340", "", ""};
+		String[] bddArgs = {"jdbc:h2:mem:it340", "", ""};
 		this.model = new Model(bddArgs);
 		model.createLabTable();
 		model.createAtelierTable();
-		Laboratoire lab = new Laboratoire("aaa", "aaa", "0666", "aaa@aaa.aaa", "aaa");
-		model.createLab(lab);
-		post("/labs/login", new LabLoginHandlerPost(model));
+		post("/labs/register", new LabRegisterHandlerPost(model));
 		awaitInitialization();
 
-		URL url = new URL("http://localhost:4567/labs/login");
+		URL url = new URL("http://localhost:4567/labs/register");
 		conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
@@ -43,32 +40,19 @@ public class TestLabLoginPost {
 	}
 	
 	@Test
-	public void testLoginValid() throws IOException {
+	public void testLabCreation() throws IOException, InterruptedException {
 		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-		wr.writeBytes("data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=aaa");
+		wr.writeBytes("data[Lab][nom]=aaa&data[Lab][respo]=aaa&data[Lab][tel]=06666666&data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=aaa&data[Lab][password2]=aaa");
 		wr.flush();
 		wr.close();
 		conn.connect();
 		
-		assertEquals("http://localhost:4567/labs/dashboard", conn.getHeaderField("Location"));
+		assertEquals("http://localhost:4567/labs/login",conn.getHeaderField("Location"));
 	
-	}
-	
-	@Test
-	public void testLoginUnothorized() throws IOException {
-		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-		wr.writeBytes("data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=bbb");
-		wr.flush();
-		wr.close();
-		conn.connect();
-		
-		assertEquals("http://localhost:4567/labs/login", conn.getHeaderField("Location"));
-
 	}
 
 	@After
 	public void after() throws SQLException {
-		conn.disconnect();
 		stop();
 		model.closeBDDConnection();
 	}
