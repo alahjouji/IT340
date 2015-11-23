@@ -2,12 +2,10 @@ package fr.enseirb.glrt.model.enumerations;
 
 public enum Public {
 	Primaire,
-	Sixième,
-	Cinquième,
-	Quatrième,
-	Troisième,
+	SixiemeCinquieme,
+	QuatriemeTroisieme,
 	Seconde,
-	Première,
+	Premiere,
 	Terminale,
 	Prepas,
 	Universite

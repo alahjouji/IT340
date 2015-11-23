@@ -13,8 +13,8 @@ public class LabLoginHandlerPost extends AbstractHandler{
 		this.model = model;
 	}
 	@Override
-	public Map<String, String> process(Map<String, String> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException{
-		Integer id = model.checkLab(urlParams.get("data[Lab][email]"), urlParams.get("data[Lab][password]"));
+	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException{
+		Integer id = model.checkLab(urlParams.get("data[Lab][email]")[0], urlParams.get("data[Lab][password]")[0]);
 		if(id!=0){
 			Map<String, String> answer = new HashMap<String, String>();
 			answer.put("sessionLab", id.toString());

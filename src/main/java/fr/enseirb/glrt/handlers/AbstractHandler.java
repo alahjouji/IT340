@@ -11,10 +11,10 @@ import spark.Route;
 public abstract class AbstractHandler implements Route{
 	@Override
     public Object handle(Request request, Response response) throws ClassNotFoundException, SQLException{
-		Map<String, String> urlParams = new HashMap<String, String>();
-		
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+
 		for (String par : request.queryParams()){
-			urlParams.put(par, request.queryParams(par));
+			urlParams.put(par, request.queryParamsValues(par));
 		}
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 
@@ -30,5 +30,5 @@ public abstract class AbstractHandler implements Route{
 		
 	}
 
-	public  abstract Map<String, String> process(Map<String, String> urlParams, Map<String, String> sessionAtts ) throws ClassNotFoundException, SQLException;
+	public  abstract Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts ) throws ClassNotFoundException, SQLException;
 }

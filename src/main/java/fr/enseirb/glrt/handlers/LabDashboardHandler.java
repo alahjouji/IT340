@@ -8,21 +8,19 @@ import java.util.Map;
 
 import fr.enseirb.glrt.model.Atelier;
 import fr.enseirb.glrt.model.Model;
+import fr.enseirb.glrt.model.enumerations.Topics;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
 public class LabDashboardHandler extends AbstractHandler {
 	private FreeMarkerEngine freeMarkerEngine;
 	private Model model;
-	
 	public LabDashboardHandler(FreeMarkerEngine freeMarkerEngine, Model model) {
-		super();
 		this.freeMarkerEngine = freeMarkerEngine;
 		this.model = model;
 	}
-
 	@Override
-	public Map<String, String> process(Map<String, String> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException {
+	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException {
 		if (sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab") == "0") {
 			Map<String, String> answer = new HashMap<String, String>();
 			answer.put("redirect", "/labs/login");
@@ -33,14 +31,14 @@ public class LabDashboardHandler extends AbstractHandler {
 			List<Atelier> ateliers = model.getAteliers(sessionLab);
 			
 			for (Atelier atelier : ateliers){
-				List<String> disciplines = atelier.getDisciplines();
-				List<String> disciplines1 = new ArrayList<String>();
+				List<Topics> disciplines = atelier.getDisciplines();
+				List<Topics> disciplines1 = new ArrayList<Topics>();
 				int i=0;
 				while (i<disciplines.size()){
 					if(i==disciplines.size()-1)
 						disciplines1.add(disciplines.get(i));
 					else
-						disciplines1.add(disciplines.get(i) +",&nbsp;");
+						disciplines1.add(disciplines.get(i));
 					i++;
 				}
 				

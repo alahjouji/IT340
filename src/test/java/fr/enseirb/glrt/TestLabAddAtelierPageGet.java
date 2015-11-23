@@ -6,11 +6,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
@@ -18,18 +15,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.enseirb.glrt.handlers.LabDashboardHandler;
-import fr.enseirb.glrt.model.Atelier;
+import fr.enseirb.glrt.handlers.LabAddAtelierHandlerGet;
+
 import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
-import fr.enseirb.glrt.model.enumerations.Jour;
-import fr.enseirb.glrt.model.enumerations.Public;
-import fr.enseirb.glrt.model.enumerations.Topics;
 import freemarker.template.Configuration;
-
 import spark.template.freemarker.FreeMarkerEngine;
 
-public class TestLabDashboardPage {
+public class TestLabAddAtelierPageGet {
 
 	private Model model;
 	private FreeMarkerEngine freeMarkerEngine;
@@ -47,40 +40,25 @@ public class TestLabDashboardPage {
 		model.createAtelierTable();
 
 		Laboratoire lab = new Laboratoire("aaa", "aaa", "06666", "aaa@aaa.aaa", "aaa");
-		model.createLab(lab );
-		List<Topics> list = new ArrayList<Topics>();
-		list.add(Topics.Anthropologie);
-		list.add(Topics.Environnement);
-		list.add(Topics.Geographie);
-		
-		List<Public> list3 = new ArrayList<Public>();
-		list3.add(Public.Premiere);
-		List<String> list2 = new ArrayList<String>();
-		list2.add("bob");
-		List<Jour> list1 = new ArrayList<Jour>();
-		list1.add(Jour.JeudiAprem);
-		Atelier atelier= new Atelier(1, "titre", list, "type", list1, "lieu", 1, 1, "resume", list2, list3);
-		model.createAtelier(atelier);
-		model.createAtelier(atelier);
-		
+		model.createLab(lab);		
 	}
 	
 	@Test
-	public void testDashboard() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
-		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);
+	public void testAddAtelier() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabAddAtelierHandlerGet handler = new LabAddAtelierHandlerGet(freeMarkerEngine);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 		sessionAtts.put("sessionLab", "1");
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 		
 		String responseHTML = handler.process(urlParams , sessionAtts).get("response");
-		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labDashboard.html"), "UTF-8");
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labAddAtelier.html"), "UTF-8");
 		assertEquals(expectedHTML, responseHTML);
 	}
 	
 	@Test
-	public void testDashboardUnothorized() throws IOException, ClassNotFoundException, SQLException {
-		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);
+	public void testAddAtelierUnothorized() throws IOException, ClassNotFoundException, SQLException {
+		LabAddAtelierHandlerGet handler = new LabAddAtelierHandlerGet(freeMarkerEngine);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
@@ -91,5 +69,6 @@ public class TestLabDashboardPage {
 	public void after() throws SQLException {
 		model.closeBDDConnection();
 	}
+
 
 }

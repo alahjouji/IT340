@@ -7,8 +7,7 @@ import java.util.Map;
 import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
 
-
-public class LabRegisterHandlerPost extends AbstractHandler{
+public class LabRegisterHandlerPost extends AbstractHandler {
 	private Model model;
 
 	public LabRegisterHandlerPost(Model model) {
@@ -16,14 +15,16 @@ public class LabRegisterHandlerPost extends AbstractHandler{
 	}
 
 	@Override
-	public Map<String, String> process(Map<String, String> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException{
+	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+			throws ClassNotFoundException, SQLException {
 		Map<String, String> answer = new HashMap<String, String>();
-		Laboratoire lab = new Laboratoire(urlParams.get("data[Lab][nom]"),urlParams.get("data[Lab][respo]"),urlParams.get("data[Lab][tel]"),urlParams.get("data[Lab][email]"),urlParams.get("data[Lab][password]"));
-		model.createLab(lab); 
+		Laboratoire lab = new Laboratoire(urlParams.get("data[Lab][nom]")[0], urlParams.get("data[Lab][respo]")[0],
+				urlParams.get("data[Lab][tel]")[0], urlParams.get("data[Lab][email]")[0],
+				urlParams.get("data[Lab][password]")[0]);
+		model.createLab(lab);
 		answer.put("redirect", "/labs/login");
 		answer.put("response", "");
-		return answer ;
+		return answer;
 	}
-
 
 }

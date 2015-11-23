@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.enseirb.glrt.model.enumerations.Jour;
+import fr.enseirb.glrt.model.enumerations.Public;
+import fr.enseirb.glrt.model.enumerations.Topics;
+
 public class Model {
 	private int labCount;
 	private int atelierCount;
@@ -76,19 +80,35 @@ public class Model {
 		stmt.setInt(2, atelier.getLabId());
 		stmt.setString(3, atelier.getTitre());
 
-		String[] arrayDisciplines = atelier.getDisciplines().toArray(new String[atelier.getDisciplines().size()]);
+		String[] arrayDisciplines = new String[atelier.getDisciplines().size()];
+		int i=0;
+		for(Topics t : atelier.getDisciplines()){
+			arrayDisciplines[i] = t.toString();
+			i++;
+		}
 		stmt.setObject(4, arrayDisciplines  );
 		stmt.setString(5, atelier.getType());
 		stmt.setString(6, atelier.getLieu());
-		String[] arraySeances = atelier.getSeances().toArray(new String[atelier.getSeances().size()]);
+		
+		String[] arraySeances = new String[atelier.getSeances().size()];
+		int j=0;
+		for(Jour t : atelier.getSeances()){
+			arraySeances[j] = t.toString();
+			j++;
+		}
 		stmt.setObject(7, arraySeances  );
 		stmt.setInt(8, atelier.getDuree());
 		stmt.setInt(9,  atelier.getCapacite());
 		stmt.setString(10, atelier.getResume());
 		String[] arrayAnimateurs = atelier.getAnimateurs().toArray(new String[atelier.getAnimateurs().size()]);
 		stmt.setObject(11, arrayAnimateurs  );
-		String[] arrayPublics = atelier.getPublics().toArray(new String[atelier.getPublics().size()]);
-		stmt.setObject(12, arrayPublics  );
+
+		String[] arrayPublics = new String[atelier.getPublics().size()];
+		int k=0;
+		for(Public t : atelier.getPublics()){
+			arrayPublics[k] = t.toString();
+			k++;
+		}		stmt.setObject(12, arrayPublics  );
 		stmt.executeUpdate();
 		stmt.close();
 		return id;
@@ -105,12 +125,12 @@ public class Model {
 			Atelier atelier = new Atelier();
 			atelier.setTitre(rs.getString("titre"));
 			atelier.setType(rs.getString("type"));
-			List<String> disc = new ArrayList<String>();
+			List<Topics> disc = new ArrayList<Topics>();
 
 
 			 for (Object obj : (Object[])rs.getArray("disciplines").getArray()) {
 				 String dis = (String) obj;
-				 disc.add(dis);
+				 disc.add(Topics.valueOf(dis));
 			 }
 			atelier.setDisciplines(disc);
 			ateliers.add(atelier);

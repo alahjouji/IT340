@@ -1,48 +1,39 @@
 package fr.enseirb.glrt;
 
 import static org.junit.Assert.*;
-import static spark.Spark.*;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.sql.SQLException;
 
-import org.junit.After;
-import org.junit.Before;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+
 import org.junit.Test;
 
 import fr.enseirb.glrt.handlers.LabDisconnectHandler;
 
+
 public class TestLabDisconnect {
-
-	private HttpURLConnection conn;
 	
-	@Before
-	public void before() throws IOException, ClassNotFoundException, SQLException {
+	@Test
+	public void testDisconnectValid() throws IOException, ClassNotFoundException, SQLException {
+		LabDisconnectHandler handler = new LabDisconnectHandler();
 		
-		get("/labs/disconnect", new LabDisconnectHandler());
-		awaitInitialization();
-
-		URL url = new URL("http://localhost:4567/labs/disconnect");
-		conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setInstanceFollowRedirects(false);
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		assertEquals("/", handler.process(urlParams , sessionAtts).get("redirect"));	
 	}
 	
 	@Test
-	public void testLoginValid() throws IOException {
-
-		conn.connect();
+	public void testDisconnectUnvalid() throws IOException, ClassNotFoundException, SQLException {
+		LabDisconnectHandler handler = new LabDisconnectHandler();
 		
-		assertEquals("http://localhost:4567/", conn.getHeaderField("Location"));
-	
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));	
 	}
 
-	@After
-	public void after() throws SQLException {
-		conn.disconnect();
-		stop();
-	}
 
 }
