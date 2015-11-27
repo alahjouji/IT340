@@ -72,7 +72,13 @@
 							<br/>
 							<h4 class="center">Type</h4>
 							<div class="form-group">
-									<input name="data[Atelier][type]" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Type" required="required"/>
+									<input type="hidden" name="type" value="" id="Type_"/>
+									<select name="data[Atelier][type]" role="form" class="form-control" id="Type" required="required">
+									<option value="01">Atelier Scientifique</option>
+									<option value="02">Exposition</option>
+									<option value="03">Conférence</option>
+									<option value="04">Visite</option>
+									</select>
 							</div>
 							<br/>				
 							
@@ -101,13 +107,14 @@
 							
 							<h4 class="center">Durée</h4>
 							<div class="form-group">
-									<input name="data[Atelier][duree]" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Duree" required="required"/>
+									<input type="number" step="1" name="data[Atelier][duree]" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Duree" required="required"/>
 							</div>
+							<span class="help-block">renseigner la durée en minutes</span>
 							<br/>	
 							
 							<h4 class="center">Capacité</h4>
 							<div class="form-group">
-									<input name="data[Atelier][capacite]" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Capacite" required="required"/>
+									<input type="number" step="1" name="data[Atelier][capacite]" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Capacite" required="required"/>
 							</div>
 							<br/>
 							

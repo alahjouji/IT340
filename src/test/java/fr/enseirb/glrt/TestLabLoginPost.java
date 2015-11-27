@@ -62,7 +62,7 @@ public class TestLabLoginPost {
 		wr.close();
 		conn.connect();
 		
-		assertEquals("http://localhost:4567/labs/login", conn.getHeaderField("Location"));
+		assertEquals("http://localhost:4567/labs/login?warn=1", conn.getHeaderField("Location"));
 
 	}
 

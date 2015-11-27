@@ -1,0 +1,118 @@
+@startuml
+
+package java.model {
+	class Atelier {
+		- UUID idLaboratoire
+		- UUID idAtelier
+		- String titre
+		- String theme
+		- String type
+		- Date date
+		- String lieu
+		- int duree
+		- int capacite
+		- boolean reservation
+		- String description
+		- String animateur
+		- String audience
+		- List<String> disciplines
+	}
+
+	class Laboratoire {
+		- UUID idLaboratoire
+		- String nom
+		- String contact
+		- String email
+	}
+
+    class Sql2oModel << (S,red) Singleton >>{
+	    - Sql2o sql2o
+	    - UuidGenerator uuidGenerator
+	    + Sql2oModel(Sql2o sql2o)
+    	+ UUID createLab(String nom, String contact, String email, String motDePasse)
+    	+ boolean registerLab(String email, String motDePasse)
+    	+ UUID createAtelier(UUID idLaboratoire, String titre, String theme, String type, Date date, String lieu, int duree, int capacite, boolean reservation, String description, String animateur, String audience, List<String> disciplines)
+    	+ List<Atelier> getLabAteliers(UUID lab)
+	    + void updateAtelier(Atelier atelier)
+	    + void deleteAtelier(UUID atelier)	
+    }
+}
+
+package java {
+	class MainServices {
+		+ {static} void main(String[] args)
+	}
+}
+
+class FreeMarkerEngine{
+}
+
+class Spark{
+}
+
+Interface Route {
+}
+
+package Handlers {
+	class HomepageHandler {
+
+	}
+
+	class CreateLabHandler {
+
+	}
+
+	class RegisterLabHandler {
+
+	}
+
+	class CreateAtelierHandler {
+
+	}
+
+	class ListLabAteliersHandler {
+
+	}
+
+	class UpdateAtelierHandler {
+
+	}
+
+	class DeleteAtelierHandler {
+
+	}
+
+	class DisconnectLabHandler {
+
+	}
+}
+
+Route <|-- HomePageHandler
+Route <|-- CreateLabHandler
+Route <|-- RegisterLabHandler
+Route <|-- CreateAtelierHandler
+Route <|-- ListLabAteliersHandler
+Route <|-- UpdateAtelierHandler
+Route <|-- DeleteAtelierHandler
+Route <|-- DisconnectLabHandler
+
+Sql2oModel <-- HomePageHandler
+Sql2oModel <-- CreateLabHandler
+Sql2oModel <-- RegisterLabHandler
+Sql2oModel <-- CreateAtelierHandler
+Sql2oModel <-- ListLabAteliersHandler
+Sql2oModel <-- UpdateAtelierHandler
+Sql2oModel <-- DeleteAtelierHandler
+Sql2oModel <-- DisconnectLabHandler
+
+Laboratoire "1" *-- "0..*" Atelier
+java +-- java.model
+
+MainServices --> Sql2oModel
+MainServices --> FreeMarkerEngine
+MainServices --> Spark
+
+Atelier <-- Sql2oModel
+Laboratoire <-- Sql2oModel
+
+@enduml

@@ -22,9 +22,7 @@ import fr.enseirb.glrt.handlers.LabDashboardHandler;
 import fr.enseirb.glrt.model.Atelier;
 import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
-import fr.enseirb.glrt.model.enumerations.Jour;
-import fr.enseirb.glrt.model.enumerations.Public;
-import fr.enseirb.glrt.model.enumerations.Topics;
+import fr.enseirb.glrt.model.Seance;
 import freemarker.template.Configuration;
 
 import spark.template.freemarker.FreeMarkerEngine;
@@ -46,21 +44,25 @@ public class TestLabDashboardPage {
 		model.createLabTable();
 		model.createAtelierTable();
 
-		Laboratoire lab = new Laboratoire("aaa", "aaa", "06666", "aaa@aaa.aaa", "aaa");
+		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab );
-		List<Topics> list = new ArrayList<Topics>();
-		list.add(Topics.Anthropologie);
-		list.add(Topics.Environnement);
-		list.add(Topics.Geographie);
+		List<String> list = new ArrayList<String>();
+		list.add("Anthropologie");
+		list.add("Environnement");
+		list.add("Geographie");
 		
-		List<Public> list3 = new ArrayList<Public>();
-		list3.add(Public.Premiere);
+		List<String> list3 = new ArrayList<String>();
+		list3.add("Premières");
+		list3.add("Secondes");
 		List<String> list2 = new ArrayList<String>();
 		list2.add("bob");
-		List<Jour> list1 = new ArrayList<Jour>();
-		list1.add(Jour.JeudiAprem);
-		Atelier atelier= new Atelier(1, "titre", list, "type", list1, "lieu", 1, 1, "resume", list2, list3);
-		model.createAtelier(atelier);
+		list2.add("Martin");
+		List<Seance> list1 = new ArrayList<Seance>();
+		list1.add(new Seance("Lundi Matin",0));
+		list1.add(new Seance("Jeudi Matin",0));
+
+		
+		Atelier atelier= new Atelier(1, " A la poursuite d'ennemis invisibles", list, "Atelier scientifique", list1, "1 avenue du Docteur Albert Schweitzer 33400 talence", 1, 1, "Cet Atelier est destiné aux personnes.", list2, list3);
 		model.createAtelier(atelier);
 		
 	}

@@ -36,10 +36,10 @@
                     <li>
                         <a href="/labs/dashboard">Tableau de bord</a>                           
                     </li>
-                    <li class="secured">
+                    <li>
                         <a href="/labs/addAtelier">Ajouter un atelier</a>
                     </li>
-                    <li class="secured">
+                    <li>
                         <a href="/labs/disconnect">Se déconnecter</a>
                     </li>  
                 </ul>
@@ -63,10 +63,10 @@
                     <li>
                         <a href="/labs/dashboard">Tableau de bord</a>                           
                     </li>
-                    <li class="secured">
+                    <li>
                         <a href="/labs/addAtelier">Ajouter un atelier</a>
                     </li>
-                    <li class="secured">
+                    <li>
                         <a href="/labs/disconnect">Se déconnecter</a>
                     </li>  
                 </ul>
@@ -91,25 +91,16 @@
 	<tbody>
 
 				<tr class="info">
-					<td>titre</td>
-					<td>type</td>
+					<td><a href="/atelier" onclick="location.href=this.href+'?atelierId='+1;return false;"> A la poursuite d'ennemis invisibles</a></td>
+					<td>Atelier scientifique</td>
 					<td>
-					Anthropologie
-					Environnement
-					Geographie
+					Anthropologie&nbsp;
+					Environnement&nbsp;
+					Geographie&nbsp;
 					</td>
-					<td>bob</td>
-				</tr>
-
-				<tr class="info">
-					<td>titre</td>
-					<td>type</td>
-					<td>
-					Anthropologie
-					Environnement
-					Geographie
+					<td><a href="/labs/editAtelier" onclick="location.href=this.href+'?atelierId='+1;return false;">supprimer</a>
+						<a href="/labs/deleteAtelier" onclick="location.href=this.href+'?atelierId='+1;return false;">editer</a>
 					</td>
-					<td>bob</td>
 				</tr>
 				
 									</tbody>

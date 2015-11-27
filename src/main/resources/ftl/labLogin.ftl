@@ -29,6 +29,19 @@
                 </div>
                 <div class="col-xs-12 col-lg-10">
 					<#include "header.ftl">
+					<#if warn??>
+						<div class="alert alert-danger alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<strong>Erreur : </strong>
+							${warn}
+						</div>
+					</#if>
+					<#if good??>
+						<div class = "alert alert-success alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							${good}
+						</div>
+					</#if>		
 					<div class="content" id="corpus">
 						<h1>
 					    	Connexion Laboratoire

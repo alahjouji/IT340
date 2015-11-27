@@ -5,9 +5,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
@@ -15,10 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.enseirb.glrt.handlers.LabAddAtelierHandlerPost;
-import fr.enseirb.glrt.model.Atelier;
 import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
-import fr.enseirb.glrt.model.enumerations.Topics;
 
 
 public class TestLabAddAtelierPost {
@@ -45,35 +41,29 @@ public class TestLabAddAtelierPost {
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 		sessionAtts.put("sessionLab", "1");
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
-		String[] titre = {"titre"};
+		String[] titre = {"A la poursuite d'ennemis invisibles"};
 		urlParams.put("data[Atelier][titre]",titre );
-		String[] type = {"type"};
+		String[] type = {"01"};
 		urlParams.put("data[Atelier][type]",type );
-		String[] lieu = {"lieu"};
+		String[] lieu = {"1 avenue du Docteur Albert Schweitzer 33400 talence "};
 		urlParams.put("data[Atelier][lieu]",lieu );
-		String[] duree = {"180"};
+		String[] duree = {"1"};
 		urlParams.put("data[Atelier][duree]",duree );
-		String[] capacite = {"18"};
+		String[] capacite = {"1"};
 		urlParams.put("data[Atelier][capacite]",capacite );
-		String[] resume = {"resume"};
+		String[] resume = {"Cet Atelier est destiné aux personnes."};
 		urlParams.put("data[Atelier][resume]",resume );
-		String[] animateurs = {"anim1"};
+		String[] animateurs = {"bob,Martin"};
 		urlParams.put("data[Atelier][animateurs]",animateurs );
-		String[] publics = {"01","04"};
+		String[] publics = {"04","05"};
 		urlParams.put("data[Atelier][public]",publics );
-		String[] topics = {"12","04"};
+		String[] topics = {"01","04","05"};
 		urlParams.put("data[Atelier][topics]",topics );
-		String[] seances = {"08","01"};
+		String[] seances = {"01","07"};
 		urlParams.put("data[Atelier][seances]",seances );
-		assertEquals("/labs/dashboard", handler.process(urlParams , sessionAtts).get("redirect"));
-		Atelier a = new Atelier();
-		a.setTitre(titre[0]);
-		a.setType(type[0]);
-		List<Topics> topics1 = new ArrayList<Topics>();
-		topics1.add(Topics.values()[12]);
-		topics1.add(Topics.values()[4]);
-		a.setDisciplines(topics1 );
-		assertTrue(model.getAteliers(1).get(0).getDisciplines().get(0).equals(Topics.values()[12]));
+		assertEquals("/labs/dashboard?good=1", handler.process(urlParams , sessionAtts).get("redirect"));
+
+		assertTrue(model.getAtelier(1).getDisciplines().get(0).equals("Anthropologie"));
 	}
 
 	@Test

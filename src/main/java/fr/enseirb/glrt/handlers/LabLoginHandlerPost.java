@@ -23,7 +23,7 @@ public class LabLoginHandlerPost extends AbstractHandler{
 			return answer ;
 		}else{
 			Map<String, String> answer = new HashMap<String, String>();
-			answer.put("redirect", "/labs/login");
+			answer.put("redirect", "/labs/login?warn=1");
 			answer.put("response", "");
 			return answer ;		}
 	}

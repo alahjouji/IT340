@@ -16,6 +16,12 @@ public class LabLoginHandlerGet extends AbstractHandler{
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts){
 		Map<String, Object> attributes = new HashMap<>();
+		if(urlParams.containsKey("warn") && urlParams.get("warn")[0].equals("1")){
+			attributes.put("warn", "Email ou mot de passe incorrecte");
+		}
+		if(urlParams.containsKey("good") && urlParams.get("good")[0].equals("1")){
+			attributes.put("good", "Laboratoire créé avec succes");
+		}
 		Map<String, String> answer = new HashMap<String, String>();
 		answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/labLogin.ftl")));
 		return answer ;

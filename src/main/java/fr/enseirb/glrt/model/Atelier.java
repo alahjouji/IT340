@@ -2,29 +2,27 @@ package fr.enseirb.glrt.model;
 
 import java.util.List;
 
-import fr.enseirb.glrt.model.enumerations.Jour;
-import fr.enseirb.glrt.model.enumerations.Public;
-import fr.enseirb.glrt.model.enumerations.Topics;
-
 public class Atelier {
+	private int id;
 	private int labId;
+	private String labName;
 	private String titre;
-	private List<Topics> disciplines;
+	private List<String> disciplines;
 	private String type;
-	private List<Jour> seances;
+	private List<Seance> seances;
 	private String lieu;
 	private int duree;
 	private int capacite;
 	private String resume;
 	private List<String> animateurs;
-	private List<Public> publics;
+	private List<String> publics;
 
 	public Atelier() {
 
 	}
 
-	public Atelier(int lab_id, String titre, List<Topics> disciplines, String type, List<Jour> seances, String lieu,
-			int duree, int capacite, String resume, List<String> animateurs, List<Public> publics) {
+	public Atelier(int lab_id, String titre, List<String> disciplines, String type, List<Seance> seances, String lieu,
+			int duree, int capacite, String resume, List<String> animateurs, List<String> publics) {
 		this.setLabId(lab_id);
 		this.setTitre(titre);
 		this.setDisciplines(disciplines);
@@ -102,28 +100,44 @@ public class Atelier {
 		this.animateurs = animateurs;
 	}
 
-	public List<Topics> getDisciplines() {
+	public List<String> getDisciplines() {
 		return disciplines;
 	}
 
-	public void setDisciplines(List<Topics> disciplines) {
+	public void setDisciplines(List<String> disciplines) {
 		this.disciplines = disciplines;
 	}
 
-	public List<Jour> getSeances() {
+	public List<Seance> getSeances() {
 		return seances;
 	}
 
-	public void setSeances(List<Jour> seances) {
+	public void setSeances(List<Seance> seances) {
 		this.seances = seances;
 	}
 
-	public List<Public> getPublics() {
+	public List<String> getPublics() {
 		return publics;
 	}
 
-	public void setPublics(List<Public> publics) {
+	public void setPublics(List<String> publics) {
 		this.publics = publics;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getLabName() {
+		return labName;
+	}
+
+	public void setLabName(String labName) {
+		this.labName = labName;
 	}
 
 }

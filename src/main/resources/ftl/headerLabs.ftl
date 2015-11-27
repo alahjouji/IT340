@@ -6,10 +6,10 @@
                     <li>
                         <a href="/labs/dashboard">Tableau de bord</a>                           
                     </li>
-                    <li class="secured">
+                    <li>
                         <a href="/labs/addAtelier">Ajouter un atelier</a>
                     </li>
-                    <li class="secured">
+                    <li>
                         <a href="/labs/disconnect">Se déconnecter</a>
                     </li>  
                 </ul>
@@ -33,10 +33,10 @@
                     <li>
                         <a href="/labs/dashboard">Tableau de bord</a>                           
                     </li>
-                    <li class="secured">
+                    <li>
                         <a href="/labs/addAtelier">Ajouter un atelier</a>
                     </li>
-                    <li class="secured">
+                    <li>
                         <a href="/labs/disconnect">Se déconnecter</a>
                     </li>  
                 </ul>

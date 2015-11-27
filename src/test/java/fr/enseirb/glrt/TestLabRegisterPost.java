@@ -47,7 +47,7 @@ public class TestLabRegisterPost {
 		wr.close();
 		conn.connect();
 		
-		assertEquals("http://localhost:4567/labs/login",conn.getHeaderField("Location"));
+		assertEquals("http://localhost:4567/labs/login?good=1",conn.getHeaderField("Location"));
 	
 	}
 
