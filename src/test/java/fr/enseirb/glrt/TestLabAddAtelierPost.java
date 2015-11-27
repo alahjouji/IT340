@@ -43,6 +43,38 @@ public class TestLabAddAtelierPost {
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 		String[] titre = {"A la poursuite d'ennemis invisibles"};
 		urlParams.put("data[Atelier][titre]",titre );
+		String[] type = {"05"};
+		urlParams.put("data[Atelier][type]",type );
+		String[] lieu = {"1 avenue du Docteur Albert Schweitzer 33400 talence "};
+		urlParams.put("data[Atelier][lieu]",lieu );
+		String[] duree = {"1"};
+		urlParams.put("data[Atelier][duree]",duree );
+		String[] capacite = {"1"};
+		urlParams.put("data[Atelier][capacite]",capacite );
+		String[] resume = {"Cet Atelier est destiné aux personnes."};
+		urlParams.put("data[Atelier][resume]",resume );
+		String[] animateurs = {"bob,Martin"};
+		urlParams.put("data[Atelier][animateurs]",animateurs );
+		String[] publics = {"01","02","03","04","05","06","07","08","09"};
+		urlParams.put("data[Atelier][public]",publics );
+		String[] topics = {"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17"};
+		urlParams.put("data[Atelier][topics]",topics );
+		String[] seances = {"01","02","03","04","05","06","07","08","09","10","11"};
+		urlParams.put("data[Atelier][seances]",seances );
+		assertEquals("/labs/dashboard?good=1", handler.process(urlParams , sessionAtts).get("redirect"));
+
+		assertTrue(model.getAtelier(1).getDisciplines().get(0).equals("Anthropologie"));
+	}
+
+	@Test
+	public void testAddAtelier1() throws IOException, ClassNotFoundException, SQLException {
+		LabAddAtelierHandlerPost handler = new LabAddAtelierHandlerPost(model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] titre = {"A la poursuite d'ennemis invisibles"};
+		urlParams.put("data[Atelier][titre]",titre );
 		String[] type = {"01"};
 		urlParams.put("data[Atelier][type]",type );
 		String[] lieu = {"1 avenue du Docteur Albert Schweitzer 33400 talence "};
@@ -55,17 +87,112 @@ public class TestLabAddAtelierPost {
 		urlParams.put("data[Atelier][resume]",resume );
 		String[] animateurs = {"bob,Martin"};
 		urlParams.put("data[Atelier][animateurs]",animateurs );
-		String[] publics = {"04","05"};
+		String[] publics = {"01","02","03","04","05","06","07","08","09"};
 		urlParams.put("data[Atelier][public]",publics );
-		String[] topics = {"01","04","05"};
+		String[] topics = {"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17"};
 		urlParams.put("data[Atelier][topics]",topics );
-		String[] seances = {"01","07"};
+		String[] seances = {"01","02","03","04","05","06","07","08","09","10","11"};
 		urlParams.put("data[Atelier][seances]",seances );
 		assertEquals("/labs/dashboard?good=1", handler.process(urlParams , sessionAtts).get("redirect"));
 
 		assertTrue(model.getAtelier(1).getDisciplines().get(0).equals("Anthropologie"));
 	}
+	
+	@Test
+	public void testAddAtelier2() throws IOException, ClassNotFoundException, SQLException {
+		LabAddAtelierHandlerPost handler = new LabAddAtelierHandlerPost(model);
 
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] titre = {"A la poursuite d'ennemis invisibles"};
+		urlParams.put("data[Atelier][titre]",titre );
+		String[] type = {"02"};
+		urlParams.put("data[Atelier][type]",type );
+		String[] lieu = {"1 avenue du Docteur Albert Schweitzer 33400 talence "};
+		urlParams.put("data[Atelier][lieu]",lieu );
+		String[] duree = {"1"};
+		urlParams.put("data[Atelier][duree]",duree );
+		String[] capacite = {"1"};
+		urlParams.put("data[Atelier][capacite]",capacite );
+		String[] resume = {"Cet Atelier est destiné aux personnes."};
+		urlParams.put("data[Atelier][resume]",resume );
+		String[] animateurs = {"bob,Martin"};
+		urlParams.put("data[Atelier][animateurs]",animateurs );
+		String[] publics = {"01","02","03","04","05","06","07","08","09"};
+		urlParams.put("data[Atelier][public]",publics );
+		String[] topics = {"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17"};
+		urlParams.put("data[Atelier][topics]",topics );
+		String[] seances = {"01","02","03","04","05","06","07","08","09","10","11"};
+		urlParams.put("data[Atelier][seances]",seances );
+		assertEquals("/labs/dashboard?good=1", handler.process(urlParams , sessionAtts).get("redirect"));
+
+		assertTrue(model.getAtelier(1).getDisciplines().get(0).equals("Anthropologie"));
+	}
+	
+	@Test
+	public void testAddAtelier3() throws IOException, ClassNotFoundException, SQLException {
+		LabAddAtelierHandlerPost handler = new LabAddAtelierHandlerPost(model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] titre = {"A la poursuite d'ennemis invisibles"};
+		urlParams.put("data[Atelier][titre]",titre );
+		String[] type = {"03"};
+		urlParams.put("data[Atelier][type]",type );
+		String[] lieu = {"1 avenue du Docteur Albert Schweitzer 33400 talence "};
+		urlParams.put("data[Atelier][lieu]",lieu );
+		String[] duree = {"1"};
+		urlParams.put("data[Atelier][duree]",duree );
+		String[] capacite = {"1"};
+		urlParams.put("data[Atelier][capacite]",capacite );
+		String[] resume = {"Cet Atelier est destiné aux personnes."};
+		urlParams.put("data[Atelier][resume]",resume );
+		String[] animateurs = {"bob,Martin"};
+		urlParams.put("data[Atelier][animateurs]",animateurs );
+		String[] publics = {"01","02","03","04","05","06","07","08","09"};
+		urlParams.put("data[Atelier][public]",publics );
+		String[] topics = {"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17"};
+		urlParams.put("data[Atelier][topics]",topics );
+		String[] seances = {"01","02","03","04","05","06","07","08","09","10","11"};
+		urlParams.put("data[Atelier][seances]",seances );
+		assertEquals("/labs/dashboard?good=1", handler.process(urlParams , sessionAtts).get("redirect"));
+
+		assertTrue(model.getAtelier(1).getDisciplines().get(0).equals("Anthropologie"));
+	}
+	
+	@Test
+	public void testAddAtelier4() throws IOException, ClassNotFoundException, SQLException {
+		LabAddAtelierHandlerPost handler = new LabAddAtelierHandlerPost(model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] titre = {"A la poursuite d'ennemis invisibles"};
+		urlParams.put("data[Atelier][titre]",titre );
+		String[] type = {"04"};
+		urlParams.put("data[Atelier][type]",type );
+		String[] lieu = {"1 avenue du Docteur Albert Schweitzer 33400 talence "};
+		urlParams.put("data[Atelier][lieu]",lieu );
+		String[] duree = {"1"};
+		urlParams.put("data[Atelier][duree]",duree );
+		String[] capacite = {"1"};
+		urlParams.put("data[Atelier][capacite]",capacite );
+		String[] resume = {"Cet Atelier est destiné aux personnes."};
+		urlParams.put("data[Atelier][resume]",resume );
+		String[] animateurs = {"bob,Martin"};
+		urlParams.put("data[Atelier][animateurs]",animateurs );
+		String[] publics = {"01","02","03","04","05","06","07","08","09"};
+		urlParams.put("data[Atelier][public]",publics );
+		String[] topics = {"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17"};
+		urlParams.put("data[Atelier][topics]",topics );
+		String[] seances = {"01","02","03","04","05","06","07","08","09","10","11"};
+		urlParams.put("data[Atelier][seances]",seances );
+		assertEquals("/labs/dashboard?good=1", handler.process(urlParams , sessionAtts).get("redirect"));
+
+		assertTrue(model.getAtelier(1).getDisciplines().get(0).equals("Anthropologie"));
+	}
 	@Test
 	public void testAddAtelierUnothorized() throws IOException, ClassNotFoundException, SQLException {
 		LabAddAtelierHandlerPost handler = new LabAddAtelierHandlerPost(model);

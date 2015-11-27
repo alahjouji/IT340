@@ -63,7 +63,7 @@
 			window.geocoder = new google.maps.Geocoder();
 			window.marker = new google.maps.Marker({position: new google.maps.LatLng(startLat, startLng), map: window.map});
 		});</script>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
 	<br/>
 	<legend>Informations</legend>
 <p>

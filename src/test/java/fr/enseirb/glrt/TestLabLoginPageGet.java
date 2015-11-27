@@ -31,25 +31,53 @@ public class TestLabLoginPageGet {
 		get("/labs/login", new LabLoginHandlerGet(freeMarkerEngine));
 		awaitInitialization();
 
+	}
+	
+	@Test
+	public void testSparkConnection() throws IOException {
 		URL url = new URL("http://localhost:4567/labs/login");
 		
 		conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.connect();
-	}
-	
-	@Test
-	public void testSparkConnection() throws IOException {
 		assertEquals(HttpURLConnection.HTTP_OK, conn.getResponseCode());
 	}
 	
 	@Test
 	public void testHTMLResponse() throws IOException {
+		URL url = new URL("http://localhost:4567/labs/login");
+		
+		conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.connect();
 		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
 		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labLogin.html"), "UTF-8");
 		assertEquals(expectedHTML, responseHTML);	
 	}
 	
+	@Test
+	public void testHTMLResponseError() throws IOException {
+		URL url = new URL("http://localhost:4567/labs/login?warn=1");
+		
+		conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.connect();
+		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labLoginError.html"), "UTF-8");
+		assertEquals(expectedHTML, responseHTML);	
+	}
+	
+	@Test
+	public void testHTMLResponseGood() throws IOException {
+		URL url = new URL("http://localhost:4567/labs/login?good=1");
+		
+		conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.connect();
+		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labLoginGood.html"), "UTF-8");
+		assertEquals(expectedHTML, responseHTML);	
+	}
 	@After
 	public void after() {
 		conn.disconnect();

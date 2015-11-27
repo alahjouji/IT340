@@ -4,9 +4,9 @@ package fr.enseirb.glrt.model;
 public class Seance {
 	private String seance;
 	private Integer inscrit;
-	public Seance(String jour5, Integer ins) {
-		this.seance = jour5;
-		this.inscrit = ins;
+	public Seance(String jour, Integer ins) {
+		setSeance(jour);
+		setInscrit(ins);
 	}
 	public String getSeance() {
 		return seance;
