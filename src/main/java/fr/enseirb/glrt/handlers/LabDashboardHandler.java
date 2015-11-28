@@ -35,6 +35,9 @@ public class LabDashboardHandler extends AbstractHandler {
 			if(urlParams.containsKey("good") && urlParams.get("good")[0].equals("2")){
 				attributes.put("good", "Atelier supprimé avec succes");
 			}
+			if(urlParams.containsKey("good") && urlParams.get("good")[0].equals("3")){
+				attributes.put("good", "Atelier modifié avec succes");
+			}
 			Map<String, String> answer = new HashMap<String, String>();
 			answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/labDashboard.ftl")));
 			return answer ;
