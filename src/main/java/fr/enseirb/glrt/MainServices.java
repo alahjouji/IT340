@@ -5,6 +5,7 @@ import fr.enseirb.glrt.handlers.IndexHandler;
 import fr.enseirb.glrt.handlers.LabAddAtelierHandlerGet;
 import fr.enseirb.glrt.handlers.LabAddAtelierHandlerPost;
 import fr.enseirb.glrt.handlers.LabDashboardHandler;
+import fr.enseirb.glrt.handlers.LabDeleteAtelierHandler;
 import fr.enseirb.glrt.handlers.LabDisconnectHandler;
 import fr.enseirb.glrt.handlers.LabLoginHandlerGet;
 import fr.enseirb.glrt.handlers.LabLoginHandlerPost;
@@ -71,6 +72,7 @@ public class MainServices {
 		get("/labs/addAtelier", new LabAddAtelierHandlerGet(freeMarkerEngine));
 		post("/labs/addAtelier", new LabAddAtelierHandlerPost(model));
 		get("/atelier", new AtelierHandler(freeMarkerEngine, model));
+		get("/labs/deleteAtelier", new LabDeleteAtelierHandler(model));
 		awaitInitialization();
 	}
 }

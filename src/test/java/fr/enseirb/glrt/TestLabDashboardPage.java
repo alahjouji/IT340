@@ -81,7 +81,7 @@ public class TestLabDashboardPage {
 	}
 	
 	@Test
-	public void testDashboardGood() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+	public void testDashboardGood1() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
 		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
@@ -91,6 +91,20 @@ public class TestLabDashboardPage {
 		urlParams.put("good", value );
 		String responseHTML = handler.process(urlParams , sessionAtts).get("response");
 		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labDashboardGood.html"), "UTF-8");
+		assertEquals(expectedHTML, responseHTML);
+	}
+	
+	@Test
+	public void testDashboardGood2() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"2"};
+		urlParams.put("good", value );
+		String responseHTML = handler.process(urlParams , sessionAtts).get("response");
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labDashboardDelete.html"), "UTF-8");
 		assertEquals(expectedHTML, responseHTML);
 	}
 	

@@ -61,8 +61,8 @@
 					${discipline}&nbsp;
 					</#list>
 					</td>
-					<td><a href="/labs/editAtelier" onclick="location.href=this.href+'?atelierId='+${atelier.id};return false;">supprimer</a>
-						<a href="/labs/deleteAtelier" onclick="location.href=this.href+'?atelierId='+${atelier.id};return false;">editer</a>
+					<td><a href="/labs/deleteAtelier" onclick="location.href=this.href+'?atelierId='+${atelier.id};return false;">supprimer</a>
+						<a href="/labs/editAtelier" onclick="location.href=this.href+'?atelierId='+${atelier.id};return false;">editer</a>
 					</td>
 				</tr>
 </#list>
