@@ -5,3 +5,6 @@ develop branch testing
 
 develop branch coverage
 [![Coverage Status](https://coveralls.io/repos/alahjouji/IT340/badge.svg?branch=develop&service=github)](https://coveralls.io/github/alahjouji/IT340?branch=develop)
+
+
+part 1 complete
