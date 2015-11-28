@@ -7,6 +7,8 @@ import fr.enseirb.glrt.handlers.LabAddAtelierHandlerPost;
 import fr.enseirb.glrt.handlers.LabDashboardHandler;
 import fr.enseirb.glrt.handlers.LabDeleteAtelierHandler;
 import fr.enseirb.glrt.handlers.LabDisconnectHandler;
+import fr.enseirb.glrt.handlers.LabEditAtelierHandlerGet;
+import fr.enseirb.glrt.handlers.LabEditAtelierHandlerPost;
 import fr.enseirb.glrt.handlers.LabLoginHandlerGet;
 import fr.enseirb.glrt.handlers.LabLoginHandlerPost;
 import fr.enseirb.glrt.handlers.LabRegisterHandlerGet;
@@ -40,7 +42,7 @@ public class MainServices {
 		List<String> list = new ArrayList<String>();
 		list.add("Anthropologie");
 		list.add("Environnement");
-		list.add("Geographie");
+		list.add("Géographie");
 		
 		List<String> list3 = new ArrayList<String>();
 		list3.add("Premières");
@@ -49,11 +51,11 @@ public class MainServices {
 		list2.add("bob");
 		list2.add("Martin");
 		List<Seance> list1 = new ArrayList<Seance>();
-		list1.add(new Seance("Lundi Matin",0));
-		list1.add(new Seance("Jeudi Matin",0));
+		list1.add(new Seance("Lundi matin",0));
+		list1.add(new Seance("Jeudi matin",0));
 
 		
-		Atelier atelier= new Atelier(1, " A la poursuite d'ennemis invisibles", list, "Atelier scientifique", list1, "1 avenue du Docteur Albert Schweitzer 33400 talence", 1, 1, "Cet Atelier est destiné aux personnes.", list2, list3);
+		Atelier atelier= new Atelier(1, " A la poursuite d'ennemis invisibles", list, "Visite", list1, "1 avenue du Docteur Albert Schweitzer 33400 talence", 1, 1, "Cet Atelier est destiné aux personnes.", list2, list3);
 		model.createAtelier(atelier);
 		
 		FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine();
@@ -73,6 +75,10 @@ public class MainServices {
 		post("/labs/addAtelier", new LabAddAtelierHandlerPost(model));
 		get("/atelier", new AtelierHandler(freeMarkerEngine, model));
 		get("/labs/deleteAtelier", new LabDeleteAtelierHandler(model));
+		get("/labs/editAtelier", new LabEditAtelierHandlerGet(freeMarkerEngine,model));
+		post("/labs/editAtelier", new LabEditAtelierHandlerPost(model));
+
+
 		awaitInitialization();
 	}
 }

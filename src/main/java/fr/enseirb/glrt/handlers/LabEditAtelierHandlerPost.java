@@ -11,22 +11,24 @@ import fr.enseirb.glrt.model.Atelier;
 import fr.enseirb.glrt.model.Model;
 import fr.enseirb.glrt.model.Seance;
 
-public class LabAddAtelierHandlerPost extends AbstractHandler {
+
+public class LabEditAtelierHandlerPost extends AbstractHandler{
+
 	private Model model;
 
-	public LabAddAtelierHandlerPost(Model model) {
+	public LabEditAtelierHandlerPost(Model model) {
 		this.model = model;
 	}
 
 	@Override
-	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
-			throws ClassNotFoundException, SQLException {
+	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException{
+		
 		Map<String, String> answer = new HashMap<String, String>();
-		if (sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0")) {
+		if(sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0")){
 			answer.put("redirect", "/labs/login");
 			answer.put("response", "");
 			return answer;
-		} else {
+		}else{
 			String[] animateurs = urlParams.get("data[Atelier][animateurs]")[0].split(",");
 			List<String> topics = new ArrayList<String>();
 			for (String str : urlParams.get("data[Atelier][topics]")) {
@@ -188,12 +190,15 @@ public class LabAddAtelierHandlerPost extends AbstractHandler {
 					urlParams.get("data[Atelier][lieu]")[0], Integer.parseInt(urlParams.get("data[Atelier][duree]")[0]),
 					Integer.parseInt(urlParams.get("data[Atelier][capacite]")[0]),
 					urlParams.get("data[Atelier][resume]")[0], Arrays.asList(animateurs), publics);
-			model.createAtelier(atelier);
-			answer.put("redirect", "/labs/dashboard?good=1");
+			atelier.setId(Integer.parseInt(urlParams.get("atelierId")[0]));
+			model.editAtelier(atelier);
+			answer.put("redirect", "/labs/dashboard?good=3");
 			answer.put("response", "");
-			return answer;
+			return answer ;
 		}
-
 	}
+
+
+
 
 }

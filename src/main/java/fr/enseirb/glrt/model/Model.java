@@ -148,6 +148,7 @@ public class Model {
 		stmt.setInt(1, atelierId);
 		ResultSet rs = stmt.executeQuery();
 		if (rs.next()) {
+			atelier.setId(rs.getInt("id"));
 			atelier.setTitre(rs.getString("titre"));
 			atelier.setType(rs.getString("type"));
 			atelier.setDuree(Integer.parseInt(rs.getString("duree")));
@@ -238,6 +239,55 @@ public class Model {
 	public void deleteAtelier(int atelierId) throws SQLException{
 		PreparedStatement stmt = conn.prepareStatement("delete from ateliers where id=?");
 		stmt.setInt(1, atelierId);
+		stmt.executeUpdate();
+		stmt.close();
+	}
+	
+	public void editAtelier(Atelier atelier) throws SQLException{
+		PreparedStatement stmt = conn
+				.prepareStatement("update ateliers VALUES set titre=?, disciplines=?, type=?, seances=?, inscrits=?, lieu=?, duree=?, capacite=?, resume=?, animateurs=?, publics=? where id=?");
+		stmt.setString(1, atelier.getTitre());
+
+		String[] arrayDisciplines = new String[atelier.getDisciplines().size()];
+		int i = 0;
+		for (String t : atelier.getDisciplines()) {
+			arrayDisciplines[i] = t.toString();
+			i++;
+		}
+		stmt.setObject(2, arrayDisciplines);
+		stmt.setString(3, atelier.getType());
+
+		String[] arraySeances = new String[atelier.getSeances().size()];
+		int j = 0;
+		for (Seance t : atelier.getSeances()) {
+			arraySeances[j] = t.getSeance().toString();
+			j++;
+		}
+		stmt.setObject(4, arraySeances);
+
+		String[] arrayInscrits = new String[atelier.getSeances().size()];
+		int l = 0;
+		for (Seance t : atelier.getSeances()) {
+			arrayInscrits[l] = t.getInscrit().toString();
+			l++;
+		}
+		stmt.setObject(5, arrayInscrits);
+
+		stmt.setString(6, atelier.getLieu());
+		stmt.setInt(7, atelier.getDuree());
+		stmt.setInt(8, atelier.getCapacite());
+		stmt.setString(9, atelier.getResume());
+		String[] arrayAnimateurs = atelier.getAnimateurs().toArray(new String[atelier.getAnimateurs().size()]);
+		stmt.setObject(10, arrayAnimateurs);
+
+		String[] arrayPublics = new String[atelier.getPublics().size()];
+		int k = 0;
+		for (String t : atelier.getPublics()) {
+			arrayPublics[k] = t.toString();
+			k++;
+		}
+		stmt.setObject(11, arrayPublics);
+		stmt.setInt(12, atelier.getId());
 		stmt.executeUpdate();
 		stmt.close();
 	}
