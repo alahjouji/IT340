@@ -13,10 +13,15 @@ import fr.enseirb.glrt.handlers.LabLoginHandlerGet;
 import fr.enseirb.glrt.handlers.LabLoginHandlerPost;
 import fr.enseirb.glrt.handlers.LabRegisterHandlerGet;
 import fr.enseirb.glrt.handlers.LabRegisterHandlerPost;
+import fr.enseirb.glrt.handlers.TeacherLoginHandlerGet;
+import fr.enseirb.glrt.handlers.TeacherLoginHandlerPost;
+import fr.enseirb.glrt.handlers.TeacherRegisterHandlerGet;
+import fr.enseirb.glrt.handlers.TeacherRegisterHandlerPost;
 import fr.enseirb.glrt.model.Atelier;
 import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
 import fr.enseirb.glrt.model.Seance;
+import fr.enseirb.glrt.model.Teacher;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -36,9 +41,13 @@ public class MainServices {
 		model = new Model(bddArgs);
 		model.createLabTable();
 		model.createAtelierTable();
+		model.createTeacherTable();
 		
 		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab );
+		Teacher teacher = new Teacher("Bob Bob", "Enseirb", "077777", "bbb@bbb.bbb", "bbb");
+		model.createTeacher(teacher );
+		
 		List<String> list = new ArrayList<String>();
 		list.add("Anthropologie");
 		list.add("Environnement");
@@ -77,7 +86,10 @@ public class MainServices {
 		get("/labs/deleteAtelier", new LabDeleteAtelierHandler(model));
 		get("/labs/editAtelier", new LabEditAtelierHandlerGet(freeMarkerEngine,model));
 		post("/labs/editAtelier", new LabEditAtelierHandlerPost(model));
-
+		get("/teachers/login", new TeacherLoginHandlerGet(freeMarkerEngine));
+		post("/teachers/login", new TeacherLoginHandlerPost(model));
+		get("/teachers/register", new TeacherRegisterHandlerGet(freeMarkerEngine));
+		post("/teachers/register", new TeacherRegisterHandlerPost(model));
 
 		awaitInitialization();
 	}

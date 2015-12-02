@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />       
     <title>
-        Laboratoires - Circuit Scientifique Bordelais - CNRS
+        Enseignants - Circuit Scientifique Bordelais - CNRS
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/img/favicon.ico" type="image/x-icon" rel="icon" />
@@ -35,54 +35,54 @@
 							<strong>Erreur : </strong>
 							${warn}
 						</div>
-					</#if>
+					</#if>					
 					<div class="content" id="corpus">
 						<h1>
-					    	Inscription Laboratoire
+					    	Inscription Enseignant
 						</h1>
 					
 						<p>
-							Vous êtes un laboratoire et vous souhaitez proposer un ou plusieurs ateliers scientifiques dans le cadre du circuit scientifique bordelais.
+							Vous êtes un enseignant ou un responsable d'un groupe d'élèves, apprentis, ou autres et vous souhaitez participer à un ou plusieurs des ateliers du circuit scientifique bordelais.
 							<br/>
 							Veuillez remplir le formulaire ci-dessous afin de créer votre espace personnel.
 							<br/>
 						</p>
-						<form action="/labs/register" id="LabRegisterForm" method="post" accept-charset="utf-8">
+						<form action="/teachers/register" id="LabRegisterForm" method="post" accept-charset="utf-8">
 							<div style="display:none;">
 								<input type="hidden" name="_method" value="POST"/>
 							</div>
 							<div class="form-group" style="padding:1.5em 0;">
-								<label for="LabNom" class="col-sm-2 control-label">Nom du laboratoire</label>
+								<label for="TeacherNom" class="col-sm-2 control-label">Nom complet</label>
 								<div class="col-sm-10">
-									<input name="data[Lab][nom]" role="form" class="form-control" maxlength="100" type="text" id="LabNom" required="required"/>
+									<input name="data[Teacher][nom]" role="form" class="form-control" maxlength="100" type="text" id="TeacherNom" required="required"/>
 								</div>
 							</div>
 							<div class="form-group" style="padding:1.5em 0;">
-								<label for="LabRespo" class="col-sm-2 control-label">Nom du Responsable</label>
+								<label for="TeacherEtab" class="col-sm-2 control-label">Nom de l'établissement</label>
 								<div class="col-sm-10">
-									<input name="data[Lab][respo]" role="form" class="form-control" maxlength="100" type="text" id="LabRespo" required="required"/>
+									<input name="data[Teacher][etab]" role="form" class="form-control" maxlength="100" type="text" id="TeacherEtab" required="required"/>
 								</div>
 							</div>							<div class="form-group" style="padding:1.5em 0;">
-								<label for="LabTel" class="col-sm-2 control-label">Téléphone</label>
+								<label for="TeacherTel" class="col-sm-2 control-label">Téléphone de l'établissement</label>
 								<div class="col-sm-10">
-									<input name="data[Lab][tel]" role="form" class="form-control" maxlength="100" type="text" id="LabTel" required="required"/>
+									<input name="data[Teacher][tel]" role="form" class="form-control" maxlength="100" type="text" id="TeacherTel" required="required"/>
 								</div>
 							</div>							<div class="form-group" style="padding:1.5em 0;">
-								<label for="LabEmail" class="col-sm-2 control-label">Adresse email</label>
+								<label for="TeacherEmail" class="col-sm-2 control-label">Adresse email</label>
 								<div class="col-sm-10">
-									<input name="data[Lab][email]" role="form" class="form-control" maxlength="100" type="email" id="LabEmail" required="required"/>
+									<input name="data[Teacher][email]" role="form" class="form-control" maxlength="100" type="email" id="TeacherEmail" required="required"/>
 								</div>
 							</div>							
 							<div class="form-group" style="padding:1.5em 0;">
-								<label for="LabPassword" class="col-sm-2 control-label">Mot de passe</label>
+								<label for="TeacherPassword" class="col-sm-2 control-label">Mot de passe</label>
 								<div class="col-sm-10 required">
-									<input name="data[Lab][password]" role="form" class="form-control" type="password" id="LabPassword" required="required"/>
+									<input name="data[Teacher][password]" role="form" class="form-control" type="password" id="TeacherPassword" required="required"/>
 								</div>
 							</div>
 							<div class="form-group" style="padding:1.5em 0;">
-								<label for="LabPassword2" class="col-sm-2 control-label">confirmer le Mot de passe</label>
+								<label for="TeacherPassword2" class="col-sm-2 control-label">confirmer le Mot de passe</label>
 								<div class="col-sm-10 required">
-									<input name="data[Lab][password2]" role="form" class="form-control" type="password" id="LabPassword2" required="required"/>
+									<input name="data[Teacher][password2]" role="form" class="form-control" type="password" id="TeacherPassword2" required="required"/>
 								</div>
 							</div>
 							<div class="form-group" style="padding:1.5em 0;">

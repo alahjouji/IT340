@@ -12,11 +12,13 @@ import java.util.List;
 public class Model {
 	private int labCount;
 	private int atelierCount;
+	private int teacherCount;
 	private Connection conn;
 
 	public Model(String[] bddArgs) throws ClassNotFoundException, SQLException {
 		this.labCount = 0;
 		this.atelierCount = 0;
+		this.teacherCount = 0;
 		Class.forName("org.h2.Driver");
 		this.conn = DriverManager.getConnection(bddArgs[0], bddArgs[1], bddArgs[2]);
 	}
@@ -32,6 +34,13 @@ public class Model {
 		stmt.close();
 	}
 
+	public void createTeacherTable() throws ClassNotFoundException, SQLException {
+		PreparedStatement stmt = conn.prepareStatement(
+				"CREATE TABLE Teachers (id int primary key, nom varchar(255) not null, etablissement varchar(255) not null, tel varchar(255) not null, email varchar(255) not null, mot_de_passe varchar(255) not null);");
+		stmt.executeUpdate();
+		stmt.close();
+	}
+	
 	public void createAtelierTable() throws ClassNotFoundException, SQLException {
 		PreparedStatement stmt = conn.prepareStatement(
 				"CREATE TABLE Ateliers (id int primary key, lab_id int not null references Laboratoires(id), titre varchar(255) not null, disciplines array not null, type varchar(255) not null, seances array not null, inscrits array not null, lieu varchar(255) not null, duree int not null, capacite int not null, resume varchar(255) not null, animateurs array not null, publics array not null);");
@@ -290,5 +299,57 @@ public class Model {
 		stmt.setInt(12, atelier.getId());
 		stmt.executeUpdate();
 		stmt.close();
+	}
+
+	public int createTeacher(Teacher teacher) throws ClassNotFoundException, SQLException {
+		teacherCount++;
+		int teacherId = teacherCount;
+		PreparedStatement stmt = conn.prepareStatement("insert into teachers VALUES (?, ?, ?, ?, ?, ?)");
+		stmt.setInt(1, teacherId);
+		stmt.setString(2, teacher.getNom());
+		stmt.setString(3, teacher.getEtablissement());
+		stmt.setString(4, teacher.getTel());
+		stmt.setString(5, teacher.getEmail());
+		stmt.setString(6, teacher.getMotDePasse());
+		stmt.executeUpdate();
+		stmt.close();
+		return teacherId;
+	}
+
+	public int checkTeacher(String email, String password) throws ClassNotFoundException, SQLException {
+		PreparedStatement stmt = conn.prepareStatement("select id,mot_de_passe from teachers where email=?");
+		stmt.setString(1, email);
+		ResultSet rs = stmt.executeQuery();
+		int check = 0;
+		if (rs.next() && password.equals(rs.getString("mot_de_passe"))) {
+			check = rs.getInt("id");
+		}
+		stmt.close();
+		return check;
+	}
+	public boolean checkLabExiste(String email) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("select id from laboratoires where email=?");
+		stmt.setString(1, email);
+		ResultSet rs = stmt.executeQuery();
+		boolean check = false;
+		if (rs.next()) {
+			check  = true;
+		}
+		stmt.close();		
+		
+		return check;
+	}
+
+	public boolean checkTeacherExiste(String email) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("select id from teachers where email=?");
+		stmt.setString(1, email);
+		ResultSet rs = stmt.executeQuery();
+		boolean check = false;
+		if (rs.next()) {
+			check  = true;
+		}
+		stmt.close();		
+		
+		return check;
 	}
 }

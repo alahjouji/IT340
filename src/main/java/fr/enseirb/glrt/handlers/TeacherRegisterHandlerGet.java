@@ -6,17 +6,17 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
-public class LabRegisterHandlerGet extends AbstractHandler {
+public class TeacherRegisterHandlerGet extends AbstractHandler {
 	private FreeMarkerEngine freeMarkerEngine;
 
-	public LabRegisterHandlerGet(FreeMarkerEngine freeMarkerEngine) {
+	public TeacherRegisterHandlerGet(FreeMarkerEngine freeMarkerEngine) {
 		super();
 		this.freeMarkerEngine = freeMarkerEngine;
 	}
 	
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) {
-		if (sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0")) {
+		if (sessionAtts.get("sessionTeacher") == null || sessionAtts.get("sessionTeacher").equals("0")) {
 			Map<String, String> answer = new HashMap<String, String>();
 			Map<String, Object> attributes = new HashMap<>();
 			if(urlParams.containsKey("warn") && urlParams.get("warn")[0].equals("1")){
@@ -25,11 +25,11 @@ public class LabRegisterHandlerGet extends AbstractHandler {
 			if(urlParams.containsKey("warn") && urlParams.get("warn")[0].equals("2")){
 				attributes.put("warn", "Mots de passe non similaires");
 			}
-			answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/labRegister.ftl")));
+			answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/teacherRegister.ftl")));
 			return answer;
 		}else{
 			Map<String, String> answer = new HashMap<String, String>();
-			answer.put("redirect", "/labs/dashboard");
+			answer.put("redirect", "/teachers/dashboard");
 			answer.put("response", "");
 			return answer ;
 		}

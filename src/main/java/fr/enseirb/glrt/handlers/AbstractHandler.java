@@ -29,6 +29,8 @@ public abstract class AbstractHandler implements Route{
 			response.redirect(answer.get("redirect"));
 		if(answer.containsKey("sessionLab"))
 			request.session().attribute("sessionLab",answer.get("sessionLab"));
+		if(answer.containsKey("sessionTeacher"))
+			request.session().attribute("sessionTeacher",answer.get("sessionTeacher"));
 		return answer.get("response");
 		
 	}
