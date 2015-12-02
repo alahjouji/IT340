@@ -2,16 +2,15 @@ package fr.enseirb.glrt.handlers;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import fr.enseirb.glrt.model.Atelier;
 import fr.enseirb.glrt.model.Model;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
 public class TeacherDashboardHandler extends AbstractHandler {
 	private FreeMarkerEngine freeMarkerEngine;
+	@SuppressWarnings("unused")
 	private Model model;
 	public TeacherDashboardHandler(FreeMarkerEngine freeMarkerEngine, Model model) {
 		this.freeMarkerEngine = freeMarkerEngine;

@@ -1,15 +1,11 @@
 package fr.enseirb.glrt;
 
 import static org.junit.Assert.assertEquals;
-import static spark.Spark.awaitInitialization;
-import static spark.Spark.get;
 import static spark.Spark.stop;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,31 +67,18 @@ public class TestAtelierPage {
 	}
 
 	@Test
-	public void testSparkConnection() throws IOException {
-		get("/atelier", new AtelierHandler(freeMarkerEngine, model));
-		URL url = new URL("http://localhost:4567/atelier?atelierId=1");
-		awaitInitialization();
+	public void testHTMLResponse() throws IOException, ClassNotFoundException, JSONException, SQLException {
+		AtelierHandler handler = new AtelierHandler(freeMarkerEngine, model);
 
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.connect();
-		assertEquals(HttpURLConnection.HTTP_OK, conn.getResponseCode());
-		conn.disconnect();
-	}
-
-	@Test
-	public void testHTMLResponse() throws IOException {
-		get("/atelier", new AtelierHandler(freeMarkerEngine, model));
-		URL url = new URL("http://localhost:4567/atelier?atelierId=1");
-		awaitInitialization();
-
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.connect();
-		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"1"};
+		urlParams.put("atelierId", value );
+		
+		String responseHTML = handler.process(urlParams , sessionAtts).get("response");
 		String expectedHTML = IOUtils.toString(new FileInputStream("src/test/resources/atelier.html"), "UTF-8");
 		assertEquals(responseHTML, expectedHTML);
-		conn.disconnect();
 	}
 
 	@Test
