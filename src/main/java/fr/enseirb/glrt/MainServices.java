@@ -13,6 +13,8 @@ import fr.enseirb.glrt.handlers.LabLoginHandlerGet;
 import fr.enseirb.glrt.handlers.LabLoginHandlerPost;
 import fr.enseirb.glrt.handlers.LabRegisterHandlerGet;
 import fr.enseirb.glrt.handlers.LabRegisterHandlerPost;
+import fr.enseirb.glrt.handlers.TeacherDashboardHandler;
+import fr.enseirb.glrt.handlers.TeacherDisconnectHandler;
 import fr.enseirb.glrt.handlers.TeacherLoginHandlerGet;
 import fr.enseirb.glrt.handlers.TeacherLoginHandlerPost;
 import fr.enseirb.glrt.handlers.TeacherRegisterHandlerGet;
@@ -90,6 +92,8 @@ public class MainServices {
 		post("/teachers/login", new TeacherLoginHandlerPost(model));
 		get("/teachers/register", new TeacherRegisterHandlerGet(freeMarkerEngine));
 		post("/teachers/register", new TeacherRegisterHandlerPost(model));
+		get("/teachers/dashboard", new TeacherDashboardHandler(freeMarkerEngine, model));
+		get("/teachers/disconnect", new TeacherDisconnectHandler());
 
 		awaitInitialization();
 	}

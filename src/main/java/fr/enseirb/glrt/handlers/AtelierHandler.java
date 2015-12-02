@@ -24,36 +24,44 @@ public class AtelierHandler extends AbstractHandler {
 	
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException, JSONException, IOException {
-		
-		boolean b = true;
-	    try { 
-	        Integer.parseInt(urlParams.get("atelierId")[0]);
-	    } catch(NumberFormatException e) { 
-	        b = false; 
-	    } catch(NullPointerException e) {
-	        b = false;
-	    }
-		
-	    if(b){
-	    	b = model.checkAtelierId(Integer.parseInt(urlParams.get("atelierId")[0]));
-	    }
-	    
-		if (!b) {
+
+		if((sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0")) && (sessionAtts.get("sessionTeacher") == null || sessionAtts.get("sessionTeacher").equals("0"))){
+
 			Map<String, String> answer = new HashMap<String, String>();
 			answer.put("redirect", "/");
 			answer.put("response", "");
-			return answer ;
-		} else {
-			Integer atelierId = Integer.parseInt(urlParams.get("atelierId")[0]);
-			Atelier atelier = model.getAtelier(atelierId);
-
-			Map<String, Object> attributes = new HashMap<>();
-			attributes.put("atelier", atelier);
-			attributes.put("latitude", GoogleMaps.getLatLon(atelier.getLieu())[0]);
-			attributes.put("longitude", GoogleMaps.getLatLon(atelier.getLieu())[1]);
-			Map<String, String> answer = new HashMap<String, String>();
-			answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/atelier.ftl")));
-			return answer ;
+			return answer;
+		}else{
+			boolean b = true;
+		    try { 
+		        Integer.parseInt(urlParams.get("atelierId")[0]);
+		    } catch(NumberFormatException e) { 
+		        b = false; 
+		    } catch(NullPointerException e) {
+		        b = false;
+		    }
+			
+		    if(b){
+		    	b = model.checkAtelierId(Integer.parseInt(urlParams.get("atelierId")[0]));
+		    }
+		    
+			if (!b) {
+				Map<String, String> answer = new HashMap<String, String>();
+				answer.put("redirect", "/");
+				answer.put("response", "");
+				return answer ;
+			} else {
+				Integer atelierId = Integer.parseInt(urlParams.get("atelierId")[0]);
+				Atelier atelier = model.getAtelier(atelierId);
+	
+				Map<String, Object> attributes = new HashMap<>();
+				attributes.put("atelier", atelier);
+				attributes.put("latitude", GoogleMaps.getLatLon(atelier.getLieu())[0]);
+				attributes.put("longitude", GoogleMaps.getLatLon(atelier.getLieu())[1]);
+				Map<String, String> answer = new HashMap<String, String>();
+				answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/atelier.ftl")));
+				return answer ;
+			}
 		}
 	}
 
