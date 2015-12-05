@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +55,7 @@ public class TestLabRegisterPost {
 	}
 
 	@Test
-	public void testAlreadyCon() throws IOException, ClassNotFoundException, SQLException {
+	public void testAlreadyCon() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		LabRegisterHandlerPost handler = new LabRegisterHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();

@@ -1,6 +1,7 @@
 package fr.enseirb.glrt.handlers;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ import spark.Route;
 
 public abstract class AbstractHandler implements Route{
 	@Override
-    public Object handle(Request request, Response response) throws ClassNotFoundException, SQLException, JSONException, IOException{
+    public Object handle(Request request, Response response) throws ClassNotFoundException, SQLException, JSONException, IOException, NoSuchAlgorithmException{
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 
 		for (String par : request.queryParams()){
@@ -35,5 +36,5 @@ public abstract class AbstractHandler implements Route{
 		
 	}
 
-	public  abstract Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts ) throws ClassNotFoundException, SQLException, JSONException, IOException;
+	public  abstract Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts ) throws ClassNotFoundException, SQLException, JSONException, IOException, NoSuchAlgorithmException;
 }

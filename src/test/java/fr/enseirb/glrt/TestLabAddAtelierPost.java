@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class TestLabAddAtelierPost {
 	private Model model;
 	
 	@Before
-	public void before() throws IOException, ClassNotFoundException, SQLException {
+	public void before() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		
 		String[] bddArgs = {"jdbc:h2:mem:it340", "", ""};
 		this.model = new Model(bddArgs);

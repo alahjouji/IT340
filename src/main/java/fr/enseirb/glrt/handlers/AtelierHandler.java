@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.json.JSONException;
 
-import fr.enseirb.glrt.GoogleMaps;
+import fr.enseirb.glrt.googleMaps.GoogleMaps;
 import fr.enseirb.glrt.model.Atelier;
 import fr.enseirb.glrt.model.Model;
 import spark.ModelAndView;

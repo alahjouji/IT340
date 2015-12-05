@@ -1,4 +1,4 @@
-package fr.enseirb.glrt;
+package fr.enseirb.glrt.googleMaps;
 
 import java.io.BufferedReader;
 import java.io.IOException;

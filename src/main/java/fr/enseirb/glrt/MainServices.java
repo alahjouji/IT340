@@ -31,6 +31,7 @@ import static spark.Spark.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ import java.util.List;
 public class MainServices {
 	
 	public static Model model;
-	public static void main( String[] args) throws ClassNotFoundException, SQLException, IOException {
+	public static void main( String[] args) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException {
 		String[] bddArgs = {"jdbc:h2:mem:it340", "user", "password"};
 		model = new Model(bddArgs);
 		model.createLabTable();

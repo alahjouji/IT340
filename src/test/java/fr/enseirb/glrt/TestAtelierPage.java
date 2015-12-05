@@ -6,6 +6,7 @@ import static spark.Spark.stop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class TestAtelierPage {
 	private FreeMarkerEngine freeMarkerEngine;
 
 	@Before
-	public void before() throws IOException, ClassNotFoundException, SQLException {
+	public void before() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		
 		freeMarkerEngine = new FreeMarkerEngine();
 		Configuration freeMarkerConfiguration = new Configuration();

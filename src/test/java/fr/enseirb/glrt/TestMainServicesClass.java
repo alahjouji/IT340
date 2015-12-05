@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import org.apache.commons.io.IOUtils;
@@ -16,7 +17,7 @@ import org.junit.Test;
 public class TestMainServicesClass {
 
 	@Test
-	public void test() throws ClassNotFoundException, SQLException, IOException {
+	public void test() throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException {
 		MainServices.main(null);
 		URL url = new URL("http://localhost:4567");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();

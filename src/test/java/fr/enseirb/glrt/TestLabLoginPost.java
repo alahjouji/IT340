@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class TestLabLoginPost {
 	private Model model;
 	
 	@Before
-	public void before() throws IOException, ClassNotFoundException, SQLException {
+	public void before() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		
 		String[] bddArgs= {"jdbc:h2:mem:it340", "", ""};
 		this.model = new Model(bddArgs);
@@ -73,7 +74,7 @@ public class TestLabLoginPost {
 	}
 
 	@Test
-	public void testAlreadyCon() throws IOException, ClassNotFoundException, SQLException {
+	public void testAlreadyCon() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		LabLoginHandlerPost handler = new LabLoginHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();

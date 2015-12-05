@@ -1,5 +1,6 @@
 package fr.enseirb.glrt.handlers;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ public class TeacherLoginHandlerPost extends AbstractHandler{
 		this.model = model;
 	}
 	@Override
-	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException{
+	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException{
 		if (sessionAtts.get("sessionTeacher") == null || sessionAtts.get("sessionTeacher").equals("0")) {
 			Integer id = model.checkTeacher(urlParams.get("data[Teacher][email]")[0], urlParams.get("data[Teacher][password]")[0]);
 			if(id!=0){

@@ -1,5 +1,7 @@
 package fr.enseirb.glrt.model;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -48,7 +50,19 @@ public class Model {
 		stmt.close();
 	}
 
-	public int createLab(Laboratoire lab) throws ClassNotFoundException, SQLException {
+	public int createLab(Laboratoire lab) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+		
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(lab.getMotDePasse().getBytes());
+        
+        byte byteData[] = md.digest();
+ 
+        StringBuffer password = new StringBuffer();
+        for (int i = 0; i < byteData.length; i++) {
+         password.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+     
+        
 		labCount++;
 		int labId = labCount;
 		PreparedStatement stmt = conn.prepareStatement("insert into laboratoires VALUES (?, ?, ?, ?, ?, ?)");
@@ -57,18 +71,29 @@ public class Model {
 		stmt.setString(3, lab.getResponsable());
 		stmt.setString(4, lab.getTel());
 		stmt.setString(5, lab.getEmail());
-		stmt.setString(6, lab.getMotDePasse());
+		stmt.setString(6, password.toString());
 		stmt.executeUpdate();
 		stmt.close();
 		return labId;
 	}
 
-	public int checkLab(String email, String password) throws ClassNotFoundException, SQLException {
+	public int checkLab(String email, String mot_de_passe) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+		
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(mot_de_passe.getBytes());
+        
+        byte byteData[] = md.digest();
+ 
+        StringBuffer password = new StringBuffer();
+        for (int i = 0; i < byteData.length; i++) {
+         password.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        
 		PreparedStatement stmt = conn.prepareStatement("select id,mot_de_passe from laboratoires where email=?");
 		stmt.setString(1, email);
 		ResultSet rs = stmt.executeQuery();
 		int check = 0;
-		if (rs.next() && password.equals(rs.getString("mot_de_passe"))) {
+		if (rs.next() && password.toString().equals(rs.getString("mot_de_passe"))) {
 			check = rs.getInt("id");
 		}
 		stmt.close();
@@ -301,7 +326,16 @@ public class Model {
 		stmt.close();
 	}
 
-	public int createTeacher(Teacher teacher) throws ClassNotFoundException, SQLException {
+	public int createTeacher(Teacher teacher) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(teacher.getMotDePasse().getBytes());
+        
+        byte byteData[] = md.digest();
+ 
+        StringBuffer password = new StringBuffer();
+        for (int i = 0; i < byteData.length; i++) {
+         password.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
 		teacherCount++;
 		int teacherId = teacherCount;
 		PreparedStatement stmt = conn.prepareStatement("insert into teachers VALUES (?, ?, ?, ?, ?, ?)");
@@ -310,18 +344,27 @@ public class Model {
 		stmt.setString(3, teacher.getEtablissement());
 		stmt.setString(4, teacher.getTel());
 		stmt.setString(5, teacher.getEmail());
-		stmt.setString(6, teacher.getMotDePasse());
+		stmt.setString(6, password.toString());
 		stmt.executeUpdate();
 		stmt.close();
 		return teacherId;
 	}
 
-	public int checkTeacher(String email, String password) throws ClassNotFoundException, SQLException {
+	public int checkTeacher(String email, String mot_de_passe) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(mot_de_passe.getBytes());
+        
+        byte byteData[] = md.digest();
+ 
+        StringBuffer password = new StringBuffer();
+        for (int i = 0; i < byteData.length; i++) {
+         password.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
 		PreparedStatement stmt = conn.prepareStatement("select id,mot_de_passe from teachers where email=?");
 		stmt.setString(1, email);
 		ResultSet rs = stmt.executeQuery();
 		int check = 0;
-		if (rs.next() && password.equals(rs.getString("mot_de_passe"))) {
+		if (rs.next() && password.toString().equals(rs.getString("mot_de_passe"))) {
 			check = rs.getInt("id");
 		}
 		stmt.close();

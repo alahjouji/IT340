@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class TestLabAddAtelierPageGet {
 	private FreeMarkerEngine freeMarkerEngine;
 	
 	@Before
-	public void before() throws IOException, ClassNotFoundException, SQLException {
+	public void before() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		freeMarkerEngine = new FreeMarkerEngine();
 		Configuration freeMarkerConfiguration = new Configuration();
 		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));
