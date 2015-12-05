@@ -280,15 +280,18 @@ public class Model {
 	}
 	
 	public void deleteAtelier(int atelierId) throws SQLException{
-		PreparedStatement stmt = conn.prepareStatement("delete from ateliers where id=?");
-		stmt.setInt(1, atelierId);
-		stmt.executeUpdate();
-		stmt.close();
 		
 		PreparedStatement stmt1 = conn.prepareStatement("delete from seances where atelier_id=?");
 		stmt1.setInt(1, atelierId);
 		stmt1.executeUpdate();
 		stmt1.close();
+		
+		PreparedStatement stmt = conn.prepareStatement("delete from ateliers where id=?");
+		stmt.setInt(1, atelierId);
+		stmt.executeUpdate();
+		stmt.close();
+		
+
 	}
 	
 	public void editAtelier(Atelier atelier) throws SQLException{
