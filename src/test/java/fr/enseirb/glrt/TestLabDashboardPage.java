@@ -43,6 +43,7 @@ public class TestLabDashboardPage {
 		this.model = new Model(bddArgs);
 		model.createLabTable();
 		model.createAtelierTable();
+		model.createSeanceTable();
 
 		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab );

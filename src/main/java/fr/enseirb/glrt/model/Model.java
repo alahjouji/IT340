@@ -15,12 +15,14 @@ public class Model {
 	private int labCount;
 	private int atelierCount;
 	private int teacherCount;
+	private int seanceCount;
 	private Connection conn;
 
 	public Model(String[] bddArgs) throws ClassNotFoundException, SQLException {
 		this.labCount = 0;
 		this.atelierCount = 0;
 		this.teacherCount = 0;
+		this.seanceCount = 0;
 		Class.forName("org.h2.Driver");
 		this.conn = DriverManager.getConnection(bddArgs[0], bddArgs[1], bddArgs[2]);
 	}
@@ -45,7 +47,14 @@ public class Model {
 	
 	public void createAtelierTable() throws ClassNotFoundException, SQLException {
 		PreparedStatement stmt = conn.prepareStatement(
-				"CREATE TABLE Ateliers (id int primary key, lab_id int not null references Laboratoires(id), titre varchar(255) not null, disciplines array not null, type varchar(255) not null, seances array not null, inscrits array not null, lieu varchar(255) not null, duree int not null, capacite int not null, resume varchar(255) not null, animateurs array not null, publics array not null);");
+				"CREATE TABLE Ateliers (id int primary key, lab_id int not null references Laboratoires(id), titre varchar(255) not null, disciplines array not null, type varchar(255) not null, lieu varchar(255) not null, duree int not null, capacite int not null, resume varchar(255) not null, animateurs array not null, publics array not null);");
+		stmt.executeUpdate();
+		stmt.close();
+	}
+	
+	public void createSeanceTable() throws ClassNotFoundException, SQLException {
+		PreparedStatement stmt = conn.prepareStatement(
+				"CREATE TABLE Seances (id int primary key, atelier_id int not null references Ateliers(id), nom varchar(255) not null, inscrits int not null);");
 		stmt.executeUpdate();
 		stmt.close();
 	}
@@ -104,7 +113,7 @@ public class Model {
 		atelierCount++;
 		int id = atelierCount;
 		PreparedStatement stmt = conn
-				.prepareStatement("insert into ateliers VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				.prepareStatement("insert into ateliers VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		stmt.setInt(1, id);
 		stmt.setInt(2, atelier.getLabId());
 		stmt.setString(3, atelier.getTitre());
@@ -112,44 +121,43 @@ public class Model {
 		String[] arrayDisciplines = new String[atelier.getDisciplines().size()];
 		int i = 0;
 		for (String t : atelier.getDisciplines()) {
-			arrayDisciplines[i] = t.toString();
+			arrayDisciplines[i] = t;
 			i++;
 		}
 		stmt.setObject(4, arrayDisciplines);
 		stmt.setString(5, atelier.getType());
 
-		String[] arraySeances = new String[atelier.getSeances().size()];
-		int j = 0;
-		for (Seance t : atelier.getSeances()) {
-			arraySeances[j] = t.getSeance().toString();
-			j++;
-		}
-		stmt.setObject(6, arraySeances);
-
-		String[] arrayInscrits = new String[atelier.getSeances().size()];
-		int l = 0;
-		for (Seance t : atelier.getSeances()) {
-			arrayInscrits[l] = t.getInscrit().toString();
-			l++;
-		}
-		stmt.setObject(7, arrayInscrits);
-
-		stmt.setString(8, atelier.getLieu());
-		stmt.setInt(9, atelier.getDuree());
-		stmt.setInt(10, atelier.getCapacite());
-		stmt.setString(11, atelier.getResume());
+		stmt.setString(6, atelier.getLieu());
+		stmt.setInt(7, atelier.getDuree());
+		stmt.setInt(8, atelier.getCapacite());
+		stmt.setString(9, atelier.getResume());
 		String[] arrayAnimateurs = atelier.getAnimateurs().toArray(new String[atelier.getAnimateurs().size()]);
-		stmt.setObject(12, arrayAnimateurs);
+		stmt.setObject(10, arrayAnimateurs);
 
 		String[] arrayPublics = new String[atelier.getPublics().size()];
 		int k = 0;
 		for (String t : atelier.getPublics()) {
-			arrayPublics[k] = t.toString();
+			arrayPublics[k] = t;
 			k++;
 		}
-		stmt.setObject(13, arrayPublics);
+		stmt.setObject(11, arrayPublics);
+		
 		stmt.executeUpdate();
 		stmt.close();
+		
+		for (Seance t : atelier.getSeances()) {
+			seanceCount++;
+			int sId = seanceCount;
+			PreparedStatement stmt1 = conn
+					.prepareStatement("insert into seances VALUES (?, ?, ?, ?)");
+			stmt1.setInt(1, sId);
+			stmt1.setInt(2, id);
+			stmt1.setString(3, t.getNom());
+			stmt1.setInt(4, t.getInscrit());
+			stmt1.executeUpdate();
+			stmt1.close();
+		}
+
 		return id;
 	}
 
@@ -199,17 +207,6 @@ public class Model {
 			}
 			atelier.setDisciplines(disc);
 
-			List<Seance> seances = new ArrayList<Seance>();
-			
-			int i;
-			for (i = 0; i < ((Object[]) rs.getArray("seances").getArray()).length ; i++) {
-				String jour = (String) ((Object[]) rs.getArray("seances").getArray())[i];
-				Integer ins = Integer.parseInt((String) ((Object[]) rs.getArray("inscrits").getArray())[i]);
-				Seance seance = new Seance(jour,ins);
-				seances.add(seance );
-			}
-			atelier.setSeances(seances);
-
 			
 			List<String> publics = new ArrayList<String>();
 
@@ -238,6 +235,18 @@ public class Model {
 			rs1.close();
 		}
 		stmt.close();
+		
+		List<Seance> seances = new ArrayList<Seance>();
+
+		PreparedStatement stmt2= conn.prepareStatement("select * from seances where atelier_id=?");
+		stmt2.setInt(1, atelierId);
+		ResultSet rs2 = stmt2.executeQuery();
+		while (rs2.next()) {
+			Seance seance = new Seance(rs2.getString("nom"), rs2.getInt("inscrits"));
+			seances.add(seance );
+		}
+		atelier.setSeances(seances);
+		stmt2.close();
 		return atelier;
 	}
 	
@@ -275,55 +284,58 @@ public class Model {
 		stmt.setInt(1, atelierId);
 		stmt.executeUpdate();
 		stmt.close();
+		
+		PreparedStatement stmt1 = conn.prepareStatement("delete from seances where atelier_id=?");
+		stmt1.setInt(1, atelierId);
+		stmt1.executeUpdate();
+		stmt1.close();
 	}
 	
 	public void editAtelier(Atelier atelier) throws SQLException{
 		PreparedStatement stmt = conn
-				.prepareStatement("update ateliers VALUES set titre=?, disciplines=?, type=?, seances=?, inscrits=?, lieu=?, duree=?, capacite=?, resume=?, animateurs=?, publics=? where id=?");
+				.prepareStatement("update ateliers VALUES set titre=?, disciplines=?, type=?, lieu=?, duree=?, capacite=?, resume=?, animateurs=?, publics=? where id=?");
 		stmt.setString(1, atelier.getTitre());
 
 		String[] arrayDisciplines = new String[atelier.getDisciplines().size()];
 		int i = 0;
 		for (String t : atelier.getDisciplines()) {
-			arrayDisciplines[i] = t.toString();
+			arrayDisciplines[i] = t;
 			i++;
 		}
 		stmt.setObject(2, arrayDisciplines);
 		stmt.setString(3, atelier.getType());
 
-		String[] arraySeances = new String[atelier.getSeances().size()];
-		int j = 0;
-		for (Seance t : atelier.getSeances()) {
-			arraySeances[j] = t.getSeance().toString();
-			j++;
-		}
-		stmt.setObject(4, arraySeances);
 
-		String[] arrayInscrits = new String[atelier.getSeances().size()];
-		int l = 0;
-		for (Seance t : atelier.getSeances()) {
-			arrayInscrits[l] = t.getInscrit().toString();
-			l++;
-		}
-		stmt.setObject(5, arrayInscrits);
-
-		stmt.setString(6, atelier.getLieu());
-		stmt.setInt(7, atelier.getDuree());
-		stmt.setInt(8, atelier.getCapacite());
-		stmt.setString(9, atelier.getResume());
+		stmt.setString(4, atelier.getLieu());
+		stmt.setInt(5, atelier.getDuree());
+		stmt.setInt(6, atelier.getCapacite());
+		stmt.setString(7, atelier.getResume());
 		String[] arrayAnimateurs = atelier.getAnimateurs().toArray(new String[atelier.getAnimateurs().size()]);
-		stmt.setObject(10, arrayAnimateurs);
+		stmt.setObject(8, arrayAnimateurs);
 
 		String[] arrayPublics = new String[atelier.getPublics().size()];
 		int k = 0;
 		for (String t : atelier.getPublics()) {
-			arrayPublics[k] = t.toString();
+			arrayPublics[k] = t;
 			k++;
 		}
-		stmt.setObject(11, arrayPublics);
-		stmt.setInt(12, atelier.getId());
+		stmt.setObject(9, arrayPublics);
+		stmt.setInt(10, atelier.getId());
 		stmt.executeUpdate();
 		stmt.close();
+		
+		for (Seance t : atelier.getSeances()) {
+			seanceCount++;
+			int sId = seanceCount;
+			PreparedStatement stmt1 = conn
+					.prepareStatement("insert into seances VALUES (?, ?, ?, ?)");
+			stmt1.setInt(1, sId);
+			stmt1.setInt(2, atelier.getId());
+			stmt1.setString(3, t.getNom());
+			stmt1.setInt(4, t.getInscrit());
+			stmt1.executeUpdate();
+			stmt1.close();
+		}
 	}
 
 	public int createTeacher(Teacher teacher) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {

@@ -31,6 +31,9 @@ public class TestLabRegisterPost {
 		this.model = new Model(bddArgs);
 		model.createLabTable();
 		model.createAtelierTable();
+		model.createSeanceTable();
+
+		
 		post("/labs/register", new LabRegisterHandlerPost(model));
 		awaitInitialization();
 

@@ -107,7 +107,7 @@
 <#list atelier.seances as seance>
 
 				<tr>
-					<td>${seance.seance}</td>
+					<td>${seance.nom}</td>
 					<td style="text-align: center">${seance.inscrit}</td>
 					<td style="text-align: center">${atelier.capacite}</td>
 				</tr>

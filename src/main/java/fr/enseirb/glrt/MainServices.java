@@ -44,6 +44,7 @@ public class MainServices {
 		model = new Model(bddArgs);
 		model.createLabTable();
 		model.createAtelierTable();
+		model.createSeanceTable();
 		model.createTeacherTable();
 		
 		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");

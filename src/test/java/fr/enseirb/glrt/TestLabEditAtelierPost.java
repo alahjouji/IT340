@@ -33,6 +33,7 @@ public class TestLabEditAtelierPost {
 		this.model = new Model(bddArgs);
 		model.createLabTable();
 		model.createAtelierTable();
+		model.createSeanceTable();
 
 		Laboratoire lab = new Laboratoire("aaa", "aaa", "06666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab);		

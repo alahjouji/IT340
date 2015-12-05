@@ -31,6 +31,8 @@ public class TestLabLoginPost {
 		this.model = new Model(bddArgs);
 		model.createLabTable();
 		model.createAtelierTable();
+		model.createSeanceTable();
+
 		Laboratoire lab = new Laboratoire("aaa", "aaa", "0666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab);
 		post("/labs/login", new LabLoginHandlerPost(model));

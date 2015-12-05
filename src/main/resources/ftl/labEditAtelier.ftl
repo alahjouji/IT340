@@ -169,7 +169,7 @@
 								<select name="data[Atelier][seances]" role="form" class="form-control input-xxlarge" multiple="multiple" id="Seances" required="required">
 								<#assign x = []>
 								<#list atelier.seances as seance>
-									<#assign x = x+[seance.seance]>
+									<#assign x = x+[seance.nom]>
 								</#list>
 								<#if x?seq_contains("Lundi matin")> 
 									<option value="01" selected>Lundi matin</option>
