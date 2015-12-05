@@ -15,11 +15,14 @@ import fr.enseirb.glrt.handlers.LabRegisterHandlerGet;
 import fr.enseirb.glrt.handlers.LabRegisterHandlerPost;
 import fr.enseirb.glrt.handlers.TeacherDashboardHandler;
 import fr.enseirb.glrt.handlers.TeacherDisconnectHandler;
+import fr.enseirb.glrt.handlers.TeacherInscrireAtelierHandler;
+import fr.enseirb.glrt.handlers.TeacherListAtelierHandler;
 import fr.enseirb.glrt.handlers.TeacherLoginHandlerGet;
 import fr.enseirb.glrt.handlers.TeacherLoginHandlerPost;
 import fr.enseirb.glrt.handlers.TeacherRegisterHandlerGet;
 import fr.enseirb.glrt.handlers.TeacherRegisterHandlerPost;
 import fr.enseirb.glrt.model.Atelier;
+import fr.enseirb.glrt.model.Inscription;
 import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
 import fr.enseirb.glrt.model.Seance;
@@ -46,10 +49,11 @@ public class MainServices {
 		model.createAtelierTable();
 		model.createSeanceTable();
 		model.createTeacherTable();
+		model.createInscriptionTable();
 		
 		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab );
-		Teacher teacher = new Teacher("Bob Bob", "Enseirb", "077777", "bbb@bbb.bbb", "bbb");
+		Teacher teacher = new Teacher("Bob Bob", "Enseirb", "077777", "bbb@bbb.bbb", "bbb",new ArrayList<Inscription>());
 		model.createTeacher(teacher );
 		
 		List<String> list = new ArrayList<String>();
@@ -96,7 +100,8 @@ public class MainServices {
 		post("/teachers/register", new TeacherRegisterHandlerPost(model));
 		get("/teachers/dashboard", new TeacherDashboardHandler(freeMarkerEngine, model));
 		get("/teachers/disconnect", new TeacherDisconnectHandler());
-
+		get("/teachers/listAteliers", new TeacherListAtelierHandler(freeMarkerEngine, model));
+		get("/teachers/sinscrireAtelier", new TeacherInscrireAtelierHandler(model));
 		awaitInitialization();
 	}
 }

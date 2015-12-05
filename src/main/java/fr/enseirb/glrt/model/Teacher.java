@@ -1,18 +1,22 @@
 package fr.enseirb.glrt.model;
 
+import java.util.List;
+
 public class Teacher {
 	private String nom;
 	private String etablissement;
 	private String tel;
 	private String email;
 	private String motDePasse;
+	private List<Inscription> inscriptions;
 
-	public Teacher(String nom, String etablissement, String tel, String email, String motDePasse) {
+	public Teacher(String nom, String etablissement, String tel, String email, String motDePasse, List<Inscription> inscriptions) {
 		this.setNom(nom);
 		this.setEtablissement(etablissement);
 		this.setTel(tel);
 		this.setEmail(email);
 		this.setMotDePasse(motDePasse);
+		this.setInscriptions(inscriptions);
 	}
 
 	public String getNom() {
@@ -53,5 +57,13 @@ public class Teacher {
 
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
+	}
+
+	public List<Inscription> getInscriptions() {
+		return inscriptions;
+	}
+
+	public void setInscriptions(List<Inscription> inscriptions) {
+		this.inscriptions = inscriptions;
 	}
 }

@@ -2,9 +2,11 @@ package fr.enseirb.glrt.handlers;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.enseirb.glrt.model.Inscription;
 import fr.enseirb.glrt.model.Model;
 import fr.enseirb.glrt.model.Teacher;
 
@@ -35,7 +37,7 @@ public class TeacherRegisterHandlerPost extends AbstractHandler {
 					Map<String, String> answer = new HashMap<String, String>();
 					Teacher teacher = new Teacher(urlParams.get("data[Teacher][nom]")[0], urlParams.get("data[Teacher][etab]")[0],
 							urlParams.get("data[Teacher][tel]")[0], urlParams.get("data[Teacher][email]")[0],
-							urlParams.get("data[Teacher][password]")[0]);
+							urlParams.get("data[Teacher][password]")[0], new ArrayList<Inscription>());
 					model.createTeacher(teacher);
 					answer.put("redirect", "/teachers/login?good=1");
 					answer.put("response", "");

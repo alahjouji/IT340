@@ -45,6 +45,9 @@ public class AtelierHandler extends AbstractHandler {
 		    	b = model.checkAtelierId(Integer.parseInt(urlParams.get("atelierId")[0]));
 		    }
 		    
+		    if(b && sessionAtts.get("sessionLab")!=null && (sessionAtts.get("sessionTeacher")==null || sessionAtts.get("sessionTeacher").equals("0"))){
+		    	b = model.atelierOfLab(Integer.parseInt(urlParams.get("atelierId")[0]), Integer.parseInt(sessionAtts.get("sessionLab")));
+		    }
 			if (!b) {
 				Map<String, String> answer = new HashMap<String, String>();
 				answer.put("redirect", "/");

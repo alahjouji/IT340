@@ -16,6 +16,7 @@ public class Model {
 	private int atelierCount;
 	private int teacherCount;
 	private int seanceCount;
+	private int inscriptionCount;
 	private Connection conn;
 
 	public Model(String[] bddArgs) throws ClassNotFoundException, SQLException {
@@ -23,6 +24,7 @@ public class Model {
 		this.atelierCount = 0;
 		this.teacherCount = 0;
 		this.seanceCount = 0;
+		this.inscriptionCount = 0;
 		Class.forName("org.h2.Driver");
 		this.conn = DriverManager.getConnection(bddArgs[0], bddArgs[1], bddArgs[2]);
 	}
@@ -59,6 +61,13 @@ public class Model {
 		stmt.close();
 	}
 
+	public void createInscriptionTable() throws ClassNotFoundException, SQLException {
+		PreparedStatement stmt = conn.prepareStatement(
+				"CREATE TABLE Inscriptions (id int primary key, teacher_id int not null references Teachers(id), atelier_id int not null references Ateliers(id), validated boolean not null);");
+		stmt.executeUpdate();
+		stmt.close();
+	}
+	
 	public int createLab(Laboratoire lab) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -184,6 +193,28 @@ public class Model {
 		return ateliers;
 	}
 
+	public List<Atelier> getAllAteliers() throws ClassNotFoundException, SQLException {
+		List<Atelier> ateliers = new ArrayList<Atelier>();
+		PreparedStatement stmt = conn.prepareStatement("select id,titre,type,disciplines from ateliers");
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			Atelier atelier = new Atelier();
+			atelier.setId(Integer.parseInt(rs.getString("id")));
+			atelier.setTitre(rs.getString("titre"));
+			atelier.setType(rs.getString("type"));
+			List<String> disc = new ArrayList<String>();
+
+			for (Object obj : (Object[]) rs.getArray("disciplines").getArray()) {
+				String dis = (String) obj;
+				disc.add(dis);
+			}
+			atelier.setDisciplines(disc);
+			ateliers.add(atelier);
+		}
+		stmt.close();
+		return ateliers;
+	}
+	
 	public Atelier getAtelier(Integer atelierId) throws SQLException {
 		Atelier atelier = new Atelier();
 		PreparedStatement stmt = conn.prepareStatement("select * from ateliers where id=?");
@@ -409,5 +440,43 @@ public class Model {
 		stmt.close();		
 		
 		return check;
+	}
+
+	public List<Inscription> getTeacherInscriptionsValidated(String teacherId) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("select * from inscriptions where teacher_id=? and validated=true");
+		stmt.setInt(1, Integer.parseInt(teacherId));
+		ResultSet rs = stmt.executeQuery();
+		List<Inscription> inscriptions = new ArrayList<Inscription>();
+		while(rs.next()){
+			Inscription ins = new Inscription(rs.getInt("atelier_id"), rs.getBoolean("validated"));
+			inscriptions.add(ins);
+		}
+		stmt.close();
+		return inscriptions;
+	}
+
+	public List<Inscription> getTeacherInscriptionsWaiting(String teacherId) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("select * from inscriptions where teacher_id=? and validated=false");
+		stmt.setInt(1, Integer.parseInt(teacherId));
+		ResultSet rs = stmt.executeQuery();
+		List<Inscription> inscriptions = new ArrayList<Inscription>();
+		while(rs.next()){
+			Inscription ins = new Inscription(rs.getInt("atelier_id"), rs.getBoolean("validated"));
+			inscriptions.add(ins);
+		}
+		stmt.close();
+		return inscriptions;
+	}
+	
+	public void teacherInscrireAtelier(String teacherId, String atelierId) throws SQLException {
+		inscriptionCount++;
+		int sId = inscriptionCount;
+		PreparedStatement stmt1 = conn
+				.prepareStatement("insert into inscriptions VALUES (?, ?, ?, false)");
+		stmt1.setInt(1, sId);
+		stmt1.setInt(2, Integer.parseInt(teacherId));
+		stmt1.setInt(3, Integer.parseInt(atelierId));
+		stmt1.executeUpdate();
+		stmt1.close();
 	}
 }
