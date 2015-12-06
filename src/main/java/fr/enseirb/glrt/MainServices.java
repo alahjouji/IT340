@@ -44,10 +44,9 @@ import java.util.List;
 
 public class MainServices {
 	
-	public static Model model;
 	public static void main( String[] args) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException {
 		String[] bddArgs = {"jdbc:h2:mem:it340", "user", "password"};
-		model = new Model(bddArgs);
+		Model model = new Model(bddArgs);
 		model.createLabTable();
 		model.createAtelierTable();
 		model.createSeanceTable();

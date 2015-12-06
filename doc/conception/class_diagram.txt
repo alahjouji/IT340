@@ -1,46 +1,270 @@
 @startuml
 
-package java.model {
+
+package fr.enseirb.glrt.model {
 	class Atelier {
-		- UUID idLaboratoire
-		- UUID idAtelier
+		- int id
+		- int labId
+		- String labName
 		- String titre
-		- String theme
+		- Lit<String> disciplines
 		- String type
-		- Date date
+		- List<Seance> seances
 		- String lieu
 		- int duree
 		- int capacite
-		- boolean reservation
-		- String description
-		- String animateur
-		- String audience
-		- List<String> disciplines
+		- String resume
+		- List<String> animateurs
+		- List<String> publics
+		+ Atelier(int lab_id, String titre, List<String> disciplines, String type, List<Seance> seances, String lieu, int duree, int capacite, String resume, List<String> animateurs, List<String> publics)
+	}
+
+	class Seance {
+		- String nom
+		- Integer inscrit
+		+ Seance(String jour, Integer ins)
+	}
+
+	class Inscription {
+		- int id
+		- int teacherId
+		- String teacherName
+		- int atelierId
+		- String atelierName
+		- boolean validated
+		- String seance
+		- String pub
+		- int nombre
+		+ Inscription(int id, int teacherId, int atelierId, boolean validated, String seance, String pub, int nombre)
+	}
+
+	class Teacher {
+		- String nom
+		- String etablissement
+		- String tel
+		- String email
+		- String motDePasse 
+		- List<Inscription> inscriptions
+		+ Teacher(String nom, String etablissement, String tel, String email, String motDePasse, List<Inscription> inscriptions)
 	}
 
 	class Laboratoire {
-		- UUID idLaboratoire
 		- String nom
-		- String contact
+		- String responsable
+		- String tel
 		- String email
+		- String motDePasse		
+		+ Laboratoire(String nom, String responsable, String tel, String email, String motDePasse)
 	}
 
-    class Sql2oModel << (S,red) Singleton >>{
-	    - Sql2o sql2o
-	    - UuidGenerator uuidGenerator
-	    + Sql2oModel(Sql2o sql2o)
-    	+ UUID createLab(String nom, String contact, String email, String motDePasse)
-    	+ boolean registerLab(String email, String motDePasse)
-    	+ UUID createAtelier(UUID idLaboratoire, String titre, String theme, String type, Date date, String lieu, int duree, int capacite, boolean reservation, String description, String animateur, String audience, List<String> disciplines)
-    	+ List<Atelier> getLabAteliers(UUID lab)
-	    + void updateAtelier(Atelier atelier)
-	    + void deleteAtelier(UUID atelier)	
-    }
+    class Model << (S,red) Singleton >>{
+    	- int labCount
+		- int atelierCount
+		- int teacherCount
+		- int seanceCount
+		- int inscriptionCount
+		- Connection conn
+		+ Model(String[] bddArgs)
+		+ void closeBDDConnection()
+		+ void createLabTable()
+		+ void createTeacherTable()
+		+ void createAtelierTable()
+		+ void createSeanceTable()
+		+ void createInscriptionTable()
+		+ int createLab(Laboratoire lab)
+		+ int checkLab(String email, String mot_de_passe)
+		+ int createAtelier(Atelier atelier)
+		+ List<Atelier> getAteliers(Integer labId)
+		+ List<Atelier> getAllAteliers()
+		+ Atelier getAtelier(Integer atelierId)
+		+ boolean checkAtelierId(int id)
+		+ boolean atelierOfLab(int atelierId, int labId)
+		+ void deleteAtelier(int atelierId)
+		+ void editAtelier(Atelier atelier)
+		+ int createTeacher(Teacher teacher)
+		+ int checkTeacher(String email, String mot_de_passe)
+		+ boolean checkLabExiste(String email)
+		+ boolean checkTeacherExiste(String email)
+		+ List<Inscription> getTeacherInscriptionsValidated(String teacherId)
+		+ List<Inscription> getTeacherInscriptionsWaiting(String teacherId)
+		+ void teacherInscrireAtelier(String teacherId, String atelierId, String seance, String pub, int nombre)
+		+ String getAtelierNameFromId(int atelierId)
+		+ String getTeacherNameFromId(int atelierId)
+		+ List<Inscription> getLabInscriptionsValidated(int labId)
+		+ List<Inscription> getLabInscriptionsWaiting(int labId)
+		+ void deleteInscription(int insId)
+		+ boolean inscriptionOfLab(int insId, int labId)
+		+ Inscription getInscription(int insId)
+		+ void validateInscription(int insId)
+   }
 }
 
-package java {
+package fr.enseirb.glrt.googleMaps {
+	class GoogleMaps {
+		- {static} String readAll(Reader rd)
+		- {static} JSONObject readJsonFromUrl(String url)
+		+ {static} String[] getLatLon(String locationAddress)		
+	}
+}
+
+package fr.enseirb.glrt {
 	class MainServices {
 		+ {static} void main(String[] args)
+	}
+}
+
+
+package fr.enseirb.glrt.handlers {
+
+	abstract class AbstractHandler {
+		+ Object handle(Request request, Response response)
+		+ {abstract} Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts )
+	}
+
+	class AtelierHandler {
+		- FreeMarkerEngine freeMarkerEngine
+		- Model model
+		+ AtelierHandler(FreeMarkerEngine freeMarkerEngine, Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}
+
+	class IndexHandler {
+		- FreeMarkerEngine freeMarkerEngine
+		+ IndexHandler(FreeMarkerEngine freeMarkerEngine)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabAddAtelierHandlerGet {
+		- FreeMarkerEngine freeMarkerEngine
+		+ LabAddAtelierHandlerGet(FreeMarkerEngine freeMarkerEngine)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabAddAtelierHandlerPost {
+		- Model model
+		+ AtelierHandler(Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabDashboardHandler {
+		- FreeMarkerEngine freeMarkerEngine
+		- Model model
+		+ LabDashboardHandler(FreeMarkerEngine freeMarkerEngine, Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabDeclineInsHandler {
+		- Model model
+		+ LabDeclineInsHandler(Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}
+
+	class LabDeleteAtelierHandler {
+		- Model model
+		+ LabDeleteAtelierHandler(Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabDisconnectHandler {
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabEditAtelierHandlerGet {
+		- FreeMarkerEngine freeMarkerEngine
+		- Model model
+		+ LabEditAtelierHandlerGet(FreeMarkerEngine freeMarkerEngine, Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabEditAtelierHandlerPost {
+		- Model model
+		+ LabEditAtelierHandlerPost(Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabLoginHandlerGet {
+		- FreeMarkerEngine freeMarkerEngine
+		+ LabLoginHandlerGet(FreeMarkerEngine freeMarkerEngine)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabLoginHandlerPost {
+		- Model model
+		+ LabLoginHandlerPost(Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabRegisterHandlerGet {
+		- FreeMarkerEngine freeMarkerEngine
+		+ LabRegisterHandlerGet(FreeMarkerEngine freeMarkerEngine)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabRegisterHandlerPost {
+		- Model model
+		+ LabRegisterHandlerPost(Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class LabValidateInsHandler {
+		- Model model
+		+ LabValidateInsHandler(Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class TeacherDashboardHandler {
+		- FreeMarkerEngine freeMarkerEngine
+		- Model model
+		+ TeacherDashboardHandler(FreeMarkerEngine freeMarkerEngine, Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class TeacherDisconnectHandler {
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class TeacherInscrireAtelierHandlerGet {
+		- FreeMarkerEngine freeMarkerEngine
+		- Model model
+		+ TeacherInscrireAtelierHandlerGet(FreeMarkerEngine freeMarkerEngine, Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class TeacherInscrireAtelierHandlerPost {
+		- Model model
+		+ TeacherInscrireAtelierHandlerPost(Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class TeacherListAtelierHandler {
+		- FreeMarkerEngine freeMarkerEngine
+		- Model model
+		+ TeacherListAtelierHandler(FreeMarkerEngine freeMarkerEngine, Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class TeacherLoginHandlerGet {
+		- FreeMarkerEngine freeMarkerEngine
+		+ TeacherLoginHandlerGet(FreeMarkerEngine freeMarkerEnginel)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class TeacherLoginHandlerPost {
+		- Model model
+		+ TeacherLoginHandlerPost(Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class TeacherRegisterHandlerGet {
+		- FreeMarkerEngine freeMarkerEngine
+		+ TeacherRegisterHandlerGet(FreeMarkerEngine freeMarkerEngine)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
+	}	
+
+	class TeacherRegisterHandlerPost {
+		- Model model
+		+ TeacherRegisterHandlerPost(Model model)
+		+ Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
 	}
 }
 
@@ -53,66 +277,85 @@ class Spark{
 Interface Route {
 }
 
-package Handlers {
-	class HomepageHandler {
-
-	}
-
-	class CreateLabHandler {
-
-	}
-
-	class RegisterLabHandler {
-
-	}
-
-	class CreateAtelierHandler {
-
-	}
-
-	class ListLabAteliersHandler {
-
-	}
-
-	class UpdateAtelierHandler {
-
-	}
-
-	class DeleteAtelierHandler {
-
-	}
-
-	class DisconnectLabHandler {
-
-	}
+class DriverManager{
+	
 }
 
-Route <|-- HomePageHandler
-Route <|-- CreateLabHandler
-Route <|-- RegisterLabHandler
-Route <|-- CreateAtelierHandler
-Route <|-- ListLabAteliersHandler
-Route <|-- UpdateAtelierHandler
-Route <|-- DeleteAtelierHandler
-Route <|-- DisconnectLabHandler
+Route <|.. AbstractHandler
 
-Sql2oModel <-- HomePageHandler
-Sql2oModel <-- CreateLabHandler
-Sql2oModel <-- RegisterLabHandler
-Sql2oModel <-- CreateAtelierHandler
-Sql2oModel <-- ListLabAteliersHandler
-Sql2oModel <-- UpdateAtelierHandler
-Sql2oModel <-- DeleteAtelierHandler
-Sql2oModel <-- DisconnectLabHandler
+
+AbstractHandler <|-- AtelierHandler
+AbstractHandler <|-- IndexHandler
+AbstractHandler <|-- LabAddAtelierHandlerGet
+AbstractHandler <|-- LabAddAtelierHandlerPost
+AbstractHandler <|-- LabDashboardHandler
+AbstractHandler <|-- LabDeclineInsHandler
+AbstractHandler <|-- LabDeleteAtelierHandler
+AbstractHandler <|-- LabDisconnectHandler
+AbstractHandler <|-- LabEditAtelierHandlerGet
+AbstractHandler <|-- LabEditAtelierHandlerPost
+AbstractHandler <|-- LabLoginHandlerGet
+AbstractHandler <|-- LabLoginHandlerPost
+AbstractHandler <|-- LabRegisterHandlerGet
+AbstractHandler <|-- LabRegisterHandlerPost
+AbstractHandler <|-- LabValidateInsHandler
+AbstractHandler <|-- TeacherDashboardHandler
+AbstractHandler <|-- TeacherDisconnectHandler
+AbstractHandler <|-- TeacherInscrireAtelierHandlerGet
+AbstractHandler <|-- TeacherInscrireAtelierHandlerPost
+AbstractHandler <|-- TeacherListAtelierHandler
+AbstractHandler <|-- TeacherLoginHandlerGet
+AbstractHandler <|-- TeacherLoginHandlerPost
+AbstractHandler <|-- TeacherRegisterHandlerGet
+AbstractHandler <|-- TeacherRegisterHandlerPost
+
+Model <-- AtelierHandler
+FreeMarkerEngine <-- AtelierHandler
+Model <-- IndexHandler
+FreeMarkerEngine <-- LabAddAtelierHandlerGet
+Model <-- LabAddAtelierHandlerPost
+FreeMarkerEngine <-- LabDashboardHandler
+Model <-- LabDashboardHandler
+Model <-- LabDeclineInsHandler
+Model <-- LabDeleteAtelierHandler
+FreeMarkerEngine <-- LabEditAtelierHandlerGet
+Model <-- LabEditAtelierHandlerGet
+Model <-- LabEditAtelierHandlerPost
+FreeMarkerEngine <-- LabLoginHandlerGet
+Model <-- LabLoginHandlerPost
+FreeMarkerEngine <-- LabRegisterHandlerGet
+Model <-- LabRegisterHandlerPost
+Model <-- LabValidateInsHandler
+FreeMarkerEngine <-- TeacherDashboardHandler
+Model <-- TeacherDashboardHandler
+FreeMarkerEngine <-- TeacherInscrireAtelierHandlerGet
+Model <-- TeacherInscrireAtelierHandlerGet
+Model <-- TeacherInscrireAtelierHandlerPost
+FreeMarkerEngine <-- TeacherListAtelierHandler
+Model <-- TeacherListAtelierHandler
+FreeMarkerEngine <-- TeacherLoginHandlerGet
+Model <-- TeacherLoginHandlerPost
+FreeMarkerEngine <-- TeacherRegisterHandlerGet
+Model <-- TeacherRegisterHandlerPost
+
 
 Laboratoire "1" *-- "0..*" Atelier
-java +-- java.model
+Atelier "1" *-- "1..*" Seance
+Teacher "1" *-- "0..*" Inscription
+Atelier "1" *-- "0..*" Inscription
 
-MainServices --> Sql2oModel
+
+MainServices --> Model
 MainServices --> FreeMarkerEngine
 MainServices --> Spark
 
-Atelier <-- Sql2oModel
-Laboratoire <-- Sql2oModel
+Atelier <-- Model
+Laboratoire <-- Model
+Teacher <-- Model
+Seance <-- Model
+Inscription <-- Model
+DriverManager <-- Model
+
+GoogleMaps <--AtelierHandler
 
 @enduml

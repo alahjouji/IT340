@@ -1,0 +1,129 @@
+@startuml
+(*) --> "Index"
+"Index" --> "Inscription Lab"
+
+if "Déjà connecté" then
+	-->[true] "Dashboard Lab"
+else
+	-->[false] "Inscription Lab Page"
+endif
+
+"Index" --> "Connexion Lab"
+
+if "Déjà connecté" then
+	-->[true] "Dashboard Lab"
+else
+	-->[false] "Connexion Lab Page"
+	if "Connexion Valide" then
+		-->[true] "Dashboard Lab"
+	else
+		-->[false] "Connexion Lab Page"
+	endif
+endif
+
+"Index" --> "Inscription Teacher"
+
+if "Déjà connecté" then
+	-->[true] "Dashboard Teacher"
+else
+	-->[false] "Inscription Teacher Page"
+endif
+
+"Index" --> "Connexion Teacher"
+
+if "Déjà connecté" then
+	-->[true] "Dashboard Teacher"
+else
+	-->[false] "Connexion Teacher Page"
+	if "Connexion Valide" then
+		-->[true] "Dashboard Teacher"
+	else
+		-->[false] "Connexion Teacher Page"
+	endif
+endif
+
+"Index" --> "Index"
+
+"Connexion Lab Page" --> "Inscription Lab Page"
+if "Inscription Valide" then
+	-->[true] "Connexion Lab Page"
+else
+	-->[false] "Inscription Lab Page"
+endif
+"Connexion Teacher Page" --> "Inscription Teacher Page"
+if "Inscription Valide" then
+	-->[true] "Connexion Teacher Page"
+else
+	-->[false] "Inscription Teacher Page"
+endif
+
+"Inscription Teacher Page" --> "Index"
+"Connexion Teacher Page" --> "Index"
+
+"Inscription Lab Page" --> "Index"
+"Connexion Lab Page" --> "Index"
+
+"Dashboard Teacher" --> "Index"
+"Dashboard Teacher" --> "Dashboard Teacher"
+"Dashboard Teacher" --> "Liste des ateliers"
+"Dashboard Teacher" --> "Teacher disconnect"
+"Dashboard Teacher" --> "Page Atelier"
+"Liste des ateliers" --> "Page Atelier"
+"Liste des ateliers" --> "Dashboard Teacher"
+"Liste des ateliers" --> "Teacher disconnect"
+"Liste des ateliers" --> "Index"
+"Liste des ateliers" --> "Inscription Atelier"
+if "Inscription Valide" then
+	-->[true] "Liste des ateliers"
+else
+	-->[false] "Liste des ateliers"
+endif
+"Liste des ateliers" --> "Liste des ateliers"
+
+"Inscription Atelier" --> "Index"
+"Inscription Atelier" --> "Dashboard Teacher"
+"Inscription Atelier" --> "Liste des ateliers"
+
+"Teacher disconnect" --> "Index"
+"Page Atelier" --> "Index"
+"Page Atelier" --> "Connexion Lab"
+"Page Atelier" --> "Connexion Teacher"
+
+"Dashboard Lab" --> "Index"
+"Dashboard Lab" --> "Dashboard Lab"
+"Dashboard Lab" --> "Ajout Atelier"
+if "Ajout Valide" then
+	-->[true] "Dashboard Lab"
+endif
+"Dashboard Lab" --> "Lab disconnect"
+"Dashboard Lab" --> "Page Atelier"
+"Ajout Atelier" --> "Dashboard Lab"
+"Ajout Atelier" --> "Index"
+"Ajout Atelier" --> "Lab disconnect"
+
+"Dashboard Lab" --> "Edit Atelier"
+if "Modification Valide" then
+	-->[true] "Dashboard Lab"
+endif
+"Edit Atelier" --> "Dashboard Lab"
+"Edit Atelier" --> "Index"
+"Edit Atelier" --> "Lab disconnect"
+"Dashboard Lab" --> "Delete Atelier"
+if "Suppression Valide" then
+	-->[true] "Dashboard Lab"
+endif
+"Dashboard Lab" --> "Decliner Inscription"
+if "Decine avec succes" then
+	-->[true] "Dashboard Lab"
+endif
+"Dashboard Lab" --> "Valider Inscription"
+if "Validation avec succes" then
+	-->[true] "Dashboard Lab"
+else
+	-->[false] "Dashboard Lab"
+endif
+"Lab disconnect" --> "Index"
+"Ajout Atelier" --> "Index"
+"Edit Atelier" --> "Index"
+
+@enduml

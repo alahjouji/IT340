@@ -1,0 +1,12 @@
+@startuml
+"User/Lab/Teacher" -> "Spark" : HTTP request
+"Spark" -> "AbstractHandler" : handle
+"AbstractHandler" -> "Appropriate Handler" : process
+"Appropriate Handler" -> "Model" : Methode
+"Model" -> H2 : CRUD
+"H2" --> "Model" : (SQL request response)
+"Model" --> "Appropriate Handler" : Methode response
+"Appropriate Handler" --> "AbstractHandler" : answer(response,redirect,session attributes)
+"AbstractHandler" --> "Spark" : response
+"Spark" --> "User/Lab/Teacher" : HTTP response
+@enduml

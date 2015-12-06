@@ -28,7 +28,6 @@ public class TestMainServicesClass {
 		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/index.html"), "UTF-8");
 		assertEquals(responseHTML, expectedHTML);
 		stop();
-		MainServices.model.closeBDDConnection();
 	}
 
 }

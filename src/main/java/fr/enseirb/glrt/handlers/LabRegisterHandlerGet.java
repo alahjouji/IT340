@@ -10,7 +10,6 @@ public class LabRegisterHandlerGet extends AbstractHandler {
 	private FreeMarkerEngine freeMarkerEngine;
 
 	public LabRegisterHandlerGet(FreeMarkerEngine freeMarkerEngine) {
-		super();
 		this.freeMarkerEngine = freeMarkerEngine;
 	}
 	
