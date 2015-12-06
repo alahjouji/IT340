@@ -4,15 +4,20 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.enseirb.glrt.model.Atelier;
 import fr.enseirb.glrt.model.Model;
+import spark.ModelAndView;
+import spark.template.freemarker.FreeMarkerEngine;
 
 
-public class TeacherInscrireAtelierHandler extends AbstractHandler{
+public class TeacherInscrireAtelierHandlerGet extends AbstractHandler{
 
 	private Model model;
+	private FreeMarkerEngine freeMarkerEngine;
 
-	public TeacherInscrireAtelierHandler(Model model) {
+	public TeacherInscrireAtelierHandlerGet(Model model, FreeMarkerEngine freeMarkerEngine) {
 		this.model = model;
+		this.freeMarkerEngine = freeMarkerEngine;
 	}
 
 	@Override
@@ -34,9 +39,11 @@ public class TeacherInscrireAtelierHandler extends AbstractHandler{
 			answer.put("response", "");
 			return answer;
 		}else{
-			model.teacherInscrireAtelier(sessionAtts.get("sessionTeacher"),urlParams.get("atelierId")[0]);
-			answer.put("redirect", "/teachers/listAteliers?good=1");
-			answer.put("response", "");
+			Map<String, Object> attributes = new HashMap<>();
+			Atelier at = model.getAtelier(Integer.parseInt(urlParams.get("atelierId")[0]));
+			attributes.put("atelier", at);
+			attributes.put("sessionTeacher", sessionAtts.get("sessionTeacher"));
+			answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/teacherInscription.ftl")));
 			return answer ;
 		}
 	}

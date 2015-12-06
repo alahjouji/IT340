@@ -36,6 +36,9 @@ public class TeacherListAtelierHandler extends AbstractHandler {
 			if(urlParams.containsKey("good") && urlParams.get("good")[0].equals("1")){
 				attributes.put("good", "Demande d'inscription envoyé vers le laboratoire");
 			}
+			if(urlParams.containsKey("warn") && urlParams.get("warn")[0].equals("1")){
+				attributes.put("warn", "Nombre de participants supérieur aux places restantes");
+			}
 			Map<String, String> answer = new HashMap<String, String>();
 			answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/listAtelier.ftl")));
 			return answer ;

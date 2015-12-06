@@ -35,6 +35,41 @@
 						</h1>
 					<h3>Mes inscriptions</h3>
 					
+						<table class="table table-hover">
+	<thead>
+        <tr>
+			<th>Titre</th>
+			<th>Seance</th>
+			<th>Public</th>
+			<th>Participants</th>
+			<th>Statut</th>
+        </tr>
+	</thead>
+	<tbody>
+<#list inscriptionsV as ins>
+
+				<tr class="info">
+					<td><a href="/atelier" onclick="location.href=this.href+'?atelierId='+${ins.atelierId};return false;">${ins.atelierName}</a></td>
+					<td>${ins.seance}</td>
+					<td>${ins.pub}</td>
+					<td>${ins.nombre}</td>
+					<td>Validé</td>
+
+				</tr>
+</#list>
+<#list inscriptionsW as ins>
+
+				<tr class="info">
+					<td><a href="/atelier" onclick="location.href=this.href+'?atelierId='+${ins.atelierId};return false;">${ins.atelierName}</a></td>
+					<td>${ins.seance}</td>
+					<td>${ins.pub}</td>
+					<td>${ins.nombre}</td>
+					<td>En attente</td>
+
+				</tr>
+</#list>				
+									</tbody>
+</table>
 										
 					</div>
 				</div>

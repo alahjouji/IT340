@@ -35,6 +35,13 @@
 							${good}
 						</div>
 					</#if>
+					<#if warn??>
+						<div class="alert alert-danger alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<strong>Erreur : </strong>
+							${warn}
+						</div>
+					</#if>
 					<div class="content" id="corpus">
 
 					<h3>List des ateliers</h3>
@@ -49,6 +56,7 @@
         </tr>
 	</thead>
 	<tbody>
+
 <#list ateliers as atelier>
 
 				<tr class="info">

@@ -31,13 +31,10 @@
 					<#include "headerLabs.ftl">
 					<div class="content" id="corpus">
 						<h1>
-					    	Ajout d'un atelier
+					    	Modification d'un atelier
 						</h1>
 					
-						<p>
-							Veuillez remplir le formulaire ci-dessous afin d'ajouter votre atelier
-							<br/>
-						</p>
+
 						<form action="/labs/editAtelier" id="LabEditAtelierForm" method="post" accept-charset="utf-8">
 							<div style="display:none;">
 								<input type="hidden" name="_method" value="POST"/>

@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />       
     <title>
-        Laboratoires - Circuit Scientifique Bordelais - CNRS
+        Circuit Scientifique Bordelais - CNRS
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/img/favicon.ico" type="image/x-icon" rel="icon" />

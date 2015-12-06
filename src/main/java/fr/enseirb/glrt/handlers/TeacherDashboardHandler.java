@@ -2,15 +2,16 @@ package fr.enseirb.glrt.handlers;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import fr.enseirb.glrt.model.Inscription;
 import fr.enseirb.glrt.model.Model;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
 public class TeacherDashboardHandler extends AbstractHandler {
 	private FreeMarkerEngine freeMarkerEngine;
-	@SuppressWarnings("unused")
 	private Model model;
 	public TeacherDashboardHandler(FreeMarkerEngine freeMarkerEngine, Model model) {
 		this.freeMarkerEngine = freeMarkerEngine;
@@ -24,8 +25,15 @@ public class TeacherDashboardHandler extends AbstractHandler {
 			answer.put("response", "");
 			return answer ;
 		} else {
-			//Integer sessionLab = Integer.parseInt(sessionAtts.get("sessionTeacher"));
 			Map<String, Object> attributes = new HashMap<>();
+			List<Inscription> inscriptions = model.getTeacherInscriptionsValidated(sessionAtts.get("sessionTeacher"));
+			for(Inscription ins : inscriptions)
+				ins.setAtelierName(model.getAtelierNameFromId(ins.getAtelierId()));
+			List<Inscription> inscriptions1 = model.getTeacherInscriptionsWaiting(sessionAtts.get("sessionTeacher"));
+			for(Inscription ins : inscriptions1)
+				ins.setAtelierName(model.getAtelierNameFromId(ins.getAtelierId()));
+			attributes.put("inscriptionsV", inscriptions);
+			attributes.put("inscriptionsW", inscriptions1);
 
 			Map<String, String> answer = new HashMap<String, String>();
 			answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/teacherDashboard.ftl")));

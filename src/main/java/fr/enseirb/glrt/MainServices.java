@@ -5,6 +5,7 @@ import fr.enseirb.glrt.handlers.IndexHandler;
 import fr.enseirb.glrt.handlers.LabAddAtelierHandlerGet;
 import fr.enseirb.glrt.handlers.LabAddAtelierHandlerPost;
 import fr.enseirb.glrt.handlers.LabDashboardHandler;
+import fr.enseirb.glrt.handlers.LabDeclineInsHandler;
 import fr.enseirb.glrt.handlers.LabDeleteAtelierHandler;
 import fr.enseirb.glrt.handlers.LabDisconnectHandler;
 import fr.enseirb.glrt.handlers.LabEditAtelierHandlerGet;
@@ -13,9 +14,11 @@ import fr.enseirb.glrt.handlers.LabLoginHandlerGet;
 import fr.enseirb.glrt.handlers.LabLoginHandlerPost;
 import fr.enseirb.glrt.handlers.LabRegisterHandlerGet;
 import fr.enseirb.glrt.handlers.LabRegisterHandlerPost;
+import fr.enseirb.glrt.handlers.LabValidateInsHandler;
 import fr.enseirb.glrt.handlers.TeacherDashboardHandler;
 import fr.enseirb.glrt.handlers.TeacherDisconnectHandler;
-import fr.enseirb.glrt.handlers.TeacherInscrireAtelierHandler;
+import fr.enseirb.glrt.handlers.TeacherInscrireAtelierHandlerPost;
+import fr.enseirb.glrt.handlers.TeacherInscrireAtelierHandlerGet;
 import fr.enseirb.glrt.handlers.TeacherListAtelierHandler;
 import fr.enseirb.glrt.handlers.TeacherLoginHandlerGet;
 import fr.enseirb.glrt.handlers.TeacherLoginHandlerPost;
@@ -72,9 +75,10 @@ public class MainServices {
 		list1.add(new Seance("Jeudi matin",0));
 
 		
-		Atelier atelier= new Atelier(1, " A la poursuite d'ennemis invisibles", list, "Visite", list1, "1 avenue du Docteur Albert Schweitzer 33400 talence", 1, 1, "Cet Atelier est destiné aux personnes.", list2, list3);
+		Atelier atelier= new Atelier(1, " A la poursuite d'ennemis invisibles", list, "Visite", list1, "1 avenue du Docteur Albert Schweitzer 33400 talence", 1, 100, "Cet Atelier est destiné aux personnes.", list2, list3);
 		model.createAtelier(atelier);
-		
+		model.createAtelier(atelier);
+
 		FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine();
 		Configuration freeMarkerConfiguration = new Configuration();
 		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));
@@ -101,7 +105,11 @@ public class MainServices {
 		get("/teachers/dashboard", new TeacherDashboardHandler(freeMarkerEngine, model));
 		get("/teachers/disconnect", new TeacherDisconnectHandler());
 		get("/teachers/listAteliers", new TeacherListAtelierHandler(freeMarkerEngine, model));
-		get("/teachers/sinscrireAtelier", new TeacherInscrireAtelierHandler(model));
+		get("/teachers/sinscrireAtelier", new TeacherInscrireAtelierHandlerGet(model, freeMarkerEngine));
+		post("/teachers/sinscrireAtelier", new TeacherInscrireAtelierHandlerPost(model));
+		get("/labs/declineIns", new LabDeclineInsHandler(model));
+		get("/labs/validateIns", new LabValidateInsHandler(model));
+
 		awaitInitialization();
 	}
 }

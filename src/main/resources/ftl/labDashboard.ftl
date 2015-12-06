@@ -35,11 +35,18 @@
 							${good}
 						</div>
 					</#if>
+					<#if warn??>
+						<div class = "alert alert-danger alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<strong> Erreur: </strong>
+							${warn}
+						</div>
+					</#if>					
 					<div class="content" id="corpus">
 						<h1>
 					    	Feuille de route
 						</h1>
-					<h3>Ateliers proposés</h3>
+					<h3>Mes ateliers</h3>
 					
 						<table class="table table-hover">
 	<thead>
@@ -47,7 +54,7 @@
 			<th>Titre</th>
 			<th>Type</th>
 			<th>Disciplines</th>
-			<th>actions</th>
+			<th>Actions</th>
         </tr>
 	</thead>
 	<tbody>
@@ -69,7 +76,51 @@
 				
 									</tbody>
 </table>
-										
+					
+					<br/>
+					<h3>Inscriptions à mes ateliers</h3>
+					
+						<table class="table table-hover">
+	<thead>
+        <tr>
+        	<th>Enseignant</th>
+			<th>Titre</th>
+			<th>Seance</th>
+			<th>Public</th>
+			<th>Participants</th>
+			<th>Actions</th>
+        </tr>
+	</thead>
+	<tbody>
+<#list inscriptionsV as ins>
+
+				<tr class="info">
+					<td>${ins.teacherName}</td>
+					<td><a href="/atelier" onclick="location.href=this.href+'?atelierId='+${ins.atelierId};return false;">${ins.atelierName}</a></td>
+					<td>${ins.seance}</td>
+					<td>${ins.pub}</td>
+					<td>${ins.nombre}</td>
+					<td>Validé</td>
+
+				</tr>
+</#list>
+<#list inscriptionsW as ins>
+
+				<tr class="info">
+					<td>${ins.teacherName}</td>
+					<td><a href="/atelier" onclick="location.href=this.href+'?atelierId='+${ins.atelierId};return false;">${ins.atelierName}</a></td>
+					<td>${ins.seance}</td>
+					<td>${ins.pub}</td>
+					<td>${ins.nombre}</td>
+					<td>
+						<a href="/labs/validateIns" onclick="location.href=this.href+'?insId='+${ins.id};return false;">valider</a>
+						<a href="/labs/declineIns" onclick="location.href=this.href+'?insId='+${ins.id};return false;">decliner</a>
+					</td>
+
+				</tr>
+</#list>				
+									</tbody>
+</table>									
 					</div>
 				</div>
 			</div>

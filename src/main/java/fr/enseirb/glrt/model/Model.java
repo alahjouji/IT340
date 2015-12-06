@@ -63,7 +63,7 @@ public class Model {
 
 	public void createInscriptionTable() throws ClassNotFoundException, SQLException {
 		PreparedStatement stmt = conn.prepareStatement(
-				"CREATE TABLE Inscriptions (id int primary key, teacher_id int not null references Teachers(id), atelier_id int not null references Ateliers(id), validated boolean not null);");
+				"CREATE TABLE Inscriptions (id int primary key, teacher_id int not null references Teachers(id), atelier_id int not null references Ateliers(id), validated boolean not null, seance varchar(255) not null, public varchar(255) not null, nombre int not null);");
 		stmt.executeUpdate();
 		stmt.close();
 	}
@@ -317,6 +317,11 @@ public class Model {
 		stmt1.executeUpdate();
 		stmt1.close();
 		
+		PreparedStatement stmt2 = conn.prepareStatement("delete from inscriptions where atelier_id=?");
+		stmt2.setInt(1, atelierId);
+		stmt2.executeUpdate();
+		stmt2.close();
+		
 		PreparedStatement stmt = conn.prepareStatement("delete from ateliers where id=?");
 		stmt.setInt(1, atelierId);
 		stmt.executeUpdate();
@@ -357,6 +362,11 @@ public class Model {
 		stmt.setInt(10, atelier.getId());
 		stmt.executeUpdate();
 		stmt.close();
+		
+		PreparedStatement stmt2 = conn.prepareStatement("delete from seances where atelier_id=?");
+		stmt2.setInt(1, atelier.getId());
+		stmt2.executeUpdate();
+		stmt2.close();
 		
 		for (Seance t : atelier.getSeances()) {
 			seanceCount++;
@@ -448,7 +458,7 @@ public class Model {
 		ResultSet rs = stmt.executeQuery();
 		List<Inscription> inscriptions = new ArrayList<Inscription>();
 		while(rs.next()){
-			Inscription ins = new Inscription(rs.getInt("atelier_id"), rs.getBoolean("validated"));
+			Inscription ins = new Inscription(rs.getInt("id"), rs.getInt("teacher_id"), rs.getInt("atelier_id"), rs.getBoolean("validated"), rs.getString("seance"), rs.getString("public"), rs.getInt("nombre"));
 			inscriptions.add(ins);
 		}
 		stmt.close();
@@ -461,22 +471,155 @@ public class Model {
 		ResultSet rs = stmt.executeQuery();
 		List<Inscription> inscriptions = new ArrayList<Inscription>();
 		while(rs.next()){
-			Inscription ins = new Inscription(rs.getInt("atelier_id"), rs.getBoolean("validated"));
+			Inscription ins = new Inscription(rs.getInt("id"), rs.getInt("teacher_id"), rs.getInt("atelier_id"), rs.getBoolean("validated"), rs.getString("seance"), rs.getString("public"), rs.getInt("nombre"));
 			inscriptions.add(ins);
 		}
 		stmt.close();
 		return inscriptions;
 	}
 	
-	public void teacherInscrireAtelier(String teacherId, String atelierId) throws SQLException {
+	public void teacherInscrireAtelier(String teacherId, String atelierId, String seance, String pub, int nombre) throws SQLException {
 		inscriptionCount++;
 		int sId = inscriptionCount;
 		PreparedStatement stmt1 = conn
-				.prepareStatement("insert into inscriptions VALUES (?, ?, ?, false)");
+				.prepareStatement("insert into inscriptions VALUES (?, ?, ?, false, ?, ?, ?)");
 		stmt1.setInt(1, sId);
 		stmt1.setInt(2, Integer.parseInt(teacherId));
 		stmt1.setInt(3, Integer.parseInt(atelierId));
+		stmt1.setString(4, seance);
+		stmt1.setString(5, pub);
+		stmt1.setInt(6, nombre);
 		stmt1.executeUpdate();
 		stmt1.close();
+	}
+
+	public String getAtelierNameFromId(int atelierId) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("select titre from ateliers where id=?");
+		stmt.setInt(1, atelierId);
+		ResultSet rs = stmt.executeQuery();		
+		String ret = "";
+		if(rs.next())
+			ret = rs.getString("titre");
+		return ret;
+	}
+
+	public String getTeacherNameFromId(int teacherId) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("select nom from teachers where id=?");
+		stmt.setInt(1, teacherId);
+		ResultSet rs = stmt.executeQuery();		
+		String ret = "";
+		if(rs.next())
+			ret = rs.getString("nom");
+		return ret;
+	}
+	
+	public List<Inscription> getLabInscriptionsValidated(int labId) throws SQLException, ClassNotFoundException {
+		List<Inscription> inscriptions = new ArrayList<Inscription>();
+
+		for(Atelier at : getAteliers(labId)){
+			PreparedStatement stmt = conn.prepareStatement("select * from inscriptions where atelier_id=? and validated=true");
+			stmt.setInt(1, at.getId());
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()){
+				Inscription ins = new Inscription(rs.getInt("id"), rs.getInt("teacher_id"), rs.getInt("atelier_id"), rs.getBoolean("validated"), rs.getString("seance"), rs.getString("public"), rs.getInt("nombre"));
+				inscriptions.add(ins);
+			}
+			stmt.close();
+		}
+		
+		return inscriptions;
+	}
+	
+	public List<Inscription> getLabInscriptionsWaiting(int labId) throws SQLException, ClassNotFoundException {
+		List<Inscription> inscriptions = new ArrayList<Inscription>();
+
+		for(Atelier at : getAteliers(labId)){
+			PreparedStatement stmt = conn.prepareStatement("select * from inscriptions where atelier_id=? and validated=false");
+			stmt.setInt(1, at.getId());
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()){
+				Inscription ins = new Inscription(rs.getInt("id"), rs.getInt("teacher_id"), rs.getInt("atelier_id"), rs.getBoolean("validated"), rs.getString("seance"), rs.getString("public"), rs.getInt("nombre"));
+				inscriptions.add(ins);
+			}
+			stmt.close();
+		}
+		
+		return inscriptions;
+	}
+
+	public void deleteInscription(int insId) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("delete from inscriptions where id=?");
+		stmt.setInt(1, insId);
+		stmt.executeUpdate();
+		stmt.close();
+		
+	}
+
+	public boolean inscriptionOfLab(int insId, int labId) throws SQLException {
+		boolean b =false;
+		PreparedStatement stmt2 = conn.prepareStatement("select * from inscriptions where id=?");
+		stmt2.setInt(1, insId);
+		ResultSet rs2 = stmt2.executeQuery();
+		if(rs2.next()){
+			int atelierId = rs2.getInt("atelier_id");
+			PreparedStatement stmt = conn.prepareStatement("select * from ateliers where id=?");
+			stmt.setInt(1, atelierId);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()){
+				PreparedStatement stmt1 = conn.prepareStatement("select * from ateliers where id=? and lab_id=?");
+				stmt1.setInt(1, atelierId);
+				stmt1.setInt(2, labId);
+				ResultSet rs1 = stmt1.executeQuery();
+				if(rs1.next())
+					b=true;
+				stmt1.close();
+			}
+			stmt.close();
+		}
+		stmt2.close();
+		return b;
+	}
+
+	public Inscription getInscription(int insId) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("select * from inscriptions where id=?");
+		stmt.setInt(1, insId);
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) {
+			return new Inscription(rs.getInt("id"), rs.getInt("teacher_id"), rs.getInt("atelier_id"), rs.getBoolean("validated"), rs.getString("seance"), rs.getString("public"), rs.getInt("nombre"));
+		}
+		
+		return null;
+	}
+
+	public void validateInscription(int insId) throws SQLException {
+		PreparedStatement stmt = conn
+				.prepareStatement("update inscriptions VALUES set validated=? where id=?");
+		stmt.setBoolean(1, true);
+		stmt.setInt(2, insId);
+		stmt.executeUpdate();
+		stmt.close();
+		
+		Inscription ins = getInscription(insId);
+		
+		PreparedStatement stmt2 = conn
+				.prepareStatement("select inscrits from seances where atelier_id=? and nom=?");
+		stmt2.setInt(1, ins.getAtelierId());
+		stmt2.setString(2, ins.getSeance());
+		ResultSet rs = stmt2.executeQuery();
+		int insc=0;
+		if(rs.next()){
+			insc=rs.getInt("inscrits");
+			PreparedStatement stmt1 = conn
+					.prepareStatement("update seances VALUES set inscrits=? where atelier_id=? and nom=?");
+			stmt1.setInt(1, insc+ins.getNombre());
+			stmt1.setInt(2, ins.getAtelierId());
+			stmt1.setString(3, ins.getSeance());
+			stmt1.executeUpdate();
+			stmt1.close();
+		}
+		stmt2.close();
+		
+
+
 	}
 }
