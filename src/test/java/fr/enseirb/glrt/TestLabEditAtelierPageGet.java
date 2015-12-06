@@ -67,7 +67,7 @@ public class TestLabEditAtelierPageGet {
 	}
 	
 	@Test
-	public void testAddAtelier() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+	public void testEditAtelier() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
 		LabEditAtelierHandlerGet handler = new LabEditAtelierHandlerGet(freeMarkerEngine, model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
@@ -81,7 +81,7 @@ public class TestLabEditAtelierPageGet {
 	}
 	
 	@Test
-	public void testAddAtelierUnothorized() throws IOException, ClassNotFoundException, SQLException {
+	public void testEditAtelierUnothorized() throws IOException, ClassNotFoundException, SQLException {
 		LabEditAtelierHandlerGet handler = new LabEditAtelierHandlerGet(freeMarkerEngine, model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();

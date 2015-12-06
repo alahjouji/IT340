@@ -44,7 +44,9 @@ public class TestLabDashboardPage {
 		model.createLabTable();
 		model.createAtelierTable();
 		model.createSeanceTable();
-
+		model.createTeacherTable();
+		model.createInscriptionTable();
+		
 		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab );
 		List<String> list = new ArrayList<String>();
