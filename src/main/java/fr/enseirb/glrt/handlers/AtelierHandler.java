@@ -25,7 +25,7 @@ public class AtelierHandler extends AbstractHandler {
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException, JSONException, IOException {
 
-		if((sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0")) && (sessionAtts.get("sessionTeacher") == null || sessionAtts.get("sessionTeacher").equals("0"))){
+		if(sessionAtts.get("sessionLab") == null && sessionAtts.get("sessionTeacher") == null){
 
 			Map<String, String> answer = new HashMap<String, String>();
 			answer.put("redirect", "/");
@@ -45,7 +45,7 @@ public class AtelierHandler extends AbstractHandler {
 		    	b = model.checkAtelierId(Integer.parseInt(urlParams.get("atelierId")[0]));
 		    }
 		    
-		    if(b && sessionAtts.get("sessionLab")!=null && (sessionAtts.get("sessionTeacher")==null || sessionAtts.get("sessionTeacher").equals("0"))){
+		    if(b && sessionAtts.get("sessionLab")!=null && sessionAtts.get("sessionTeacher")==null){
 		    	b = model.atelierOfLab(Integer.parseInt(urlParams.get("atelierId")[0]), Integer.parseInt(sessionAtts.get("sessionLab")));
 		    }
 			if (!b) {

@@ -16,7 +16,7 @@ public class TeacherRegisterHandlerGet extends AbstractHandler {
 	
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) {
-		if (sessionAtts.get("sessionTeacher") == null || sessionAtts.get("sessionTeacher").equals("0")) {
+		if (sessionAtts.get("sessionTeacher") == null) {
 			Map<String, String> answer = new HashMap<String, String>();
 			Map<String, Object> attributes = new HashMap<>();
 			if(urlParams.containsKey("warn") && urlParams.get("warn")[0].equals("1")){

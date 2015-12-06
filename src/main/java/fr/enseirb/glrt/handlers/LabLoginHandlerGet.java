@@ -15,7 +15,7 @@ public class LabLoginHandlerGet extends AbstractHandler{
 
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts){
-		if (sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0")) {
+		if (sessionAtts.get("sessionLab") == null) {
 			Map<String, Object> attributes = new HashMap<>();
 			if(urlParams.containsKey("warn") && urlParams.get("warn")[0].equals("1")){
 				attributes.put("warn", "Email ou mot de passe incorrecte");

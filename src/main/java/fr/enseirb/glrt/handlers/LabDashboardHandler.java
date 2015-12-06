@@ -20,7 +20,7 @@ public class LabDashboardHandler extends AbstractHandler {
 	}
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException {
-		if (sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0")) {
+		if (sessionAtts.get("sessionLab") == null) {
 			Map<String, String> answer = new HashMap<String, String>();
 			answer.put("redirect", "/labs/login");
 			answer.put("response", "");

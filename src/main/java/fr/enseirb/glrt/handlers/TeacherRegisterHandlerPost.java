@@ -20,7 +20,7 @@ public class TeacherRegisterHandlerPost extends AbstractHandler {
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts)
 			throws ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-		if (sessionAtts.get("sessionTeacher") == null || sessionAtts.get("sessionTeacher").equals("0")) {
+		if (sessionAtts.get("sessionTeacher") == null) {
 			
 			if(model.checkTeacherExiste(urlParams.get("data[Teacher][email]")[0])){
 				Map<String, String> answer = new HashMap<String, String>();

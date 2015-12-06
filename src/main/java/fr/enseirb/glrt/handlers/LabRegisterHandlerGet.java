@@ -16,7 +16,7 @@ public class LabRegisterHandlerGet extends AbstractHandler {
 	
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) {
-		if (sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0")) {
+		if (sessionAtts.get("sessionLab") == null) {
 			Map<String, String> answer = new HashMap<String, String>();
 			Map<String, Object> attributes = new HashMap<>();
 			if(urlParams.containsKey("warn") && urlParams.get("warn")[0].equals("1")){

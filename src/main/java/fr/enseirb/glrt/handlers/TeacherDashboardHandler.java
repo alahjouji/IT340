@@ -19,7 +19,7 @@ public class TeacherDashboardHandler extends AbstractHandler {
 	}
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException {
-		if (sessionAtts.get("sessionTeacher") == null || sessionAtts.get("sessionTeacher").equals("0")) {
+		if (sessionAtts.get("sessionTeacher") == null) {
 			Map<String, String> answer = new HashMap<String, String>();
 			answer.put("redirect", "/teachers/login");
 			answer.put("response", "");

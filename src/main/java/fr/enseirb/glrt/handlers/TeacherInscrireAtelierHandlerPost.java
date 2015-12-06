@@ -35,7 +35,7 @@ public class TeacherInscrireAtelierHandlerPost extends AbstractHandler{
 		
 	    
 		Map<String, String> answer = new HashMap<String, String>();
-		if(!b || sessionAtts.get("sessionTeacher") == null || sessionAtts.get("sessionTeacher").equals("0")){
+		if(!b || sessionAtts.get("sessionTeacher") == null){
 			answer.put("redirect", "/teachers/login");
 			answer.put("response", "");
 			return answer;

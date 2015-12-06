@@ -24,7 +24,7 @@ public class LabEditAtelierHandlerPost extends AbstractHandler{
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException{
 		
 		Map<String, String> answer = new HashMap<String, String>();
-		if(sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0")){
+		if(sessionAtts.get("sessionLab") == null){
 			answer.put("redirect", "/labs/login");
 			answer.put("response", "");
 			return answer;

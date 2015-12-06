@@ -15,7 +15,7 @@ public class LabLoginHandlerPost extends AbstractHandler{
 	}
 	@Override
 	public Map<String, String> process(Map<String, String[]> urlParams, Map<String, String> sessionAtts) throws ClassNotFoundException, SQLException, NoSuchAlgorithmException{
-		if (sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0")) {
+		if (sessionAtts.get("sessionLab") == null) {
 			Integer id = model.checkLab(urlParams.get("data[Lab][email]")[0], urlParams.get("data[Lab][password]")[0]);
 			if(id!=0){
 				Map<String, String> answer = new HashMap<String, String>();

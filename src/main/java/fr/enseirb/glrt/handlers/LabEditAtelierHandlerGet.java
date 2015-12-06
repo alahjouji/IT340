@@ -30,7 +30,7 @@ public class LabEditAtelierHandlerGet extends AbstractHandler{
 		
 	    
 		Map<String, String> answer = new HashMap<String, String>();
-		if(!b || sessionAtts.get("sessionLab") == null || sessionAtts.get("sessionLab").equals("0") || !model.atelierOfLab(Integer.parseInt(urlParams.get("atelierId")[0]), Integer.parseInt(sessionAtts.get("sessionLab")))){
+		if(!b || sessionAtts.get("sessionLab") == null || !model.atelierOfLab(Integer.parseInt(urlParams.get("atelierId")[0]), Integer.parseInt(sessionAtts.get("sessionLab")))){
 			answer.put("redirect", "/labs/login");
 			answer.put("response", "");
 			return answer;
