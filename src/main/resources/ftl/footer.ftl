@@ -25,9 +25,6 @@
 					<a href="http://www.cap-sciences.net/"><img src="/img/CapSciences.png" id="CapSciencesLogo" alt="logo de Cap Sciences" title="Cap Sciences"></a>
 					<a href="http://www.ac-bordeaux.fr/"><img src="/img/ACBordeaux.png" id="ACBdXLogo" alt="logo de l'Académie de Bordeaux" title="Académie de Bordeaux"></a>
 				</div>
-				<div id="footerLinks">
-					<a href="/page/contacts">Contacts</a> | <a href="/admin/pages">Administrateurs</a>
-				</div>
 			</div>
 		</div>
 	</div>		
