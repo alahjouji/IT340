@@ -23,6 +23,7 @@ import fr.enseirb.glrt.model.Atelier;
 import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
 import fr.enseirb.glrt.model.Seance;
+import fr.enseirb.glrt.model.Teacher;
 import freemarker.template.Configuration;
 
 import spark.template.freemarker.FreeMarkerEngine;
@@ -68,7 +69,8 @@ public class TestLabDashboardPage {
 		
 		Atelier atelier= new Atelier(1, " A la poursuite d'ennemis invisibles", list, "Atelier scientifique", list1, "1 avenue du Docteur Albert Schweitzer 33400 talence", 1, 1, "Cet Atelier est destiné aux personnes.", list2, list3);
 		model.createAtelier(atelier);
-		
+
+
 	}
 	
 	@Test
@@ -127,6 +129,43 @@ public class TestLabDashboardPage {
 	}
 	
 	@Test
+	public void testDashboardGood4() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"4"};
+		urlParams.put("good", value );
+		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
+
+	}
+	
+	@Test
+	public void testDashboardGood5() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"5"};
+		urlParams.put("good", value );
+		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+	
+	@Test
+	public void testDashboardWarn1() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"1"};
+		urlParams.put("warn", value );
+
+		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+	@Test
 	public void testDashboardUnothorized() throws IOException, ClassNotFoundException, SQLException {
 		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);
 
@@ -135,6 +174,40 @@ public class TestLabDashboardPage {
 		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));
 	}
 
+	@Test
+	public void testDashboardInscriptions() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
+
+		List<String> list = new ArrayList<String>();
+		list.add("Anthropologie");
+		list.add("Environnement");
+		list.add("Geographie");
+		
+		List<String> list3 = new ArrayList<String>();
+		list3.add("Premières");
+		list3.add("Secondes");
+		List<String> list2 = new ArrayList<String>();
+		list2.add("bob");
+		list2.add("Martin");
+		List<Seance> list1 = new ArrayList<Seance>();
+		list1.add(new Seance("Lundi Matin",0));
+		list1.add(new Seance("Jeudi Matin",0));
+
+		
+		Atelier atelier= new Atelier(1, " A la poursuite d'ennemis invisibles", list, "Atelier scientifique", list1, "1 avenue du Docteur Albert Schweitzer 33400 talence", 1, 1, "Cet Atelier est destiné aux personnes.", list2, list3);
+		model.createAtelier(atelier);
+		Teacher teacher = new Teacher("Bob Bob", "Enseirb", "077777", "bbb@bbb.bbb", "bbb");
+		model.createTeacher(teacher );
+		model.teacherInscrireAtelier("1", "1", "Lundi Matin", "Secondes", 1);
+		model.teacherInscrireAtelier("1", "2", "Lundi Matin", "Secondes", 1);
+		model.validateInscription(1);
+		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+	
 	@After
 	public void after() throws SQLException {
 		model.closeBDDConnection();

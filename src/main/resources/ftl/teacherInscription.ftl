@@ -66,7 +66,7 @@
 							
 							<h4 class="center">Nombre de participants</h4>
 							<div class="form-group">
-									<input type="number" step="1" name="nombre" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Nombre" required="required"/>
+									<input type="number" step="1" name="nombre" min="1" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Nombre" required="required"/>
 							</div>
 							<br/>
 							

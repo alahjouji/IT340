@@ -368,6 +368,11 @@ public class Model {
 		stmt2.executeUpdate();
 		stmt2.close();
 		
+		PreparedStatement stmt3 = conn.prepareStatement("delete from inscriptions where atelier_id=?");
+		stmt3.setInt(1, atelier.getId());
+		stmt3.executeUpdate();
+		stmt3.close();
+		
 		for (Seance t : atelier.getSeances()) {
 			seanceCount++;
 			int sId = seanceCount;
@@ -584,11 +589,12 @@ public class Model {
 		PreparedStatement stmt = conn.prepareStatement("select * from inscriptions where id=?");
 		stmt.setInt(1, insId);
 		ResultSet rs = stmt.executeQuery();
+		Inscription ins =null;
 		if (rs.next()) {
-			return new Inscription(rs.getInt("id"), rs.getInt("teacher_id"), rs.getInt("atelier_id"), rs.getBoolean("validated"), rs.getString("seance"), rs.getString("public"), rs.getInt("nombre"));
+			ins = new Inscription(rs.getInt("id"), rs.getInt("teacher_id"), rs.getInt("atelier_id"), rs.getBoolean("validated"), rs.getString("seance"), rs.getString("public"), rs.getInt("nombre"));
 		}
 		
-		return null;
+		return ins;
 	}
 
 	public void validateInscription(int insId) throws SQLException {

@@ -16,12 +16,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.enseirb.glrt.handlers.LabRegisterHandlerPost;
-import fr.enseirb.glrt.model.Laboratoire;
+import fr.enseirb.glrt.handlers.TeacherRegisterHandlerPost;
+import fr.enseirb.glrt.model.Teacher;
 import fr.enseirb.glrt.model.Model;
 
 
-public class TestLabRegisterPost {
+public class TestTeacherRegisterPost {
 
 	private Model model;
 	
@@ -30,70 +30,68 @@ public class TestLabRegisterPost {
 		
 		String[] bddArgs = {"jdbc:h2:mem:it340", "", ""};
 		this.model = new Model(bddArgs);
-		model.createLabTable();
-		model.createAtelierTable();
-		model.createSeanceTable();
+		model.createTeacherTable();
 
 		
-		post("/labs/register", new LabRegisterHandlerPost(model));
+		post("/teachers/register", new TeacherRegisterHandlerPost(model));
 		awaitInitialization();
 
 	}
 	
 	@Test
-	public void testLabCreation() throws IOException, InterruptedException {
-		URL url = new URL("http://localhost:4567/labs/register");
+	public void testTeacherCreation() throws IOException, InterruptedException {
+		URL url = new URL("http://localhost:4567/teachers/register");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
 		conn.setInstanceFollowRedirects(false);
 		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-		wr.writeBytes("data[Lab][nom]=aaa&data[Lab][respo]=aaa&data[Lab][tel]=06666666&data[Lab][email]=aaa@aaa.aaa&data[Lab][password]=aaa&data[Lab][password2]=aaa");
+		wr.writeBytes("data[Teacher][nom]=aaa&data[Teacher][etab]=aaa&data[Teacher][tel]=06666666&data[Teacher][email]=aaa@aaa.aaa&data[Teacher][password]=aaa&data[Teacher][password2]=aaa");
 		wr.flush();
 		wr.close();
 		conn.connect();
 		
-		assertEquals("http://localhost:4567/labs/login?good=1",conn.getHeaderField("Location"));
+		assertEquals("http://localhost:4567/teachers/login?good=1",conn.getHeaderField("Location"));
 		conn.disconnect();
 	
 	}
 
 	@Test
 	public void testAlreadyCon() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-		LabRegisterHandlerPost handler = new LabRegisterHandlerPost(model);
+		TeacherRegisterHandlerPost handler = new TeacherRegisterHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
-		sessionAtts.put("sessionLab", "1");
+		sessionAtts.put("sessionTeacher", "1");
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
-		assertEquals("/labs/dashboard", handler.process(urlParams , sessionAtts).get("redirect"));	
+		assertEquals("/teachers/dashboard", handler.process(urlParams , sessionAtts).get("redirect"));	
 	}
 
 	@Test
 	public void testMailAlreadyExist() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");
-		model.createLab(lab );
-		LabRegisterHandlerPost handler = new LabRegisterHandlerPost(model);
+		Teacher teacher = new Teacher("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");
+		model.createTeacher(teacher );
+		TeacherRegisterHandlerPost handler = new TeacherRegisterHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 		String[] value = {"aaa@aaa.aaa"};
-		urlParams.put("data[Lab][email]", value);
-		assertEquals("/labs/register?warn=1", handler.process(urlParams , sessionAtts).get("redirect"));	
+		urlParams.put("data[Teacher][email]", value);
+		assertEquals("/teachers/register?warn=1", handler.process(urlParams , sessionAtts).get("redirect"));	
 	}
 	
 	@Test
 	public void testNotSimilarPasswords() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
-		LabRegisterHandlerPost handler = new LabRegisterHandlerPost(model);
+		TeacherRegisterHandlerPost handler = new TeacherRegisterHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 		String[] value2 = {"aaa@aaa.aaa"};
-		urlParams.put("data[Lab][email]", value2);
+		urlParams.put("data[Teacher][email]", value2);
 		String[] value = {"aaa"};
 		String[] value1 = {"aaaa"};
-		urlParams.put("data[Lab][password]", value);
-		urlParams.put("data[Lab][password2]", value1);
-		assertEquals("/labs/register?warn=2", handler.process(urlParams , sessionAtts).get("redirect"));	
+		urlParams.put("data[Teacher][password]", value);
+		urlParams.put("data[Teacher][password2]", value1);
+		assertEquals("/teachers/register?warn=2", handler.process(urlParams , sessionAtts).get("redirect"));	
 	}
 	@After
 	public void after() throws SQLException {

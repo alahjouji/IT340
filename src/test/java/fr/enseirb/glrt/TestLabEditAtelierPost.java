@@ -34,7 +34,9 @@ public class TestLabEditAtelierPost {
 		model.createLabTable();
 		model.createAtelierTable();
 		model.createSeanceTable();
-
+		model.createTeacherTable();
+		model.createInscriptionTable();
+		
 		Laboratoire lab = new Laboratoire("aaa", "aaa", "06666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab);		
 		List<String> list = new ArrayList<String>();
@@ -92,7 +94,7 @@ public class TestLabEditAtelierPost {
 	}
 
 	@Test
-	public void testAddAtelier1() throws IOException, ClassNotFoundException, SQLException {
+	public void testEditAtelier1() throws IOException, ClassNotFoundException, SQLException {
 		LabEditAtelierHandlerPost handler = new LabEditAtelierHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
@@ -126,7 +128,7 @@ public class TestLabEditAtelierPost {
 	}
 	
 	@Test
-	public void testAddAtelier2() throws IOException, ClassNotFoundException, SQLException {
+	public void testEditAtelier2() throws IOException, ClassNotFoundException, SQLException {
 		LabEditAtelierHandlerPost handler = new LabEditAtelierHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
@@ -160,7 +162,7 @@ public class TestLabEditAtelierPost {
 	}
 	
 	@Test
-	public void testAddAtelier3() throws IOException, ClassNotFoundException, SQLException {
+	public void testEditAtelier3() throws IOException, ClassNotFoundException, SQLException {
 		LabEditAtelierHandlerPost handler = new LabEditAtelierHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
@@ -194,7 +196,7 @@ public class TestLabEditAtelierPost {
 	}
 	
 	@Test
-	public void testAddAtelier4() throws IOException, ClassNotFoundException, SQLException {
+	public void testEditAtelier4() throws IOException, ClassNotFoundException, SQLException {
 		LabEditAtelierHandlerPost handler = new LabEditAtelierHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
@@ -227,7 +229,7 @@ public class TestLabEditAtelierPost {
 		assertTrue(model.getAtelier(1).getDisciplines().get(0).equals("Anthropologie"));
 	}
 	@Test
-	public void testAddAtelierUnothorized() throws IOException, ClassNotFoundException, SQLException {
+	public void testEditAtelierUnothorized() throws IOException, ClassNotFoundException, SQLException {
 		LabEditAtelierHandlerPost handler = new LabEditAtelierHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();

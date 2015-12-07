@@ -16,11 +16,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.enseirb.glrt.handlers.LabRegisterHandlerGet;
+import fr.enseirb.glrt.handlers.TeacherRegisterHandlerGet;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
-public class TestLabRegisterPageGet {
+public class TestTeacherRegisterPageGet {
 
 	private FreeMarkerEngine freeMarkerEngine;
 	@Before
@@ -31,7 +31,7 @@ public class TestLabRegisterPageGet {
 		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));;
 		freeMarkerEngine.setConfiguration(freeMarkerConfiguration);
 
-		get("/labs/register", new LabRegisterHandlerGet(freeMarkerEngine));
+		get("/teachers/register", new TeacherRegisterHandlerGet(freeMarkerEngine));
 		awaitInitialization();
 
 		
@@ -39,7 +39,7 @@ public class TestLabRegisterPageGet {
 	
 	@Test
 	public void testSparkConnection() throws IOException {
-		URL url = new URL("http://localhost:4567/labs/register");
+		URL url = new URL("http://localhost:4567/teachers/register");
 		
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
@@ -50,30 +50,30 @@ public class TestLabRegisterPageGet {
 	
 	@Test
 	public void testHTMLResponse() throws IOException {
-		URL url = new URL("http://localhost:4567/labs/register");
+		URL url = new URL("http://localhost:4567/teachers/register");
 		
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.connect();
 		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
-		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labRegister.html"), "UTF-8");
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/teacherRegister.html"), "UTF-8");
 		assertEquals(expectedHTML, responseHTML);	
 		conn.disconnect();
 	}
 	
 	@Test
 	public void testAlreadyCon() throws IOException {
-		LabRegisterHandlerGet handler = new LabRegisterHandlerGet(freeMarkerEngine);
+		TeacherRegisterHandlerGet handler = new TeacherRegisterHandlerGet(freeMarkerEngine);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
-		sessionAtts.put("sessionLab", "1");
-		assertEquals("/labs/dashboard", handler.process(urlParams , sessionAtts).get("redirect"));	
+		sessionAtts.put("sessionTeacher", "1");
+		assertEquals("/teachers/dashboard", handler.process(urlParams , sessionAtts).get("redirect"));	
 	}
 	
 	@Test
 	public void testWarn1() throws IOException {
-		LabRegisterHandlerGet handler = new LabRegisterHandlerGet(freeMarkerEngine);
+		TeacherRegisterHandlerGet handler = new TeacherRegisterHandlerGet(freeMarkerEngine);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
@@ -84,7 +84,7 @@ public class TestLabRegisterPageGet {
 	
 	@Test
 	public void testWarn2() throws IOException {
-		LabRegisterHandlerGet handler = new LabRegisterHandlerGet(freeMarkerEngine);
+		TeacherRegisterHandlerGet handler = new TeacherRegisterHandlerGet(freeMarkerEngine);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();

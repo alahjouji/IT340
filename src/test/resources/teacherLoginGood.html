@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />       
     <title>
-        Circuit Scientifique Bordelais - CNRS
+        Enseignants - Circuit Scientifique Bordelais - CNRS
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/img/favicon.ico" type="image/x-icon" rel="icon" />
@@ -73,106 +73,49 @@
             </div><!--/.nav-collapse -->
         </div>
     </nav>
-</header>												<div class="content" id="corpus">
-	<font size="7"><b>CNRS</b></font>
-<h1>" A la poursuite d'ennemis invisibles"<small>Atelier scientifique</small></h1>
-<hr/>
-<p>
-	<strong>Thèmes disciplinaires : </strong> 
-					Anthropologie&nbsp;
-					Environnement&nbsp;
-					Geographie&nbsp;
-	<br/>
-</p>
-<legend>Accès</legend>
-<address>
-	<strong>Adresse :</strong>
-	<p style="padding-left: 1em; ">
-		1 avenue du Docteur Albert Schweitzer 33400 talence
-		<br />
-	</p>
-</address>
-	<strong>Géolocalisation :</strong> 
-	<div id="map" style="width: 100%; height: 400px"></div>
-	<script type="text/javascript">
-		window.addEventListener('load', function () {
-			var startLat = parseFloat("44.8063124");
-			var startLng = parseFloat("-0.6068176000000001");
-			var optionsGmaps = {
-				center: new google.maps.LatLng(startLat, startLng),
-				mapTypeId: google.maps.MapTypeId.ROADMAP,
-				zoom: 17
-			};
-			window.map = new google.maps.Map(document.getElementById("map"), optionsGmaps);
-			window.geocoder = new google.maps.Geocoder();
-			window.marker = new google.maps.Marker({position: new google.maps.LatLng(startLat, startLng), map: window.map});
-		});</script>
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
-	<br/>
-	<legend>Informations</legend>
-<p>
-	<strong>Durée : </strong> 1 minutes<br/>
-	<strong>Capacité : </strong> 1 personnes<br/>
-</p>
-
-<h4>Résumé :</h4>
-<p style="padding-left: 1em;">Cet Atelier est destiné aux personnes.
-			<br />
-</p>
-
-<h4>Animateur(s) / Conférencier(s) :</h4>
-<p style="padding-left: 1em;">						
-					bob<br/>
-					Martin<br/>
-<br />
-</p>
-
-
-<legend>Public visé</legend>
-<p style="padding-left: 1em;">
-	<strong>
-					Premières&nbsp;
-										Secondes&nbsp;
-					</strong>
-</p>
-<br/>
-<h2>Plages horaires</h2>
-<hr/>
-<table class="table table-hover">
-	<thead>
-        <tr>
-			<th>Séance</th>
-			<th style="text-align: center">Durée</th>
-			<th style="text-align: center">Capacité</th>
-			<th style="text-align: center">Inscrits</th>
-			        </tr>
-	</thead>
-	<tbody>
-
-				<tr>
-					<td>Lundi Matin</td>
-					<td style="text-align: center">1</td>					
-					<td style="text-align: center">1</td>					
-					<td style="text-align: center">0</td>
-				</tr>
-
-				<tr>
-					<td>Jeudi Matin</td>
-					<td style="text-align: center">1</td>					
-					<td style="text-align: center">1</td>					
-					<td style="text-align: center">0</td>
-				</tr>
-				</tbody>
-</table>
-<br/>
+</header>						<div class = "alert alert-success alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							Compte enseignant créé avec succes
 						</div>
+					<div class="content" id="corpus">
+						<h1>
+					    	Connexion Enseignant
+						</h1>
+					
+						<p>
+							Vous avez déjà créé votre compte personnel. Vous pouvez y accéder en rentrant vos identifiants.
+							Si vous n’avez pas encore créé de compte vous pouvez le faire <a href="/teachers/register">en cliquant ici</a>.
+							<br/>
+						</p>
+						<form action="/teachers/login" id="TeacherLoginForm" method="post" accept-charset="utf-8">
+							<div style="display:none;">
+								<input type="hidden" name="_method" value="POST"/>
+							</div>
+							<div class="form-group" style="padding:1.5em 0;">
+								<label for="TeacherEmail" class="col-sm-2 control-label">Adresse email</label>
+								<div class="col-sm-10">
+									<input name="data[Teacher][email]" role="form" class="form-control" maxlength="100" type="email" id="TeacherEmail" required="required"/>
+								</div>
+							</div>
+							<div class="form-group" style="padding:1.5em 0;">
+								<label for="TeacherPassword" class="col-sm-2 control-label">Mot de passe</label>
+								<div class="col-sm-10 required">
+									<input name="data[Teacher][password]" role="form" class="form-control" type="password" id="TeacherPassword" required="required"/>
+								</div>
+							</div>
+							<div class="form-group" style="padding:1.5em 0;">
+								<div class="col-sm-offset-2 col-sm-10">
+								<input  class="btn btn-default" title="Se connecter" type="submit" value="Se connecter"/>
+								</div>
+							</div>
+						</form>						
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 
+
+	</div>
 
 <footer id="footer">
 	<div class="container">
@@ -204,5 +147,6 @@
 			</div>
 		</div>
 	</div>		
-</footer>	</html>
+</footer>
+</body>
 </html>

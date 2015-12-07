@@ -107,14 +107,14 @@
 							
 							<h4 class="center">Durée</h4>
 							<div class="form-group">
-									<input type="number" step="1" name="data[Atelier][duree]" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Duree" required="required"/>
+									<input type="number" step="1" min="10" name="data[Atelier][duree]" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Duree" required="required"/>
 							</div>
 							<span class="help-block">renseigner la durée en minutes</span>
 							<br/>	
 							
 							<h4 class="center">Capacité</h4>
 							<div class="form-group">
-									<input type="number" step="1" name="data[Atelier][capacite]" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Capacite" required="required"/>
+									<input type="number" step="1" min="5" name="data[Atelier][capacite]" role="form" class="form-control input-xxlarge"  maxlength="100" type="text" id="Capacite" required="required"/>
 							</div>
 							<br/>
 							

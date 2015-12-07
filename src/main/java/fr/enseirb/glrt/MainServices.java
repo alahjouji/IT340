@@ -25,7 +25,6 @@ import fr.enseirb.glrt.handlers.TeacherLoginHandlerPost;
 import fr.enseirb.glrt.handlers.TeacherRegisterHandlerGet;
 import fr.enseirb.glrt.handlers.TeacherRegisterHandlerPost;
 import fr.enseirb.glrt.model.Atelier;
-import fr.enseirb.glrt.model.Inscription;
 import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
 import fr.enseirb.glrt.model.Seance;
@@ -55,7 +54,7 @@ public class MainServices {
 		
 		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab );
-		Teacher teacher = new Teacher("Bob Bob", "Enseirb", "077777", "bbb@bbb.bbb", "bbb",new ArrayList<Inscription>());
+		Teacher teacher = new Teacher("Bob Bob", "Enseirb", "077777", "bbb@bbb.bbb", "bbb");
 		model.createTeacher(teacher );
 		
 		List<String> list = new ArrayList<String>();
@@ -75,7 +74,6 @@ public class MainServices {
 
 		
 		Atelier atelier= new Atelier(1, " A la poursuite d'ennemis invisibles", list, "Visite", list1, "1 avenue du Docteur Albert Schweitzer 33400 talence", 1, 100, "Cet Atelier est destiné aux personnes.", list2, list3);
-		model.createAtelier(atelier);
 		model.createAtelier(atelier);
 
 		FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine();

@@ -99,8 +99,9 @@
 	<thead>
         <tr>
 			<th>Séance</th>
-			<th style="text-align: center">Inscrits</th>
+			<th style="text-align: center">Durée</th>
 			<th style="text-align: center">Capacité</th>
+			<th style="text-align: center">Inscrits</th>
 			        </tr>
 	</thead>
 	<tbody>
@@ -108,8 +109,9 @@
 
 				<tr>
 					<td>${seance.nom}</td>
+					<td style="text-align: center">${atelier.duree}</td>					
+					<td style="text-align: center">${atelier.capacite}</td>					
 					<td style="text-align: center">${seance.inscrit}</td>
-					<td style="text-align: center">${atelier.capacite}</td>
 				</tr>
 </#list>
 				</tbody>
