@@ -24,7 +24,7 @@ public class TeacherLoginHandlerGet extends AbstractHandler{
 				attributes.put("good", "Compte enseignant créé avec succes");
 			}
 			Map<String, String> answer = new HashMap<String, String>();
-			answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/TeacherLogin.ftl")));
+			answer.put("response", freeMarkerEngine.render(new ModelAndView(attributes, "ftl/teacherLogin.ftl")));
 			return answer ;
 		}else{
 			Map<String, String> answer = new HashMap<String, String>();

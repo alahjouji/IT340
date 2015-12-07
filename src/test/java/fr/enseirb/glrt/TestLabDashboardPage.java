@@ -36,6 +36,7 @@ public class TestLabDashboardPage {
 	public void before() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		freeMarkerEngine = new FreeMarkerEngine();
 		Configuration freeMarkerConfiguration = new Configuration();
+		freeMarkerConfiguration.setDefaultEncoding("UTF-8");
 		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));
 		freeMarkerEngine.setConfiguration(freeMarkerConfiguration);
 		
