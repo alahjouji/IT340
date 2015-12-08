@@ -123,6 +123,29 @@ public class TestTeacherListAtelierPageGet {
 		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
 	}
 	
+	@Test
+	public void testDashboardGood2() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		TeacherListAtelierHandler handler = new TeacherListAtelierHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionTeacher", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"2"};
+		urlParams.put("good", value );
+		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+	
+	@Test
+	public void testDashboardWarn2() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		TeacherListAtelierHandler handler = new TeacherListAtelierHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionTeacher", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"2"};
+		urlParams.put("warn", value );
+		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
+	}
 	@After
 	public void after() throws SQLException {
 		model.closeBDDConnection();

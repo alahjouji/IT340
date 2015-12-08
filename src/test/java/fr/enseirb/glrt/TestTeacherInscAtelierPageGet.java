@@ -107,6 +107,7 @@ public class TestTeacherInscAtelierPageGet {
 		assertEquals("/teachers/login", handler.process(urlParams , sessionAtts).get("redirect"));
 	}
 	
+	
 	@Test
 	public void testIdNotNumber() throws IOException, ClassNotFoundException, JSONException, SQLException {
 		
@@ -115,6 +116,18 @@ public class TestTeacherInscAtelierPageGet {
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 		String[] value = {"aa"};
+		urlParams.put("atelierId", value );
+		assertEquals("/teachers/login", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+	
+	@Test
+	public void testIdNoTeacherSession() throws IOException, ClassNotFoundException, JSONException, SQLException {
+		
+		TeacherInscrireAtelierHandlerGet handler = new TeacherInscrireAtelierHandlerGet(model, freeMarkerEngine);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"1"};
 		urlParams.put("atelierId", value );
 		assertEquals("/teachers/login", handler.process(urlParams , sessionAtts).get("redirect"));
 	}

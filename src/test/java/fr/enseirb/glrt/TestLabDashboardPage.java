@@ -165,6 +165,20 @@ public class TestLabDashboardPage {
 
 		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
 	}
+	
+	@Test
+	public void testDashboardWarn2() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"2"};
+		urlParams.put("warn", value );
+
+		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+	
 	@Test
 	public void testDashboardUnothorized() throws IOException, ClassNotFoundException, SQLException {
 		LabDashboardHandler handler = new LabDashboardHandler(freeMarkerEngine, model);

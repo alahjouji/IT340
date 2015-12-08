@@ -88,6 +88,31 @@ public class TestTeacherLoginPageGet {
 	}
 	
 	@Test
+	public void testHTMLResponseError2() throws IOException {
+		URL url = new URL("http://localhost:4567/teachers/login?warn=2");
+		
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.connect();
+		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/teacherLogin.html"), "UTF-8");
+		assertEquals(expectedHTML, responseHTML);	
+		conn.disconnect();
+	}
+	
+	@Test
+	public void testHTMLResponseGood2() throws IOException {
+		URL url = new URL("http://localhost:4567/teachers/login?good=2");
+		
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.connect();
+		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/teacherLogin.html"), "UTF-8");
+		assertEquals(expectedHTML, responseHTML);
+		conn.disconnect();
+	}
+	@Test
 	public void testAlreadyCon() throws IOException {
 		TeacherLoginHandlerGet handler = new TeacherLoginHandlerGet(freeMarkerEngine);
 

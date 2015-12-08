@@ -64,7 +64,7 @@ public class TestDeclineInsc {
 	}
 	
 	@Test
-	public void testDecine() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+	public void testDecline() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
 		LabDeclineInsHandler handler = new LabDeclineInsHandler(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
@@ -73,6 +73,29 @@ public class TestDeclineInsc {
 		String[] value = {"1"};
 		urlParams.put("insId", value);
 		assertEquals("/labs/dashboard?good=5", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+
+	@Test
+	public void testInsNotOfLab() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabDeclineInsHandler handler = new LabDeclineInsHandler(model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"3"};
+		urlParams.put("insId", value);
+		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+
+	@Test
+	public void testNoSessionLab() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabDeclineInsHandler handler = new LabDeclineInsHandler(model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"3"};
+		urlParams.put("insId", value);
+		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));
 	}
 	
 	@Test
@@ -90,7 +113,6 @@ public class TestDeclineInsc {
 		LabDeclineInsHandler handler = new LabDeclineInsHandler(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
-		sessionAtts.put("sessionLab", "1");
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 		String[] value = {"aa"};
 		urlParams.put("insId", value);

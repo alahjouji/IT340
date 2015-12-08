@@ -24,6 +24,7 @@ import fr.enseirb.glrt.model.Atelier;
 import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
 import fr.enseirb.glrt.model.Seance;
+import fr.enseirb.glrt.model.Teacher;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -95,6 +96,51 @@ public class TestAtelierPage {
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 		assertEquals("/", handler.process(urlParams , sessionAtts).get("redirect"));
 	}
+
+	@Test
+	public void testAtelierInexistant() throws IOException, ClassNotFoundException, JSONException, SQLException {
+		
+		AtelierHandler handler = new AtelierHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"5"};
+		urlParams.put("atelierId", value );
+		assertEquals("/", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+
+	@Test
+	public void testAtelierNotOfLab() throws IOException, ClassNotFoundException, JSONException, SQLException, NoSuchAlgorithmException {
+		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "bbb@aaa.aaa", "aaa");
+		model.createLab(lab );
+		List<String> list = new ArrayList<String>();
+		list.add("Anthropologie");
+		list.add("Environnement");
+		list.add("Geographie");
+		
+		List<String> list3 = new ArrayList<String>();
+		list3.add("Premières");
+		list3.add("Secondes");
+		List<String> list2 = new ArrayList<String>();
+		list2.add("bob");
+		list2.add("Martin");
+		List<Seance> list1 = new ArrayList<Seance>();
+		list1.add(new Seance("Lundi Matin",0));
+		list1.add(new Seance("Jeudi Matin",0));
+
+		
+		Atelier atelier= new Atelier(2, " A la poursuite d'ennemis invisibles", list, "Atelier scientifique", list1, "1 avenue du Docteur Albert Schweitzer 33400 talence", 1, 1, "Cet Atelier est destiné aux personnes.", list2, list3);
+		model.createAtelier(atelier);
+		AtelierHandler handler = new AtelierHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"2"};
+		urlParams.put("atelierId", value );
+		assertEquals("/", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
 	
 	@Test
 	public void testIdNotNumber() throws IOException, ClassNotFoundException, JSONException, SQLException {
@@ -117,6 +163,55 @@ public class TestAtelierPage {
 		Map<String, String> sessionAtts = new HashMap<String, String>();
 		Map<String, String[]> urlParams = new HashMap<String, String[]>();
 		assertEquals("/", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+
+	@Test
+	public void testSessionTeacher() throws IOException, ClassNotFoundException, JSONException, SQLException, NoSuchAlgorithmException {
+		model.createTeacherTable();
+		Teacher t = new Teacher("CNRS", "Milan Kaback", "06666666", "bbb@aaa.aaa", "aaa");
+		model.createTeacher(t );
+
+		AtelierHandler handler = new AtelierHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		sessionAtts.put("sessionTeacher", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"1"};
+		urlParams.put("atelierId", value );
+		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+
+	@Test
+	public void testNotValidAt() throws IOException, ClassNotFoundException, JSONException, SQLException, NoSuchAlgorithmException {
+		model.createTeacherTable();
+		Teacher t = new Teacher("CNRS", "Milan Kaback", "06666666", "bbb@aaa.aaa", "aaa");
+		model.createTeacher(t );
+
+		AtelierHandler handler = new AtelierHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionTeacher", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"7"};
+		urlParams.put("atelierId", value );
+		assertEquals("/", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+	
+	@Test
+	public void testNotSessionLab() throws IOException, ClassNotFoundException, JSONException, SQLException, NoSuchAlgorithmException {
+		model.createTeacherTable();
+		Teacher t = new Teacher("CNRS", "Milan Kaback", "06666666", "bbb@aaa.aaa", "aaa");
+		model.createTeacher(t );
+
+		AtelierHandler handler = new AtelierHandler(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionTeacher", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"1"};
+		urlParams.put("atelierId", value );
+		assertEquals(null, handler.process(urlParams , sessionAtts).get("redirect"));
 	}
 	
 	@After

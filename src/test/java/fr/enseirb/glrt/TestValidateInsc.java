@@ -39,6 +39,8 @@ public class TestValidateInsc {
 		
 		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");
 		model.createLab(lab );
+		Laboratoire lab1 = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaba@aaa.aaa", "aaa");
+		model.createLab(lab1 );
 		List<String> list = new ArrayList<String>();
 		list.add("Anthropologie");
 		list.add("Environnement");
@@ -78,6 +80,30 @@ public class TestValidateInsc {
 	}
 
 	@Test
+	public void testInsNotOfLab() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabValidateInsHandler handler = new LabValidateInsHandler(model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "2");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"1"};
+		urlParams.put("insId", value);
+		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+
+	@Test
+	public void testInsNotExist() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabValidateInsHandler handler = new LabValidateInsHandler(model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "2");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"5"};
+		urlParams.put("insId", value);
+		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+	
+	@Test
 	public void testWarn() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
 		LabValidateInsHandler handler = new LabValidateInsHandler(model);
 
@@ -111,7 +137,16 @@ public class TestValidateInsc {
 		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));
 	}
 	
+	@Test
+	public void testNoSessionLab() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabValidateInsHandler handler = new LabValidateInsHandler(model);
 
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"3"};
+		urlParams.put("insId", value);
+		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
 	
 	@After
 	public void after() throws SQLException {

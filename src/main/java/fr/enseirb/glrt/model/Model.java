@@ -567,19 +567,13 @@ public class Model {
 		ResultSet rs2 = stmt2.executeQuery();
 		if(rs2.next()){
 			int atelierId = rs2.getInt("atelier_id");
-			PreparedStatement stmt = conn.prepareStatement("select * from ateliers where id=?");
-			stmt.setInt(1, atelierId);
-			ResultSet rs = stmt.executeQuery();
-			if(rs.next()){
-				PreparedStatement stmt1 = conn.prepareStatement("select * from ateliers where id=? and lab_id=?");
-				stmt1.setInt(1, atelierId);
-				stmt1.setInt(2, labId);
-				ResultSet rs1 = stmt1.executeQuery();
-				if(rs1.next())
-					b=true;
-				stmt1.close();
-			}
-			stmt.close();
+			PreparedStatement stmt1 = conn.prepareStatement("select * from ateliers where id=? and lab_id=?");
+			stmt1.setInt(1, atelierId);
+			stmt1.setInt(2, labId);
+			ResultSet rs1 = stmt1.executeQuery();
+			if(rs1.next())
+				b=true;
+			stmt1.close();
 		}
 		stmt2.close();
 		return b;

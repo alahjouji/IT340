@@ -75,6 +75,19 @@ public class TestLabLoginPageGet {
 	}
 	
 	@Test
+	public void testHTMLResponseError2() throws IOException {
+		URL url = new URL("http://localhost:4567/labs/login?warn=2");
+		
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.connect();
+		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labLogin.html"), "UTF-8");
+		assertEquals(expectedHTML, responseHTML);	
+		conn.disconnect();
+	}
+	
+	@Test
 	public void testHTMLResponseGood() throws IOException {
 		URL url = new URL("http://localhost:4567/labs/login?good=1");
 		
@@ -83,6 +96,19 @@ public class TestLabLoginPageGet {
 		conn.connect();
 		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
 		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labLoginGood.html"), "UTF-8");
+		assertEquals(expectedHTML, responseHTML);
+		conn.disconnect();
+	}
+	
+	@Test
+	public void testHTMLResponseGood2() throws IOException {
+		URL url = new URL("http://localhost:4567/labs/login?good=2");
+		
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.connect();
+		String responseHTML = IOUtils.toString(conn.getInputStream(), "UTF-8");
+		String expectedHTML= IOUtils.toString(new FileInputStream("src/test/resources/labLogin.html"), "UTF-8");
 		assertEquals(expectedHTML, responseHTML);
 		conn.disconnect();
 	}

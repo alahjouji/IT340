@@ -101,6 +101,17 @@ public class TestLabEditAtelierPageGet {
 	}
 	
 	@Test
+	public void testIdNoSessionLab() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabEditAtelierHandlerGet handler = new LabEditAtelierHandlerGet(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"1"};
+		urlParams.put("atelierId", value);
+		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+	
+	@Test
 	public void testIdNotNumber() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
 		LabEditAtelierHandlerGet handler = new LabEditAtelierHandlerGet(freeMarkerEngine, model);
 
@@ -112,6 +123,17 @@ public class TestLabEditAtelierPageGet {
 		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));
 	}
 	
+	@Test
+	public void testAtNotOfLab() throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		LabEditAtelierHandlerGet handler = new LabEditAtelierHandlerGet(freeMarkerEngine, model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		sessionAtts.put("sessionLab", "1");
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value = {"5"};
+		urlParams.put("atelierId", value);
+		assertEquals("/labs/login", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
 	
 	@After
 	public void after() throws SQLException {

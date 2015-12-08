@@ -76,6 +76,24 @@ public class TestLabLoginPost {
 	}
 
 	@Test
+	public void testLoginInexistant() throws IOException {
+		URL url = new URL("http://localhost:4567/labs/login");
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		conn.setInstanceFollowRedirects(false);
+		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+		wr.writeBytes("data[Lab][email]=aaa@aaa.aa&data[Lab][password]=bbb");
+		wr.flush();
+		wr.close();
+		conn.connect();
+		
+		assertEquals("http://localhost:4567/labs/login?warn=1", conn.getHeaderField("Location"));
+		conn.disconnect();
+
+	}
+	
+	@Test
 	public void testAlreadyCon() throws IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {
 		LabLoginHandlerPost handler = new LabLoginHandlerPost(model);
 

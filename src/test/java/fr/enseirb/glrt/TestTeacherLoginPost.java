@@ -54,6 +54,23 @@ public class TestTeacherLoginPost {
 	
 	}
 	
+	@Test
+	public void testLoginInexistant() throws IOException {
+		URL url = new URL("http://localhost:4567/teachers/login");
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		conn.setInstanceFollowRedirects(false);
+		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+		wr.writeBytes("data[Teacher][email]=aaa@a.aaa&data[Teacher][password]=aaa");
+		wr.flush();
+		wr.close();
+		conn.connect();
+		
+		assertEquals("http://localhost:4567/teachers/login?warn=1", conn.getHeaderField("Location"));
+		conn.disconnect();
+	
+	}
 	
 	@Test
 	public void testLoginUnothorized() throws IOException {

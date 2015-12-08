@@ -129,6 +129,23 @@ public class TestTeacherInscAtelierPost {
 		assertEquals("/teachers/login", handler.process(urlParams , sessionAtts).get("redirect"));
 	}
 	
+	@Test
+	public void testNoSessionTeacher() throws IOException, ClassNotFoundException, SQLException {
+		TeacherInscrireAtelierHandlerPost handler = new TeacherInscrireAtelierHandlerPost(model);
+
+		Map<String, String> sessionAtts = new HashMap<String, String>();
+		Map<String, String[]> urlParams = new HashMap<String, String[]>();
+		String[] value3 = {"5"};
+		urlParams.put("nombre", value3 );
+		String[] value1 = {"Lundi Matin"};
+		urlParams.put("seance", value1 );
+		String[] value2 = {"secondes"};
+		urlParams.put("public", value2 );
+		String[] value = {"1"};
+		urlParams.put("atelierId", value );
+		assertEquals("/teachers/login", handler.process(urlParams , sessionAtts).get("redirect"));
+	}
+	
 	@After
 	public void after() throws SQLException {
 		model.closeBDDConnection();
