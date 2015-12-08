@@ -1,9 +1,7 @@
 # IT340
 
-develop branch testing
-[![Build Status](https://travis-ci.org/alahjouji/IT340.svg?branch=develop)](https://travis-ci.org/alahjouji/IT340)
 
-develop branch coverage
+[![Build Status](https://travis-ci.org/alahjouji/IT340.svg?branch=develop)](https://travis-ci.org/alahjouji/IT340)
 [![Coverage Status](https://coveralls.io/repos/alahjouji/IT340/badge.svg?branch=develop&service=github)](https://coveralls.io/github/alahjouji/IT340?branch=develop)
 
 
@@ -13,7 +11,10 @@ Vous y trouverez le fichier d'exigences, les fichiers de conception, le code sou
 
 Pour lancer l'application, Faite un clone du repo, accédez y et lancer les 2 commandes suivantes:
 
-mvn compile
-mvn exec:java -Dexec.mainClass="fr.enseirb.glrt.MainServices"
+
+- mvn compile
+
+- mvn exec:java -Dexec.mainClass="fr.enseirb.glrt.MainServices"
+
 
 L'application est lancée alors sur http://localhost:4567/
