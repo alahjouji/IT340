@@ -63,7 +63,7 @@ public class TestTeacherInscAtelierPost {
 	}
 	
 	@Test
-	public void TestPostValid() throws ClassNotFoundException, SQLException{
+	public void testPostValid() throws ClassNotFoundException, SQLException{
 		TeacherInscrireAtelierHandlerPost handler = new TeacherInscrireAtelierHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();
@@ -80,7 +80,7 @@ public class TestTeacherInscAtelierPost {
 	}
 
 	@Test
-	public void TestPostWarn() throws ClassNotFoundException, SQLException{
+	public void testPostWarn() throws ClassNotFoundException, SQLException{
 		TeacherInscrireAtelierHandlerPost handler = new TeacherInscrireAtelierHandlerPost(model);
 
 		Map<String, String> sessionAtts = new HashMap<String, String>();

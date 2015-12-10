@@ -1,4 +1,4 @@
-package fr.enseirb.glrt.googleMaps;
+package fr.enseirb.glrt.googlemaps;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class GoogleMaps {
 		try {
 			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 			String jsonText = readAll(rd);
-			org.json.JSONObject json = new org.json.JSONObject(jsonText);
+			JSONObject json = new JSONObject(jsonText);
 			return json;
 		} finally {
 			is.close();

@@ -24,11 +24,7 @@ import fr.enseirb.glrt.handlers.TeacherLoginHandlerGet;
 import fr.enseirb.glrt.handlers.TeacherLoginHandlerPost;
 import fr.enseirb.glrt.handlers.TeacherRegisterHandlerGet;
 import fr.enseirb.glrt.handlers.TeacherRegisterHandlerPost;
-import fr.enseirb.glrt.model.Atelier;
-import fr.enseirb.glrt.model.Laboratoire;
 import fr.enseirb.glrt.model.Model;
-import fr.enseirb.glrt.model.Seance;
-import fr.enseirb.glrt.model.Teacher;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -38,8 +34,6 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainServices {
 	
@@ -52,29 +46,6 @@ public class MainServices {
 		model.createTeacherTable();
 		model.createInscriptionTable();
 		
-		Laboratoire lab = new Laboratoire("CNRS", "Milan Kaback", "06666666", "aaa@aaa.aaa", "aaa");
-		model.createLab(lab );
-		Teacher teacher = new Teacher("Bob Bob", "Enseirb", "077777", "bbb@bbb.bbb", "bbb");
-		model.createTeacher(teacher );
-		
-		List<String> list = new ArrayList<String>();
-		list.add("Anthropologie");
-		list.add("Environnement");
-		list.add("Géographie");
-		
-		List<String> list3 = new ArrayList<String>();
-		list3.add("Premières");
-		list3.add("Secondes");
-		List<String> list2 = new ArrayList<String>();
-		list2.add("bob");
-		list2.add("Martin");
-		List<Seance> list1 = new ArrayList<Seance>();
-		list1.add(new Seance("Lundi matin",0));
-		list1.add(new Seance("Jeudi matin",0));
-
-		
-		Atelier atelier= new Atelier(1, " A la poursuite d'ennemis invisibles", list, "Visite", list1, "1 avenue du Docteur Albert Schweitzer 33400 talence", 1, 100, "Cet Atelier est destiné aux personnes.", list2, list3);
-		model.createAtelier(atelier);
 
 		FreeMarkerEngine freeMarkerEngine = new FreeMarkerEngine();
 		Configuration freeMarkerConfiguration = new Configuration();

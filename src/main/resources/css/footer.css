@@ -20,7 +20,7 @@ html
 body
 {
 	font-family: "Helvetica Neue", Helvetica ,Arial ,sans-serif;
-	background: transparent !important;
+	background: transparent;
 }
 
 #wrap {
@@ -31,7 +31,6 @@ body
 {
     overflow: auto;
 	padding-bottom: 185px;
-	/*min-width: 1170px;*/
 }
 
 #corpus
@@ -50,19 +49,12 @@ body
 	font-weight: bold;
 }
 
-.row
-{
-	/*overflow: hidden;*/
-}
 
 .center
 {
 	text-align: center;
 }
 
-.container {
-    /*width: 1170px !important;*/
-}
 
 
 /*-----*-----------------*-----**-----*-----------------*-----*					Timeslots					*-----*-----------------*-----**-----*-----------------*-----*/
@@ -111,7 +103,7 @@ body
 
 .small-input
 {
-	width: 5em !important;
+	width: 5em;
 }
 
 
@@ -119,7 +111,7 @@ body
 
 .navbar
 {
-	margin-top: 50px !important;
+	margin-top: 50px;
 }
 
 .navbar-collapse, .container-fluid
@@ -164,11 +156,6 @@ body
 {
 	margin-right: 0;
 	flex-grow: 1;
-}
-
-.navbar-nav.teachers>li, .navbar-nav.labs>li
-{
-	/*width: 230px;*/
 }
 
 .navbar-nav.teachers>li:first-child, .navbar-nav.labs>li:first-child
@@ -272,7 +259,7 @@ body
 
 #xsmenu .navbar-nav>li>a, #xsmenu .navbar-nav>li>a:focus, #xsmenu .navbar-nav>li>a:hover
 {
-	color: white !important;
+	color: white;
 	padding-left: 1em;
 	background: #ff2956;
 }
@@ -325,7 +312,7 @@ body
 
 #sidebarBottom
 {
-	box-shadow: 1px 0px 5px #999;
+	box-shadow: 1px 0 5px #999;
 	height: 370px;
 }
 
@@ -439,55 +426,8 @@ body
 {
 	max-width: 140px;
 }
-/*
-#ENSCBPLogo
-{
-	max-height: 60px !important;
-}
 
-#CNRSLogo, #CEALogo
-{
-	max-height: 50px !important;
-}
 
-#INRALogo
-{
-	max-width: 90px !important;
-}
-
-#INRIALogo
-{
-	max-width: 95px !important;
-}
-
-#UBXLogo
-{
-	max-width: 120px !important;
-	margin-right:0;
-}
-
-#UBMLogo
-{
-	max-width: 120px !important;
-	margin-right:0;
-}
-
-#CapSciencesLogo
-{
-	height: 50px;
-}
-
-#ACBdXLogo
-{
-	height: 65px;
-}
-*/
-/*-----*-----------------*-----**-----*-----------------*-----*					Home					*-----*-----------------*-----**-----*-----------------*-----*/
-
-#home1
-{
-
-}
 
 #home2
 {
@@ -499,6 +439,7 @@ body
 
 #home3, #home5, #home3:hover, #home5:hover, #home3:focus, #home5:focus, #home3:visited, #home5:visited
 {
+	box-sizing: border-box;
 	border: 2px solid #ffab00;
 	height: 300px;
 	display: block;
@@ -506,7 +447,7 @@ body
 	color: #ffab00;
 }
 
-#home3 h2, #home5 h2
+#home3 h2 #home5
 {
 	font-weight: bold;
 	margin-top: 80px;
@@ -514,7 +455,7 @@ body
 	font-size: 1.6em;
 }
 
-#home3 p, #home5 p
+#home3 p #home5
 {
 	padding: 10px;
 	font-weight: bold;
@@ -537,7 +478,6 @@ body
 a.nostyle, a.nostyle:hover, a.nostyle:visited
 {
 	text-decoration: none;
-	color: initial;
 }
 
 
@@ -564,17 +504,14 @@ a.nostyle, a.nostyle:hover, a.nostyle:visited
 {
     height: 75px;
 	display: flex;
-	box-orient: horizontal;
     flex-direction: row;
 
-    box-pack: center;
     justify-content: space-between;
 
-    box-align: center;  
     align-items: center;
 }
 
-.logoBanner div.wrapper
+.logoBanner wrapper
 {
 	max-height:100%;
 }

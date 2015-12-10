@@ -28,7 +28,7 @@ public class TestLabRegisterPageGet {
 		freeMarkerEngine = new FreeMarkerEngine();
 		Configuration freeMarkerConfiguration = new Configuration();
 		freeMarkerConfiguration.setDefaultEncoding("UTF-8");
-		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));;
+		freeMarkerConfiguration.setDirectoryForTemplateLoading(new File("src/main/resources"));
 		freeMarkerEngine.setConfiguration(freeMarkerConfiguration);
 
 		get("/labs/register", new LabRegisterHandlerGet(freeMarkerEngine));
